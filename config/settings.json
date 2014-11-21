@@ -1,0 +1,7 @@
+{
+  public: {
+    appName: 'OrangePeel'
+  },
+  // Everything below is private and is on the server.
+
+}
