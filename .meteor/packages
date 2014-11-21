@@ -16,4 +16,5 @@ pauli:accounts-linkedin
 service-configuration
 iron:router
 meteorhacks:kadira
+meteorhacks:fast-render
 

@@ -16,34 +16,54 @@ Schema.User = new SimpleSchema({
     defaultValue: false,
   },
   createdAt: { type: Date },
-  twitterUrl: { type: String },
+  twitterUrl: {
+    type: String,
+    optional: true
+  },
   linkedInUrl: { type: String },
   skills: {
     type: [String]
   },
   listedAs: {
-    type: [String]
+    type: [String],
+    defaultValue: []
+  },
+  lookingFor: {
+    type: [String],
+    defaultValue: []
   },
   interests: {
     type: [String]
   },
   headline: { type: String },
-  jobExperience: { type: String },
+  jobExperience: {
+    type: [String],
+    defaultValue: []
+  },
   email: {
     type: String ,
     regEx: SimpleSchema.RegEx.Email,
     unique: true,
   },
   pictureUrl: { type: String },
-  lookingFor: { type: [String] },
   location: {
     type: [Number],
     index: '2d',
+    optional: true
   },
-  isHidden: { type: Boolean },
-  numVotesReceived: { type: Number, defaultValue: 0 },
-  numVotesCast: { type: Number, defaultValue: 0 },
-  lastActiveAt: { type: Date },
+  isHidden: { type: Boolean, defaultValue: false },
+  numVotesReceived: {
+    type: Number,
+    defaultValue: 0
+  },
+  numVotesCast: {
+    type: Number,
+    defaultValue: 0
+  },
+  lastActiveAt: {
+    type: Date,
+    optional: true
+  },
 });
 
 Meteor.users.attachSchema(Schema.User);
