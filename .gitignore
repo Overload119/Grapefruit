@@ -1,3 +1,4 @@
 .meteor/local
 .meteor/meteorite
 server/linkedin.js
+config/settings.json
