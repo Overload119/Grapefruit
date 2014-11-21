@@ -48,6 +48,7 @@ Schema.User = new SimpleSchema({
   pictureUrl: { type: String },
   location: {
     type: [Number],
+    decimal: true,
     index: '2d',
     optional: true
   },
@@ -63,6 +64,10 @@ Schema.User = new SimpleSchema({
   lastActiveAt: {
     type: Date,
     optional: true
+  },
+  isTutorialComplete: {
+    type: Boolean,
+    defaultValue: false
   },
   services: {
     type: Object,

@@ -1,0 +1,103 @@
+.tutorial-screen {
+  background: @orange;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: #FFF;
+  .scrolling-nav {
+    position: absolute;
+    min-width: 640px;
+    left: 50%;
+    margin-left: -320px;
+    height: 100%;
+  }
+  .step {
+    position: absolute;
+    width: 100%;
+    top: 25%;
+    visibility: hidden;
+    opacity: 0;
+    .translate(0, 80px);
+    .transition-transform(500ms, opacity 500ms);
+    &.slideIn {
+      visibility: visible;
+      opacity: 1;
+      .translate(0,0);
+    }
+    &.slideOut {
+      opacity: 0;
+      .translate(0, -160px);
+      visibility: visible;
+    }
+    .continue-btn {
+      border: 2px solid #FFF;
+      background: transparent;
+      margin-top: 1em;
+      padding: 0.8em 1em;
+      font-size: 1.25em;
+      .gf-button();
+      &:hover {
+        text-decoration: underline;
+      }
+      &.disabled {
+        opacity: 0.5;
+        color: @gray;
+      }
+    }
+    p {
+      font-size: 1.5em;
+      line-height: 1.6em;
+    }
+    .toggles {
+      list-style: none;
+      padding: 0;
+      margin: 2em 0;
+      li {
+        display: inline-block;
+        background-color: @badge;
+        font-size: 1.5em;
+        padding: 0.8em 1em;
+        border-radius: 4px;
+        margin-right: 2em;
+        position: relative;
+        cursor: pointer;
+        opacity: 0.9;
+        &:after {
+          top: -7px;
+          left: -7px;
+          padding: 7px;
+          .box-sizing(content-box);
+          .user-select(none);
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          border-radius: 4px;
+          .transform(scale(0.8));
+          .box-shadow(0 0 0 4px #FFF);
+          .transition-transform(250ms, opacity 250ms);
+        }
+        &:hover {
+          background: lighten(@badge, 2%);
+        }
+        &.selected {
+          color: @orange;
+          background: white;
+          &:after {
+            .transform(scale(1));
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .error {
+      padding: 1em;
+      font-size: 1em;
+      background: @brightRed;
+      border-radius: 4px;
+      margin-top: 1.5em;
+    }
+
+  }
+}

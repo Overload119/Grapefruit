@@ -63,6 +63,8 @@ var updateLinkedInForUser = function(user, accessToken) {
     jobExperienceArr = jobExperienceArr.concat(_temp);
   }
 
+  user.jobExperience = jobExperienceArr;
+
   return user;
 }
 
