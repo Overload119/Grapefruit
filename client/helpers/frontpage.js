@@ -5,6 +5,7 @@ Template.frontpage.events({
     };
     Meteor.loginWithLinkedIn(linkedInOptions, function(e) {
       if (!e) {
+        Router.go('/dashboard');
       }
     });
   }

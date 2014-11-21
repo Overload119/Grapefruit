@@ -1,3 +1,5 @@
+var debug = Meteor.npmRequire('debug')('accounts');
+
 var updateLinkedInForUser = function(user, accessToken) {
   // Retrieve the fields we need from LinkedIn.
   // The LinkedIn package uses some defaults that aren't suitable for our needs.
@@ -65,10 +67,16 @@ var updateLinkedInForUser = function(user, accessToken) {
 }
 
 Accounts.onCreateUser(function(options, user) {
+  debug('onCreateUser fired.');
+
+  debugger
+
   var accessToken = user.services.linkedin.accessToken;
 
   updateLinkedInForUser(user, accessToken);
 
-  console.log(user);
+  // This is required for `accounts-base` to recognize a user from before.
+
+
   return user;
 });

@@ -64,6 +64,11 @@ Schema.User = new SimpleSchema({
     type: Date,
     optional: true
   },
+  services: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  }
 });
 
 Meteor.users.attachSchema(Schema.User);
