@@ -8,7 +8,7 @@
 
 <body>
   {{#if currentUser}}
-    <p>You are logged in.</p>
+    {{> dashboard}}
   {{else}}
     {{> frontpage}}
   {{/if}}
