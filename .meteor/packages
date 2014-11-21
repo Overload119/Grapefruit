@@ -4,11 +4,14 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
-insecure
 mizzao:bootstrap-3
 less
 spiderable
 underscore
 accounts-password
+aldeed:simple-schema
+aldeed:collection2
+mrt:moment
+pauli:accounts-linkedin
+service-configuration
 

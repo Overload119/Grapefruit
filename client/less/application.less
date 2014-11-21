@@ -22,7 +22,7 @@ body {
     height: 100%;
     left: 0;
     top: 0;
-    background: rgba(47, 47, 47, 0.35);
+    background: rgba(47, 47, 47, 0.6);
   }
   .frontpage-caption {
     position: absolute;
@@ -55,10 +55,10 @@ body {
   border-radius: 4px;
   .gf-button();
   &:hover {
-    background: @orange;
-    color: #FFF;
+    text-decoration: underline;
   }
   &:active {
-    background: darken(@orange, 3%);
+    background: darken(@badge, 3%);
+    .scale(0.97);
   }
 }

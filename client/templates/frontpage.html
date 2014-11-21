@@ -4,9 +4,11 @@
     <div class="frontpage-caption">
       <img src="/logo.png" />
       <h2>Connect with nearby talent.</h2>
-      <button id="connect">
-        Get Started >
-      </button>
+      {{#if isLoginConfigured}}
+        <button id="connect">
+          Get Started >
+        </button>
+      {{/if}}
     </div>
   </div>
 
@@ -28,7 +30,7 @@
     </div>
     <div class="col-md-7">
       <h2>Search</h2>
-      <p class="lead">Whether you're looking for a developer, a designer, or business expect, you can search by specific skills, and get relevant results sorted by proficiency and distance away from you.</p>
+      <p class="lead">Whether you're looking for a developer, a designer, or business expert, you can search by specific skills, and get relevant results sorted by proficiency and distance away from you.</p>
     </div>
   </div>
 
@@ -37,7 +39,7 @@
   <div class="row featurette">
     <div class="col-md-7">
       <h2>Discover</h2>
-      <p class="lead">Ask a question, get advice, or schedule a meeting with real time messaging.</p>
+      <p class="lead">Everyone on Grapefruit wants to engage with the community. Ask a question, get advice, or schedule a meeting with real time messaging.</p>
     </div>
     <div class="col-md-5">
       <img class="img-responsive" src="http://lorempixel.com/400/200" />
