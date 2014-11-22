@@ -9,6 +9,7 @@ MessageSchema = new SimpleSchema({
   content: { type: String },
   fromId: { type: String },
   toId: { type: String },
+  read: { type: Boolean, defaultValue: false }
 });
 
 Messages.attachSchema(MessageSchema);
