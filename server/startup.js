@@ -7,12 +7,13 @@ debug_applyFixture = function() {
       var lat = user.location[0];
       var lng = user.location[1];
 
-      var nudgeValue = Math.random() * 0.004 - 0.002;
+      var nudgeValueLat = Math.random() * 0.04 - 0.02;
+      var nudgeValueLng = Math.random() * 0.04 - 0.02;
 
       user._id = Random.id();
       user.services = {};
       user.email = 'budgeneration+' + i + '@gmail.com';
-      user.location = [ lat + nudgeValue, lng + nudgeValue ];
+      user.location = [ lat + nudgeValueLat, lng + nudgeValueLng ];
 
       Meteor.users.insert(user);
     }

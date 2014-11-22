@@ -74,14 +74,8 @@ var updateLinkedInForUser = function(user, accessToken) {
 Accounts.onCreateUser(function(options, user) {
   debug('onCreateUser fired.');
 
-  debugger
-
   var accessToken = user.services.linkedin.accessToken;
-
   updateLinkedInForUser(user, accessToken);
-
-  // This is required for `accounts-base` to recognize a user from before.
-
 
   return user;
 });
