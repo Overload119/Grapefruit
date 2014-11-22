@@ -2,3 +2,5 @@
 .meteor/meteorite
 server/linkedin.js
 config/settings.json
+packages/npm-container/.npm/package/npm-shrinkwrap.json
+GrapeFruit.sublime-workspace

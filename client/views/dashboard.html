@@ -2,10 +2,14 @@
   {{#if isTutorialComplete}}
     <div class="top-bar">
       <input id="search-bar" class="search-bar" type="search" />
-      <button id="profile-btn" class="profile">{{formatName currentUser }}</button>
+      <button id="profile-btn" class="profile">{{ formatName currentUser }}</button>
     </div>
-    <h1>Welcome to your dashboard</h1>
-    <p>You are logged in.</p>
+
+    <div class="search-results">
+      {{#if isSearching}}
+
+      {{/if}}
+    </div>
   {{else}}
     {{> tutorial}}
   {{/if}}
