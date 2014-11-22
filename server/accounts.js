@@ -19,13 +19,16 @@ var updateLinkedInForUser = function(user, accessToken) {
   user.headline       = linkedInFieldResponse.headline;
   user.linkedInUrl    = linkedInFieldResponse.publicProfileUrl;
   user.email          = linkedInFieldResponse.emailAddress;
-  user.pictureUrl     = linkedInFieldResponse.publicProfileUrl;
+  user.pictureUrl     = linkedInFieldResponse.pictureUrl;
+
+  // The following fields are used when searching, and they are case-sensitive.
+  // Therefore we bring them all to lowercase.
 
   // Process interests - Interests come in a string - we want them in an array.
   var interestsArr = [];
   if (linkedInFieldResponse.interests && linkedInFieldResponse.interests.trim() !== '') {
     interestsArr = _.map(linkedInFieldResponse.interests.split(','), function(interest) {
-      return interest.trim();
+      return interest.trim().toLowerCase();
     });
     interestsArr = _.compact(interestsArr);
   }
@@ -36,7 +39,7 @@ var updateLinkedInForUser = function(user, accessToken) {
   var skillsArr = [];
   if (linkedInFieldResponse.skills && linkedInFieldResponse.skills._total > 0) {
     skillsArr = _.map(linkedInFieldResponse.skills.values, function(skillObj) {
-      return skillObj.skill.name;
+      return skillObj.skill.name.toLowerCase();
     });
   }
   user.skills = skillsArr;
@@ -48,7 +51,7 @@ var updateLinkedInForUser = function(user, accessToken) {
   if (linkedInFieldResponse.threeCurrentPositions &&
       linkedInFieldResponse.threeCurrentPositions._total > 0) {
     _temp = _.map(linkedInFieldResponse.threeCurrentPositions.values, function(posValue) {
-      return posValue.company.name;
+      return posValue.company.name.toLowerCase();
     });
 
     jobExperienceArr = jobExperienceArr.concat(_temp);
@@ -57,7 +60,7 @@ var updateLinkedInForUser = function(user, accessToken) {
   if (linkedInFieldResponse.threePastPositions &&
       linkedInFieldResponse.threePastPositions._total > 0) {
     _temp = _.map(linkedInFieldResponse.threePastPositions.values, function(posValue) {
-      return posValue.company.name;
+      return posValue.company.name.toLowerCase();
     });
 
     jobExperienceArr = jobExperienceArr.concat(_temp);

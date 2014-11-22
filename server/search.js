@@ -16,8 +16,6 @@ Meteor.methods({
     // TODO Incorporate recently active
     check(searchParams, Object);
 
-
-
     if (!this.userId) {
       throw new Meteor.Error('User is not logged in');
     }
@@ -46,12 +44,10 @@ Meteor.methods({
           results = _.map(res.results, function(entry) {
             var mappedEntry = _.pick(entry.obj, '_id', 'pictureUrl', 'headline', 'firstName');
             mappedEntry.distance = entry.dis;
-
             return mappedEntry
           });
         }
 
-        console.log(results);
         callback(null, results);
       });
     };

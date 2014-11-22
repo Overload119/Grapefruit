@@ -17,6 +17,9 @@ Template.dashboard.helpers({
   isSearching: function() {
     return Session.get('searchQuery').trim() !== '';
   },
+  searchResults: function() {
+    return Session.get('searchResults');
+  }
 });
 
 Template.dashboard.events({
@@ -29,9 +32,9 @@ Template.dashboard.events({
         lng: Meteor.user().location[1]
       };
 
+      Session.set('searchQuery', searchQueryParams.term);
       Meteor.call('searchQuery', searchQueryParams, function(err, result) {
-        console.log(err);
-        console.log(result);
+        Session.set('searchResults', result);
       });
     }
   }

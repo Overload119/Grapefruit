@@ -5,11 +5,27 @@
       <button id="profile-btn" class="profile">{{ formatName currentUser }}</button>
     </div>
 
-    <div class="search-results">
-      {{#if isSearching}}
+    {{#if isSearching}}
+      <div class="search-results">
+        {{#if searchResults}}
+          {{#each searchResults}}
+            <a class="user-list-item" href="{{ pathFor route='users.show'}}">
+              <div class="profile-image" style="{{ profileBackgroundImage this }}"></div>
+              <div class="profile-details">
+                <p class="name">{{ firstName }}</p>
+                <p class="title">{{ headline }}</p>
+              </div>
+              <div class="profile-meta">
+                <p class="distance">{{ distanceAwayInKm distance }}</p>
+              </div>
+            </a>
+          {{/each}}
+        {{else}}
+          <p>Loading...</p>
+        {{/if}}
+      </div>
+    {{/if}}
 
-      {{/if}}
-    </div>
   {{else}}
     {{> tutorial}}
   {{/if}}
