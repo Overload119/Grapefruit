@@ -14,7 +14,7 @@ Template.registerHelper('profileBackgroundImage', function(user) {
   if (user.pictureUrl && user.pictureUrl.trim() !== '') {
     return 'background-image: url(\'' + user.pictureUrl + '\')';
   } else {
-    return 'background-image: url(\'/default_profile.jpg\')';
+    return 'background-image: url(\'/img/default_profile.jpg\')';
   }
 });
 
