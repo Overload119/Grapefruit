@@ -39,7 +39,7 @@ Meteor.methods({
     if (existingKeyword) {
       Keywords.update({ _id: existingKeyword.id }, { $inc: {count: 1} });
     } else {
-      Keywords.insert({ content: keyword });
+      Keywords.insert({ content: keyword, count: 1 });
     }
   }
 });

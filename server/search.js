@@ -24,6 +24,8 @@ Meteor.methods({
       throw new Meteor.Error('Search parameters did not contain `term`.');
     }
 
+    searchParams.term = searchParams.term.toLowerCase();
+
     var asyncDbLookup = function(callback) {
       _db.command({
         geoNear: 'users',

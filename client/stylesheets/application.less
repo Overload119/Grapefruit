@@ -11,6 +11,13 @@ body {
   line-height: normal;
 }
 
+a {
+  color: @linkBlue;
+  &:hover {
+    color: darken(@linkBlue, 10%);
+  }
+}
+
 button, textarea, input {
   outline: none;
 }

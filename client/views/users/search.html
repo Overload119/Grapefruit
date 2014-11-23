@@ -1,6 +1,13 @@
 <template name="usersSearch">
   <div class="top-bar">
     <input id="search-bar" class="search-bar" type="search" placeholder="Search for skills, work experience, role, or interests..."/>
+    {{#if suggestedKeywords}}
+      <div class="suggestions">
+        {{#each suggestedKeywords}}
+          <button class="suggestion" data-rawContent="{{ content }}">{{ formatKeyword content }}</button>
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
 
   {{#if isSearching}}
@@ -21,7 +28,14 @@
           {{/each}}
         </div>
       {{else}}
-        <p>Loading...</p>
+        {{#if isSearchLoading}}
+          <div>
+            {{> spinner}}
+          </div>
+        {{else}}
+          <p>No results were found for "{{ searchQuery }}".</p>
+          <p><i>Tip: Clicking one of the suggested keyword will guarentee a result.</i></p>
+        {{/if}}
       {{/if}}
     </div>
   {{/if}}
