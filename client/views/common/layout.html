@@ -1,0 +1,33 @@
+<template name="layout">
+  <div class="outer-wrapper">
+
+    {{#if shouldShowNav}}
+      <nav class="nav">
+        <div class="nav-left">
+          <a id="search-btn" class="{{toggleActiveRouteNav 'usersSearch'}}" href="{{ pathFor route='usersSearch' }}">
+            <i class="fa fa-search"></i>
+          </a>
+          <a id="inbox-btn" class="{{toggleActiveRouteNav 'messagesInbox'}}">
+            <i class="fa fa-envelope"></i>
+          </a>
+          <a id="discuss-btn" class="{{toggleActiveRouteNav 'discussionsIndex'}}">
+            <i class="fa fa-comments"></i>
+          </a>
+        </div>
+
+        <div class="nav-right">
+          <a id="profile-btn" class="button-with-image">
+            <div class="image" style="{{profileBackgroundImage currentUser}}"></div>
+            <span>{{ currentUser.firstName }}</span>
+          </a>
+        </div>
+      </nav>
+    {{/if}}
+
+    <div class="inner-wrapper template-{{pageName}}">
+      <div class="content-wrapper">
+        {{> yield}}
+      </div>
+    </div>
+  </div>
+</template>

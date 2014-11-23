@@ -1,0 +1,51 @@
+<template name="usersTutorial">
+  <div class="tutorial-screen">
+    <div class="scrolling-nav">
+      <div class="step">
+        <h1>Thanks for joining OrangePeel!</h1>
+        <h3>Let's get your profile setup. This will take less than 1 minute.</h3>
+        <button id="start-tutorial" class="continue-btn" data-next="1">Okay, let's do it.</button>
+      </div>
+
+      <div class="step">
+        <p>OrangePeel works because we use your approximate location to show you people nearby you can connect with.</p>
+        <button id="request-location" class="continue-btn" data-next="2">Use my location</button>
+        {{#if locationErrorMessage}}
+          <p class="error">{{ locationErrorMessage }}</p>
+        {{/if}}
+      </div>
+
+      <div class="step">
+        <p>Let's get to know you. Which roles do you identify most with?</p>
+        <ul id="listed-as-list" class="toggles">
+          <li data-which="designer">Designer</li>
+          <li data-which="developer">Developer</li>
+          <li data-which="business">Biz. Dev.</li>
+        </ul>
+        <p>You can pick as many or as little as you want. You can also change this later.</p>
+        <button class="continue-btn basic" data-next="3">Continue</button>
+      </div>
+
+      <div class="step">
+        <p>
+          Which kinds of people are you wanting to connect with?
+        </p>
+        <ul id="looking-for-list" class="toggles">
+          <li data-which="designer">Designer</li>
+          <li data-which="developer">Developer</li>
+          <li data-which="business">Biz. Dev.</li>
+        </ul>
+        <p>
+           This is just a preference - feel free to check none.
+           You'll never be locked out of who you can search for.
+        </p>
+        <button class="continue-btn basic" data-next="4">Continue</button>
+      </div>
+
+      <div class="step">
+        <p>Thanks! You can now begin using OrangePeel.</p>
+        <button class="exit-btn continue-btn">All done!</button>
+      </div>
+    </div>
+  </div>
+</template>

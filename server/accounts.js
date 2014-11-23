@@ -1,5 +1,22 @@
 var debug = Meteor.npmRequire('debug')('accounts');
 
+var populateKeywordsFromUser = function(user) {
+  // Populate keywords from their Skills/Interests/Job Experience.
+  _.each(user.interests, function(word) {
+    Meteor.call('insertOrUpdateKeyword', word);
+  });
+
+  _.each(user.skills, function(word) {
+    Meteor.call('insertOrUpdateKeyword', word);
+  });
+
+  _.each(user.jobExperience, function(word) {
+    Meteor.call('insertOrUpdateKeyword', word);
+  });
+
+  return user;
+}
+
 var updateLinkedInForUser = function(user, accessToken) {
   // Retrieve the fields we need from LinkedIn.
   // The LinkedIn package uses some defaults that aren't suitable for our needs.
@@ -76,6 +93,7 @@ Accounts.onCreateUser(function(options, user) {
 
   var accessToken = user.services.linkedin.accessToken;
   updateLinkedInForUser(user, accessToken);
+  populateKeywordsFromUser(user);
 
   return user;
 });

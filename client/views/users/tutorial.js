@@ -1,10 +1,10 @@
-Template.tutorial.helpers({
+Template.usersTutorial.helpers({
   locationErrorMessage: function() {
     return Session.get('tutorial-location-error-message');
   }
 });
 
-Template.tutorial.events({
+Template.usersTutorial.events({
   'click #start-tutorial': function(evt, template) {
     Session.set('tutorial-step', 1);
   },
@@ -15,8 +15,11 @@ Template.tutorial.events({
   'click .continue-btn.basic': function(evt, template) {
     Session.set('tutorial-step', +$(evt.currentTarget).data('next'));
   },
-  'click #looking-for-list li': function(evt, template) {
-    var el    = $(evt.currentTarget);
+  'click .toggles li': function(evt, template) {
+    var el          = $(evt.currentTarget);
+    var sessionKey  = el.closest('ul').attr('id') === 'listed-as-list' ?
+                      'tutorialListedAs' :
+                      'tutorialLookingFor'
 
     if (el.hasClass('selected')) {
       el.removeClass('selected');
@@ -24,31 +27,16 @@ Template.tutorial.events({
       el.addClass('selected');
     }
 
-    var result = $('#looking-for-list li.selected').map(function(i, domEl) {
-      return $(domEl).data('which');
-    });
+    var sessionResult = el.closest('ul').find('.selected').map(function(i, domEl) {
+      return domEl.dataset.which;
+    }).get();
 
-    Session.set('tutorialLookingFor', result);
-  },
-  'click #listed-as-list li': function(evt, template) {
-    var el    = $(evt.currentTarget);
-
-    if (el.hasClass('selected')) {
-      el.removeClass('selected');
-    } else {
-      el.addClass('selected');
-    }
-
-    var result = $('#listed-as-list li.selected').map(function(i, domEl) {
-      return $(domEl).data('which');
-    });
-
-    Session.set('tutorialListedAs', result);
+    Session.set(sessionKey, sessionResult);
   },
   'click .exit-btn': function(evt, template) {
     var newUserFields = {
-      lookingFor: Session.get('tutorialLookingFor'),
-      listedAs: Session.get('tutorialListedAs'),
+      // lookingFor: Session.get('tutorialLookingFor'),
+      // listedAs: Session.get('tutorialListedAs'),
       isTutorialComplete: true
     };
     Meteor.call('completeTutorial', newUserFields, function(err, result) {
@@ -61,7 +49,7 @@ Template.tutorial.events({
   }
 });
 
-Template.tutorial.created = function() {
+Template.usersTutorial.created = function() {
   this.getLocation = function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.getLocationCb.bind(this),
@@ -112,7 +100,7 @@ Template.tutorial.created = function() {
   }
 };
 
-Template.tutorial.rendered = function() {
+Template.usersTutorial.rendered = function() {
   this.windowHeight = $(window).height();
   this.$('.tutorial-screen').height( this.windowHeight );
   Session.setDefault('tutorial-step', 0);
