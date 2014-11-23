@@ -1,8 +1,23 @@
 <template name="usersShow">
   <div class="module">
-    <a href="{{ pathFor 'usersSearch' }}"><i class="fa fa-long-arrow-left"></i> Back to search</a>
+    <a href="javascript: history.back();"><i class="fa fa-long-arrow-left"></i> Back</a>
   </div>
+  <div class="profile-module">
+    <div class="profile-image" style="{{ largeProfileBackgroundImage this }}"></div>
+    <div class="inner">
+      <h1 class="name">{{ firstName }}</h1>
+      <h2 class="headline">{{ headline }}</h2>
+      <h3 class="summary">{{ summary }}</h3>
+    </div>
+    <div class="meta">
+      <p>last active {{ relativeTimeFromNow this.lastActiveAt }}</p>
+    </div>
+  </div>
+
   <div class="module">
-    <h1>{{ firstName }}</h1>
+    <div class="user-section">
+      <h3>{{ pluralize this.skills 'Skill' }}</h3>
+      <p>{{ this.skills }}</p>
+    </div>
   </div>
 </template>

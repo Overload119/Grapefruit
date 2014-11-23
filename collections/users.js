@@ -35,7 +35,8 @@ Schema.User = new SimpleSchema({
   interests: {
     type: [String]
   },
-  headline: { type: String },
+  headline: { type: String, optional: true },
+  summary: { type: String, optional: true },
   jobExperience: {
     type: [String],
     defaultValue: []
@@ -46,6 +47,7 @@ Schema.User = new SimpleSchema({
     unique: true,
   },
   pictureUrl: { type: String },
+  largePictureUrl: { type: String },
   location: {
     type: [Number],
     decimal: true,
@@ -77,3 +79,18 @@ Schema.User = new SimpleSchema({
 });
 
 Meteor.users.attachSchema(Schema.User);
+
+Meteor.users.allow({
+  update: function(userId, userProp, fieldNames, modifier) {
+    // Remove from the fields names the protected fields.
+    // If there is nothing left, then deny the update.
+    if (userId === Meteor.userId()) {
+      // Allow _.without to accept an array as an argument.
+      var validFieldsToUpdate = _.without.apply(_, [fieldNames].concat(Constants.PROTECTED_USER_FIELDS));
+      if (validFieldsToUpdate.length > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+});

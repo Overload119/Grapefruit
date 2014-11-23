@@ -17,6 +17,12 @@ var populateKeywordsFromUser = function(user) {
   return user;
 }
 
+Accounts.onLogin(function(options) {
+  Meteor.users.update({ _id: options.user._id }, {
+    $set: { lastActiveAt: new Date() }
+  });
+});
+
 var updateLinkedInForUser = function(user, accessToken) {
   // Retrieve the fields we need from LinkedIn.
   // The LinkedIn package uses some defaults that aren't suitable for our needs.
@@ -37,6 +43,11 @@ var updateLinkedInForUser = function(user, accessToken) {
   user.linkedInUrl    = linkedInFieldResponse.publicProfileUrl;
   user.email          = linkedInFieldResponse.emailAddress;
   user.pictureUrl     = linkedInFieldResponse.pictureUrl;
+  user.summary        = linkedInFieldResponse.summary;
+
+  if (linkedInFieldResponse.pictureUrls && linkedInFieldResponse.pictureUrls._total > 0) {
+    user.largePictureUrl = linkedInFieldResponse.pictureUrls.values[0];
+  }
 
   // The following fields are used when searching, and they are case-sensitive.
   // Therefore we bring them all to lowercase.
@@ -84,6 +95,7 @@ var updateLinkedInForUser = function(user, accessToken) {
   }
 
   user.jobExperience = jobExperienceArr;
+  user.lastActiveAt = new Date();
 
   return user;
 }

@@ -1,0 +1,41 @@
+.profile-module {
+  margin: 0 1em 1em 1em;
+  background: #FFF;
+  overflow: auto;
+  height: 10em;
+  .profile-image {
+    width: 10em;
+    height: 10em;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: left;
+  }
+  .inner {
+    float: left;
+    margin-left: 1em;
+    width: 25em;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .name {
+      margin: 0.25em 0;
+      font-size: 1.5em;
+    }
+    .headline {
+      color: @lightTextColor;
+      margin: 0;
+      font-size: 1.25em;
+      margin: 0 0 .5em 0;
+    }
+    .summary {
+      font-size: 1em;
+      color: @lightTextColor;
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+  .meta {
+    float: right;
+  }
+}

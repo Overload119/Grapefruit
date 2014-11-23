@@ -10,6 +10,39 @@ Template.registerHelper('formatName', function(user) {
   return result;
 });
 
+Template.registerHelper('pluralize', function(arrOrNumber, word) {
+  if (arrOrNumber instanceof Array) {
+    if (arrOrNumber.length === 0 || arrOrNumber.length > 1) {
+      return word + 's';
+    } else {
+      return word;
+    }
+  } else if (typeof arrOrNumber === 'number') {
+    if (arrOrNumber === 0 || arrOrNumber > 1) {
+      return word + 's';
+    } else {
+      return word;
+    }
+  } else {
+    return '???';
+  }
+});
+
+Template.registerHelper('relativeTimeFromNow', function(date) {
+  return moment(date).fromNow();
+});
+
+Template.registerHelper('largeProfileBackgroundImage', function(user) {
+  if (user.largePictureUrl && user.largePictureUrl.trim() !== '') {
+    return 'background-image: url(\'' + user.largePictureUrl + '\')';
+  } else if (user.pictureUrl && user.pictureUrl.trim() !== '') {
+    // Fallback to a smaller profile picture if possible.
+    return 'background-image: url(\'' + user.pictureUrl + '\')';
+  } else {
+    return 'background-image: url(\'/img/default_profile.jpg\')';
+  }
+});
+
 Template.registerHelper('profileBackgroundImage', function(user) {
   if (user.pictureUrl && user.pictureUrl.trim() !== '') {
     return 'background-image: url(\'' + user.pictureUrl + '\')';
