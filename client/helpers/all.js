@@ -10,6 +10,17 @@ Template.registerHelper('formatName', function(user) {
   return result;
 });
 
+Template.registerHelper('capitalizeEveryWord', function(tag) {
+  check(tag, String);
+
+  var result = '';
+  var words = tag.split(' ');
+  for (var i = 0; i < words.length; i++) {
+    result += words[i][0].toUpperCase() + words[i].substring(1) + ' ';
+  }
+  return result.trim();
+});
+
 Template.registerHelper('pluralize', function(arrOrNumber, word) {
   if (arrOrNumber instanceof Array) {
     if (arrOrNumber.length === 0 || arrOrNumber.length > 1) {

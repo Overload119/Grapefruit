@@ -1,8 +1,10 @@
 .profile-module {
   margin: 0 1em 1em 1em;
   background: #FFF;
-  overflow: auto;
   height: 10em;
+  overflow: hidden;
+  border: 1px solid @gray;
+  border-radius: 4px;
   .profile-image {
     width: 10em;
     height: 10em;
@@ -14,12 +16,13 @@
   .inner {
     float: left;
     margin-left: 1em;
-    width: 25em;
+    width: 50%;
     height: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding: 1em 0;
     .name {
-      margin: 0.25em 0;
+      margin: 0;
       font-size: 1.5em;
     }
     .headline {
@@ -33,9 +36,39 @@
       color: @lightTextColor;
       margin: 0;
       white-space: nowrap;
+      height: 5.5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .meta {
     float: right;
+    width: 10em;
+    padding: 1em 0;
+  }
+}
+
+.module {
+  .user-section {
+    clear: both;
+    .column {
+      float: left;
+      width: 50%;
+    }
+    h3 {
+      margin: 0 0 0.3em 0;
+    }
+    .tag-list {
+      padding: 0 0 0 0.5em;
+      margin: 0;
+      margin-bottom: 1em;
+      list-style: none;
+      list-style-type: square;
+      float: left;
+      max-height: 15em;
+      overflow: auto;
+      width: 100%;
+      border-left: 1px solid darken(@gray, 10%);
+    }
   }
 }

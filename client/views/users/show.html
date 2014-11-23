@@ -7,17 +7,62 @@
     <div class="inner">
       <h1 class="name">{{ firstName }}</h1>
       <h2 class="headline">{{ headline }}</h2>
-      <h3 class="summary">{{ summary }}</h3>
+      <p class="summary">{{ summary }}</p>
     </div>
     <div class="meta">
-      <p>last active {{ relativeTimeFromNow this.lastActiveAt }}</p>
+      <p>Last Active<br/><i class="fa fa-clock-o"></i> {{ relativeTimeFromNow this.lastActiveAt }}</p>
+      {{#if listedAs}}
+        <p>
+          Listed As<br/>
+          {{#each listedAs}}
+            <span>{{ capitalizeEveryWord this }}</span><br/>
+          {{/each}}
+        </p>
+      {{/if}}
+      {{#if lookingFor}}
+        <p>
+          Looking For<br/>
+          {{#each lookingFor}}
+            <span>{{ capitalizeEveryWord this }}</span><br/>
+          {{/each}}
+        </p>
+      {{/if}}
     </div>
   </div>
 
   <div class="module">
     <div class="user-section">
-      <h3>{{ pluralize this.skills 'Skill' }}</h3>
-      <p>{{ this.skills }}</p>
+      {{#if interests}}
+        <div class="column">
+          <h3>Interests</h3>
+          <ul class="tag-list">
+            {{#each interests}}
+              <li>{{ capitalizeEveryWord this }}</li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+      <div class="column">
+        {{#if skills}}
+          <h3>{{ pluralize skills 'Skill' }}</h3>
+          <ul class="tag-list">
+            {{#each skills}}
+              <li>{{ capitalizeEveryWord this }}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </div>
     </div>
+
+    {{#if jobExperience}}
+      <div class="user-section">
+        <h3>Worked At</h3>
+        <p>
+          {{#each jobExperience}}
+            <span>{{ capitalizeEveryWord this }}</span>&nbsp;
+          {{/each}}
+        </p>
+      </div>
+    {{/if}}
   </div>
 </template>
