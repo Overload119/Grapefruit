@@ -1,6 +1,6 @@
 <template name="usersSearch">
   <div class="top-bar">
-    <input id="search-bar" class="search-bar" type="search" placeholder="Search for skills, work experience, role, or interests..."/>
+    <input id="search-bar" class="search-bar" type="search" placeholder="Search for skills, work experience, role, or interests..." value="{{ searchQuery }}"/>
     {{#if suggestedKeywords}}
       <div class="suggestions">
         {{#each suggestedKeywords}}
