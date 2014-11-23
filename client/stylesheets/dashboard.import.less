@@ -15,8 +15,10 @@
 .module {
   background: @gray;
   padding: 1em;
-  margin: 1em;
-  width: 100%;
+  margin: 0 1em 1em 1em;
+  &:first-of-type {
+    margin-top: 1em;
+  }
 }
 
 .user-list-item {
@@ -67,9 +69,9 @@
 }
 
 .nav {
-  background-color: @orange;
+  background-color: @gray;
   height: 4em;
-  border-bottom: 1px solid darken(@orange, 5%);
+  border-bottom: 1px solid darken(@gray, 5%);
   .nav-left {
     float: left;
     margin-left: 0.55em;
@@ -87,17 +89,21 @@
   a {
     display: inline-block;
     background: white;
-    color: @orange;
+    color: @textColor;
     font-size: 2em;
     border: 0;
     border-radius: 4px;
     padding: 0.1em 0.5em;
-    .box-shadow(0 1px 1px 1px rgba(0, 0, 0, 0.1));
+    border: 1px solid darken(@gray, 5%);
+    &:hover {
+      .box-shadow(0 1px 1px 1px rgba(0, 0, 0, 0.1));
+    }
     &:active {
       .box-shadow(inset 0 1px 1px 1px rgba(0, 0, 0, 0.1));
     }
     &.active {
-      border-bottom: 2px solid @brightRed;
+      color: @orange;
+      border-bottom: 2px solid @orange;
     }
   }
   .button-with-image {
