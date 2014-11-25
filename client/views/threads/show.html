@@ -1,0 +1,17 @@
+<template name="threadsShow">
+  <div class="module">
+    <div class="chat-screen">
+      {{#if isChatEmpty this}}
+        <p class="empty-thread">This chat is currently empty.</p>
+      {{else}}
+        {{#each messages}}
+          {{> messagesBubble this}}
+        {{/each}}
+      {{/if}}
+    </div>
+    <div class="response-area">
+      <input class="message-content" type="text" placeholder="Enter your message here" />
+      <button class="send-message">Send</button>
+    </div>
+  </div>
+</template>

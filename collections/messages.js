@@ -3,12 +3,15 @@ Messages = new Meteor.Collection("messages");
 MessageSchema = new SimpleSchema({
   _id: {
     type: String,
-    optional: false
+    optional: true
   },
-  createdAt: { type: Date },
+  createdAt: { type: Date, defaultValue: new Date() },
   content: { type: String },
   fromId: { type: String },
-  toId: { type: String },
+  threadId: {
+    type: String,
+    optional: false
+  },
   read: { type: Boolean, defaultValue: false }
 });
 

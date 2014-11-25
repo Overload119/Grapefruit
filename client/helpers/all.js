@@ -50,7 +50,7 @@ Template.registerHelper('largeProfileBackgroundImage', function(user) {
     // Fallback to a smaller profile picture if possible.
     return 'background-image: url(\'' + user.pictureUrl + '\')';
   } else {
-    return 'background-image: url(\'/img/default_profile.jpg\')';
+    return 'background-image: url(\'/img/default_profile.png\')';
   }
 });
 
@@ -58,7 +58,7 @@ Template.registerHelper('profileBackgroundImage', function(user) {
   if (user.pictureUrl && user.pictureUrl.trim() !== '') {
     return 'background-image: url(\'' + user.pictureUrl + '\')';
   } else {
-    return 'background-image: url(\'/img/default_profile.jpg\')';
+    return 'background-image: url(\'/img/default_profile.png\')';
   }
 });
 

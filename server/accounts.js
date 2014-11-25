@@ -49,7 +49,7 @@ var updateLinkedInForUser = function(user, accessToken) {
     user.largePictureUrl = linkedInFieldResponse.pictureUrls.values[0];
   }
 
-  // The following fields are used when searching, and they are case-sensitive.
+  // The following fields are us`ed when searching, and they are case-sensitive.
   // Therefore we bring them all to lowercase.
 
   // Process interests - Interests come in a string - we want them in an array.

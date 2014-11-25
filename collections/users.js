@@ -46,8 +46,8 @@ Schema.User = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Email,
     unique: true,
   },
-  pictureUrl: { type: String },
-  largePictureUrl: { type: String },
+  pictureUrl: { type: String, optional: true },
+  largePictureUrl: { type: String, optional: true },
   location: {
     type: [Number],
     decimal: true,

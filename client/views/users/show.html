@@ -57,12 +57,20 @@
     {{#if jobExperience}}
       <div class="user-section">
         <h3>Worked At</h3>
-        <p>
+        <ul class="tag-list">
           {{#each jobExperience}}
-            <span>{{ capitalizeEveryWord this }}</span>&nbsp;
+            <li>{{ capitalizeEveryWord this }}</li>
           {{/each}}
-        </p>
+        </ul>
       </div>
     {{/if}}
+
+    <p>
+      <a href="{{ linkedInUrl }}" target="_blank">View {{ firstName }}'s full profile on LinkedIn <i class="fa fa-long-arrow-right"></i></a>
+    </p>
   </div>
+
+  <button class="send-message-cta">
+    <i class="fa fa-envelope"></i> Send {{firstName}} a Message
+  </button>
 </template>

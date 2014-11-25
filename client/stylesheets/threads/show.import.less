@@ -1,0 +1,64 @@
+.chat-screen {
+  border: 1px solid darken(@gray, 10%);
+  background: white;
+  padding: 1em;
+  height: 30em;
+  overflow: auto;
+  overflow-x: hidden;
+  .bubble-left {
+    float: left;
+    background-color: lighten(@badge, 10%);
+    .arrow(6px, lighten(@badge, 10%), left, 50%, 0px, lighten(@badge, 10%));
+    &.loading {
+      .translate(-100px, 0);
+    }
+  }
+  .bubble-right {
+    float: right;
+    background-color: @badge;
+    .arrow(6px, @badge, right, 50%, 0px, @badge);
+    &.loading {
+      .translate(100px, 0);
+    }
+  }
+  .bubble-right, .bubble-left {
+    clear: both;
+    max-width: 50%;
+    padding: 8px;
+    border-radius: 4px;
+    position: relative;
+    opacity: 1;
+    .translate(0, 0);
+    .transition-transform(500ms, opacity 500ms);
+    &.loading {
+      opacity: 0;
+      .transition-transform(500ms, opacity 500ms);
+    }
+  }
+  .empty-thread {
+    color: darken(@gray, 10%);
+    font-style: italic;
+  }
+}
+
+.response-area {
+  margin-top: 1em;
+  input {
+    width: 90%;
+    padding: 0.5em;
+    border: 1px solid darken(@gray, 10%);
+  }
+  .send-message {
+    width: 4em;
+    text-align: center;
+    float: right;
+    padding: 0.5em;
+    border: 1px solid @orange;
+    background: white;
+    color: @orange;
+    &:active {
+      color: #FFF;
+      background: @orange;
+    }
+  }
+}
