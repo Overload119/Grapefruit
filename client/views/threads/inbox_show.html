@@ -1,0 +1,12 @@
+<template name="threadsInboxShow">
+  <a class="thread user-list-item" href="{{ pathFor route='threadsShow' }}">
+    <div class="profile-image" style="{{ threadThumbnail }}"></div>
+    <div class="item-details">
+      <p class="lead">{{ threadTitle }}</p>
+      <p class="sublead">{{ lastThreadMessage }}</p>
+    </div>
+    <div class="profile-meta">
+      <p class="meta">{{ relativeTimeAgo lastThreadActiveDate }}</p>
+    </div>
+  </a>
+</template>

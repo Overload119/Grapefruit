@@ -43,6 +43,11 @@ Template.registerHelper('relativeTimeFromNow', function(date) {
   return moment(date).fromNow();
 });
 
+Template.registerHelper('relativeTimeAgo', function(date) {
+  // I like the verbosity - it's a bit more clear.
+  return moment(date).fromNow();
+});
+
 Template.registerHelper('largeProfileBackgroundImage', function(user) {
   if (user.largePictureUrl && user.largePictureUrl.trim() !== '') {
     return 'background-image: url(\'' + user.largePictureUrl + '\')';

@@ -17,12 +17,12 @@
           {{#each searchResults}}
             <a class="user-list-item" href="{{ pathFor route='usersShow'}}">
               <div class="profile-image" style="{{ profileBackgroundImage this }}"></div>
-              <div class="profile-details">
-                <p class="name">{{ firstName }}</p>
-                <p class="title">{{ headline }}</p>
+              <div class="item-details">
+                <p class="lead">{{ firstName }}</p>
+                <p class="sublead">{{ headline }}</p>
               </div>
               <div class="profile-meta">
-                <p class="distance">{{ distanceAwayInKm distance }}</p>
+                <p class="meta">{{ distanceAwayInKm distance }}</p>
               </div>
             </a>
           {{/each}}

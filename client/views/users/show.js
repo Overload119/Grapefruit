@@ -3,8 +3,7 @@ Template.usersShow.events({
     Meteor.call('startOrContinueThreadWithUser', template.data._id, function(err, result) {
       // The result is a thread ID.
       Router.go('threadsShow', {
-        threadId: result._id,
-        userId: template.data._id
+        _id: result._id
       });
     });
   }

@@ -5,6 +5,7 @@ Template.threadsShow.helpers({
       sort: { createdAt: -1 }, limit: Session.get('messageLimit')
     }).fetch();
 
+    // Get the latest messages, but sort them ASC to render correctly.
     return _.sortBy(messages, function(message) { return message.createdAt });
   },
   isChatEmpty: function(thread) {

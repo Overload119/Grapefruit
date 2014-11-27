@@ -30,6 +30,46 @@ ThreadsSchema = new SimpleSchema({
 Threads.attachSchema(ThreadsSchema);
 
 Meteor.methods({
+  currentUserInbox: function() {
+    // Constructs an array of Inbox items.
+    // An Inbox item is an object that contains:
+    // { user: { name, image }, thread: { _id }, lastMessageContent: {} }
+
+    if (!this.userId)
+      throw new Meteor.Error('You must be logged in to do that.');
+
+    var threads = Threads.find({ memberId: this.userId, isPrivate: true }).fetch();
+    var results = [];
+
+    // For each thread, find the last message and the recipient.
+    _.each(threads, function(thread) {
+
+      var entry = {};
+
+      // It's possible that a thread was created but has no messages.
+      var lastMessage = Messages.find({ threadId: thread.id }, {
+        sort: { createdAt: -1 }, limit: 1
+      }).fetch();
+
+      if (lastMessage) {
+        entry.lastMessageContent = lastMessage.content;
+      }
+
+      entry.thread = thread;
+
+      var recipientId = _.without(thread.memberIds, this.userId)[0];
+
+      if (recipientId) {
+        user = Users.findOne(recipientId, { fields: Constants.PUBLIC_USER_FIELDS });
+        entry.user = user;
+      }
+
+      results.push(entry);
+
+    }.bind(this));
+
+    return results;
+  },
   sendMessageToThread: function(threadId, message) {
     check(threadId, String);
     check(message, String);
