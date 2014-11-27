@@ -29,18 +29,20 @@ Meteor.publish('userPrivateThreads', function() {
 
 Meteor.publish('lastMessagesInThreads', function(threadIds) {
   if (this.userId) {
-    var messages = Messages.find({ threadId: { $in: threadIds }});
-
     // We found the messages. Now retrieve the last ones per thread.
+    var lastMessageIds = [];
     var messageCursors = [];
     _.each(threadIds, function(threadId) {
-      var lastMessage = Messages.find({ threadId: threadId }, {
+      var lastMessage = Messages.findOne({ threadId: threadId }, {
         sort: { createdAt: -1 }, limit: 1
       });
-      messageCursors.push(lastMessage);
+
+      if (lastMessage) {
+        lastMessageIds.push(lastMessage._id);
+      }
     });
 
-    return messageCursors;
+    return Messages.find({ _id: { $in: lastMessageIds }});
   }
   return [];
 });
