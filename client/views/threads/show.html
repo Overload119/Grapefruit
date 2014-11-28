@@ -1,9 +1,16 @@
 <template name="threadsShow">
   <div class="module">
     <div class="chat-screen">
-      {{#if isChatEmpty this}}
+      {{#if isChatEmpty}}
         <p class="empty-thread">This chat is currently empty.</p>
       {{else}}
+        {{#if hasMoreMessages}}
+          {{#if moreMessagesLoading}}
+            <div class="more-messages">Loading...</div>
+          {{else}}
+            <button id="more-message-btn" class="more-messages">Load More Messages</button>
+          {{/if}}
+        {{/if}}
         {{#each messages}}
           {{> messagesBubble this}}
         {{/each}}

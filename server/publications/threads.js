@@ -11,10 +11,15 @@ Meteor.publish('privateThread', function(threadId) {
   return [];
 });
 
-// TODO - as the volume of messages gets larger, this will get very slow.
-Meteor.publish('privateThreadMessages', function(threadId) {
+Meteor.publish('privateThreadMessages', function(threadId, limit) {
   if (this.userId) {
-    return Messages.find({ threadId: threadId });
+    if (!limit) {
+      limit = Constants.DEFAULT_MESSAGES_LIMIT;
+    }
+
+    return Messages.find({ threadId: threadId }, {
+      sort: { createdAt: -1 }, limit: limit
+    });
   }
   return [];
 });

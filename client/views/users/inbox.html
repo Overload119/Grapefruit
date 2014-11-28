@@ -1,16 +1,12 @@
 <template name="usersInbox">
   <div class="module">
     <div class="module-title">Your Inbox</div>
-  </div>
-  <div class="module">
     {{#if hasThreads}}
       {{#each threads}}
         {{> threadsInboxShow this }}
       {{/each}}
     {{else}}
-      <div class="module">
-        <p>You have no messages.</p>
-      </div>
+      <p>You have no messages... yet.</p>
     {{/if}}
   </div>
 </template>
