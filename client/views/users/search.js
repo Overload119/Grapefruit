@@ -51,10 +51,18 @@ Template.usersSearch.events({
   },
   'keyup #search-bar': function(evt, template) {
     var currentTerms = $(evt.currentTarget).val();
-    var suggestedTermIds = template.keywordFuzzySearch.search(currentTerms);
 
-    var suggestedKeywords = Keywords.find({ _id: { $in: suggestedTermIds } } ).fetch();
-    Session.set('suggestedKeywords', suggestedKeywords);
+    if (currentTerms.length === 0) {
+      Session.set('suggestedKeywords', []);
+      return;
+    }
+
+    if (currentTerms.length > 2) {
+      // Only start fuzzy search after 2 character to make it more responsive.
+      var suggestedTermIds = template.keywordFuzzySearch.search(currentTerms);
+      var suggestedKeywords = Keywords.find({ _id: { $in: suggestedTermIds } } ).fetch();
+      Session.set('suggestedKeywords', suggestedKeywords);
+    }
 
     // If they hit Enter, start a search.
     if (evt.keyCode === 13) {

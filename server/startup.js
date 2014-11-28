@@ -11,6 +11,7 @@ debug_applyFixture = function() {
       var nudgeValueLng = Math.random() * 0.4 - 0.2;
 
       user._id = Random.id();
+      user.firstName = user.firstName + ' ' + Math.round(Math.random() * 100);
       user.services = {};
       user.email = 'budgeneration+' + i + '@gmail.com';
       user.location = [ lat + nudgeValueLat, lng + nudgeValueLng ];
