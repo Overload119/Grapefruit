@@ -3,6 +3,7 @@ debug_applyFixture = function() {
   // If there is only 1 person, we can duplicate by nudging its values.
   if (userCount === 1) {
     var user = Meteor.users.findOne();
+    var originalFirstName = user.firstName;
     for (var i = 0; i < 30; i++) {
       var lat = user.location[0];
       var lng = user.location[1];
@@ -11,7 +12,7 @@ debug_applyFixture = function() {
       var nudgeValueLng = Math.random() * 0.4 - 0.2;
 
       user._id = Random.id();
-      user.firstName = user.firstName + ' ' + Math.round(Math.random() * 100);
+      user.firstName = originalFirstName + ' ' + Math.round(Math.random() * 100);
       user.services = {};
       user.email = 'budgeneration+' + i + '@gmail.com';
       user.location = [ lat + nudgeValueLat, lng + nudgeValueLng ];

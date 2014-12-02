@@ -12,7 +12,6 @@ accounts-password
 aldeed:simple-schema
 aldeed:collection2
 mrt:moment
-pauli:accounts-linkedin
 service-configuration
 iron:router
 meteorhacks:kadira
@@ -22,4 +21,5 @@ meteorhacks:npm
 
 npm-container
 sacha:spin
-
+meteor-accounts-linkedin
+meteor-linkedin

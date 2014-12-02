@@ -1,10 +1,14 @@
 Template.frontpage.events({
   'click #connect': function(evt, template) {
     var linkedInOptions = {
-      requestPermissions: ['r_emailaddress', 'r_fullprofile']
+      requestPermissions: ['r_emailaddress', 'r_fullprofile'],
+      loginStyle: 'redirect'
     };
+
     Meteor.loginWithLinkedIn(linkedInOptions, function(e) {
-      if (!e) {
+      if (e) {
+        alert('Oh no! You weren\'t logged in. Here\'s why:\n\n' + e.message);
+      } else {
         Router.go('/');
       }
     });
