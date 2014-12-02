@@ -35,8 +35,8 @@ Template.usersTutorial.events({
   },
   'click .exit-btn': function(evt, template) {
     var newUserFields = {
-      // lookingFor: Session.get('tutorialLookingFor'),
-      // listedAs: Session.get('tutorialListedAs'),
+      lookingFor: Session.get('tutorialLookingFor'),
+      listedAs: Session.get('tutorialListedAs'),
       isTutorialComplete: true
     };
     Meteor.call('completeTutorial', newUserFields, function(err, result) {

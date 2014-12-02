@@ -1,0 +1,71 @@
+.nav {
+  background-color: lighten(@baseColor, 1%);
+  height: 4em;
+  border-bottom: 2px solid @baseBorderColor;
+  .nav-left {
+    float: left;
+    height: 100%;
+    a {
+      border: 0;
+      border-right: 1px solid @baseBorderColor;
+    }
+  }
+  .nav-right {
+    float: right;
+    height: 100%;
+  }
+  a {
+    display: block;
+    float: left;
+    height: 100%;
+    font-size: 2em;
+    line-height: 1.75em;
+    border: 0;
+    padding: 0.1em 0.5em;
+    color: @baseTextColor;
+    &:hover {
+      color: @accentColor;
+    }
+    &:active {
+      .box-shadow(inset 0 1px 1px 1px rgba(0, 0, 0, 0.1));
+      background: darken(@baseColor, 1%);
+    }
+    &.active {
+      color: @accentColor;
+      border-bottom: 2px solid @accentColor;
+    }
+  }
+  .button-with-image {
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-left: 1px solid @baseBorderColor;
+    .image {
+      float: left;
+      width: 1.5em;
+      height: 1.5em;
+      margin: 0.25em;
+      display: inline-block;
+      background-color: @gray;
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    span {
+      float: right;
+      font-size: 0.6em;
+      max-width: 120px;
+      height: 1.5em;
+      line-height: 1.5em;
+      margin-top: 1em;
+      padding: 0 0.5em;
+      padding-left: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &:hover {
+      color: @accentColor;
+    }
+  }
+}

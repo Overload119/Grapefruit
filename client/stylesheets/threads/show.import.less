@@ -1,22 +1,21 @@
 .chat-screen {
-  border: 1px solid darken(@gray, 10%);
+  border: 1px solid @baseBorderColor;
   background: white;
   padding: 1em;
-  height: 30em;
+  height: 25em;
   overflow: auto;
   overflow-x: hidden;
   .bubble-left {
     float: left;
     background-color: lighten(@badge, 10%);
-    .arrow(6px, lighten(@badge, 10%), left, 50%, 0px, lighten(@badge, 10%));
+    .arrow(6px, #FFF, left, 50%, 1px, @baseBorderColor);
     &.loading {
       .translate(-100px, 0);
     }
   }
   .bubble-right {
     float: right;
-    background-color: @badge;
-    .arrow(6px, @badge, right, 50%, 0px, @badge);
+    .arrow(6px, #FFF, right, 50%, 1px, @baseBorderColor);
     &.loading {
       .translate(100px, 0);
     }
@@ -28,6 +27,7 @@
     border-radius: 4px;
     position: relative;
     opacity: 1;
+    border: 1px solid @baseBorderColor;
     .translate(0, 0);
     .transition-transform(500ms, opacity 500ms);
     &.loading {
@@ -58,12 +58,12 @@
 .response-area {
   margin-top: 1em;
   input {
-    width: 85%;
+    width: 75%;
     padding: 0.5em;
-    border: 1px solid darken(@gray, 10%);
+    border: 1px solid @baseBorderColor;
   }
   .send-message {
-    width: 4em;
+    width: 20%;
     text-align: center;
     float: right;
     padding: 0.5em;

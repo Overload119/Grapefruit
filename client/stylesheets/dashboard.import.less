@@ -1,7 +1,7 @@
 .top-bar {
   margin: 1em;
   padding: 1em;
-  background: @gray;
+  background: @baseColor;
   border-radius: 4px;
   .search-bar {
     height: 3em;
@@ -9,6 +9,7 @@
     width: 100%;
     border: 0;
     padding: 0 1em;
+    border: 1px solid @baseBorderColor;
   }
   .suggestions {
     padding: 1em 0 0 0;
@@ -28,7 +29,7 @@
 .user-list-item {
   padding: 1em;
   display: block;
-  border: 1px solid darken(@gray, 3%);
+  border: 1px solid @baseBorderColor;
   background: #FFF;
   border-bottom: 0;
   height: 5em;
@@ -42,16 +43,17 @@
   }
   &:last-child {
     border-radius: 0 0 4px 4px;
-    border-bottom: 1px solid darken(@gray, 3%);
+    border-bottom: 1px solid @baseBorderColor;
   }
   &:only-child {
     border-radius: 4px;
+    border-bottom: 1px solid @baseBorderColor;
   }
   .profile-image {
     width: 3em;
     height: 100%;
     background-size: contain;
-    background-color: @gray;
+    background-color: @baseColor;
     background-repeat: no-repeat;
     float: left;
     margin-right: 1em;
@@ -76,78 +78,16 @@
   }
 }
 
-.nav {
-  background-color: @gray;
-  height: 4em;
-  border-bottom: 1px solid darken(@gray, 5%);
-  .nav-left {
-    float: left;
-    margin-left: 0.55em;
-    a {
-      margin-right: 10px;
-    }
-  }
-  .nav-right {
-    float: right;
-    margin-right: 0.55em;
-  }
-  .nav-left, .nav-right {
-    margin-top: 0.55em;
-  }
-  a {
-    display: inline-block;
-    background: white;
-    color: lighten(@textColor, 10%);
-    font-size: 2em;
-    border: 0;
-    border-radius: 4px;
-    padding: 0.1em 0.5em;
-    border: 1px solid darken(@gray, 5%);
-    &:hover {
-      .box-shadow(0 1px 1px 1px rgba(0, 0, 0, 0.1));
-      color: @textColor;
-    }
-    &:active {
-      .box-shadow(inset 0 1px 1px 1px rgba(0, 0, 0, 0.1));
-    }
-    &.active {
-      color: @orange;
-      border-bottom: 2px solid @orange;
-    }
-  }
-  .button-with-image {
-    padding: 0;
-    overflow: hidden;
-    .image {
-      float: left;
-      width: 1.5em;
-      height: 1.5em;
-      display: inline-block;
-      background-color: @gray;
-      background-position: center center;
-      background-size: contain;
-    }
-    span {
-      float: right;
-      font-size: 0.6em;
-      line-height: 1.5em;
-      padding: 0.53em 1em;
-      max-width: 120px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: @textColor;
-    }
-  }
-}
-
 .search-results {
   margin: 0 1em 1em 1em;
-  background: @gray;
+  background: @baseColor;
   border-radius: 4px;
   padding: 1em;
   .search-results-container {
     max-height: 40em;
     overflow: auto;
+    @media (min-device-width : 320px) and (max-device-width : 480px) {
+      max-height: 19em;
+    }
   }
 }

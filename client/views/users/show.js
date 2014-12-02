@@ -1,3 +1,14 @@
+Template.usersShow.helpers({
+  showSummaryOrPlaceholder: function(summaryText) {
+    if (summaryText) {
+      var textLines = summaryText.split('\n');
+      return textLines.join('<br/>');
+    } else {
+      return this.firstName + ' has not filled out their profile yet.';
+    }
+  }
+});
+
 Template.usersShow.events({
   'click .send-message-cta': function(event, template) {
     Meteor.call('startOrContinueThreadWithUser', template.data._id, function(err, result) {
