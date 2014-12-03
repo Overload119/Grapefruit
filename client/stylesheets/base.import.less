@@ -10,19 +10,22 @@ body {
 .outer-wrapper {
   width: 640px;
   margin: 0 auto;
-  background: #FFF;
-  border: 1px solid @baseBorderColor;
   position: absolute;
   top: 0px;
   left: 50%;
   margin-left: -320px;
   height: 100%;
-  overflow: hidden;
   @media (min-device-width : 320px) and (max-device-width : 480px) {
     width: 100%;
     margin: 0;
     left: 0;
   }
+}
+
+.content-wrapper {
+  overflow: auto;
+  background: #FFF;
+  border: 1px solid @baseBorderColor;
 }
 
 .module {

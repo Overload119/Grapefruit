@@ -50,7 +50,7 @@
     position: relative;
     .profile-tags {
       list-style: none;
-      margin: 0 0 1em 0;
+      margin: 0 0 .5em 0;
       padding: 0;
       overflow: hidden;
       li {
@@ -62,15 +62,6 @@
         margin-right: .5em;
       }
     }
-    .summary {
-      font-size: .8em;
-      color: @lightTextColor;
-      margin: 0;
-      white-space: nowrap;
-      height: 5.5em;
-      overflow: auto;
-      text-overflow: ellipsis;
-    }
     .meta-bar {
       width: 100%;
       height: 1.5em;
@@ -80,25 +71,20 @@
       color: @gray;
     }
   }
-  .meta {
-    float: right;
-    width: 10em;
-    padding: 1em 0;
-  }
 }
 
 .module {
   .user-section {
     clear: both;
-    .column {
-      float: left;
-      width: 50%;
-    }
+    margin-bottom: 1em;
     h3 {
       margin: 0 0 0.3em 0;
+      border-bottom: 1px solid @gray;
+      font-size: 1.25em;
+      color: darken(@baseTextColor, 3%);
     }
     .tag-list {
-      padding: 0 0 0 0.5em;
+      padding: 0;
       margin: 0;
       margin-bottom: 1em;
       list-style: none;
@@ -107,7 +93,16 @@
       max-height: 15em;
       overflow: auto;
       width: 100%;
-      border-left: 1px solid darken(@gray, 10%);
+      li {
+        width: 50%;
+        float: left;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        &:hover {
+          white-space: normal;
+        }
+      }
     }
   }
 }

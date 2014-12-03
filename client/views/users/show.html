@@ -17,55 +17,51 @@
           {{/each}}
         </ul>
       {{/if}}
-      <p class="summary">{{{ showSummaryOrPlaceholder summary }}}</p>
+
+      {{#if lookingFor}}
+        <p>Looking For:</p>
+        <ul class="profile-tags">
+          {{#each lookingFor}}
+            <li>{{ capitalizeEveryWord this }}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
+
       <div class="meta-bar">
         <span><i class="fa fa-clock-o"></i> Last active {{ relativeTimeFromNow lastActiveAt }}</span>
       </div>
-    </div>
-    <div class="meta">
-
-      {{#if listedAs}}
-        <p>
-          Listed As<br/>
-          {{#each listedAs}}
-            <span>{{ capitalizeEveryWord this }}</span><br/>
-          {{/each}}
-        </p>
-      {{/if}}
-      {{#if lookingFor}}
-        <p>
-          Looking For<br/>
-          {{#each lookingFor}}
-            <span>{{ capitalizeEveryWord this }}</span><br/>
-          {{/each}}
-        </p>
-      {{/if}}
     </div>
   </div>
 
   <div class="module">
     <div class="user-section">
-      {{#if interests}}
-        <div class="column">
-          <h3>Interests</h3>
-          <ul class="tag-list">
-            {{#each interests}}
-              <li>{{ capitalizeEveryWord this }}</li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}}
-      <div class="column">
-        {{#if skills}}
-          <h3>{{ pluralize skills 'Skill' }}</h3>
-          <ul class="tag-list">
-            {{#each skills}}
-              <li>{{ capitalizeEveryWord this }}</li>
-            {{/each}}
-          </ul>
-        {{/if}}
-      </div>
+      <h3>Summary</h3>
+      <p class="summary">
+        {{{ showSummaryOrPlaceholder summary }}}
+      </p>
     </div>
+
+    {{#if interests}}
+      <div class="user-section">
+        <h3>Interests</h3>
+        <ul class="tag-list">
+          {{#each interests}}
+            <li>{{ capitalizeEveryWord this }}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+
+    {{#if skills}}
+      <div class="user-section">
+        <h3>{{ pluralize skills 'Skill' }}</h3>
+        <ul class="tag-list">
+          {{#each skills}}
+            <li>{{ capitalizeEveryWord this }}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
 
     {{#if jobExperience}}
       <div class="user-section">
