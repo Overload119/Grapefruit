@@ -71,6 +71,10 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     defaultValue: false
   },
+  isSubscribedToMsgNotif: {
+    type: Boolean,
+    defaultValue: true
+  },
   services: {
     type: Object,
     optional: true,
