@@ -15,7 +15,10 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     defaultValue: false,
   },
-  createdAt: { type: Date },
+  createdAt: {
+    type: Date,
+    defaultValue: new Date()
+  },
   twitterUrl: {
     type: String,
     optional: true
