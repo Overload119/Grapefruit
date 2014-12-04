@@ -47,13 +47,8 @@
     z-index: 2;
     right: 0px;
     bottom: 0px;
-    background: @linkBlue;
-    color: #FFF;
     border-radius: 4px 0 0 0;
     padding: .25em .5em;
-    &:hover {
-      background: darken(@linkBlue, 5%);
-    }
   }
   &.editing {
     background: #FFF;
@@ -65,6 +60,76 @@
     }
     .preview {
       display: none;
+    }
+  }
+}
+
+.user-option-list {
+  overflow: hidden;
+  .column {
+    float: left;
+    width: 45%;
+  }
+  .column-divider {
+    float: left;
+    width: 10%;
+    height: 1px;
+  }
+  .list-card {
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid @baseBorderColor;
+    background: #FFF;
+    .card-bar {
+      border-bottom: 1px solid @baseBorderColor;
+      box-shadow: 0 0 1px 1px fade(@baseBorderColor, 50);
+      .tag-textbox {
+        padding: .5em;
+        font-weight: bold;
+        @media (min-device-width : 320px) and (max-device-width : 480px) {
+          width: 100%;
+        }
+      }
+      .tag-submit {
+        border-radius: 4px;
+        @media (min-device-width : 320px) and (max-device-width : 480px) {
+          width: 100%;
+        }
+      }
+    }
+    .list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      overflow: auto;
+      height: 10em;
+      li {
+        padding: .5em;
+        float: left;
+        width: 100%;
+        clear: both;
+        border-bottom: 1px solid @baseBorderColor;
+        .transition(color 500ms);
+        &.appear {
+          color: @linkColor;
+        }
+        &.empty-list {
+          font-syle: italic;
+        }
+        span {
+          width: ~"calc(100% - 1.75em)";
+          float: left;
+        }
+        .remove-tag-btn {
+          width: 1.75em;
+          float: right;
+          border-radius: 4px;
+          background: @errorColor;
+          &:hover {
+            background: darken(@errorColor, 4%);
+          }
+        }
+      }
     }
   }
 }

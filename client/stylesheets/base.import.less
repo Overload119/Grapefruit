@@ -25,6 +25,14 @@ button, textarea, input {
   border: 0;
 }
 
+button {
+  color: #FFF;
+  background: @buttonColor;
+  &:hover {
+    background: lighten(@buttonColor, 5%);
+  }
+}
+
 .outer-wrapper {
   width: 640px;
   margin: 0 auto;

@@ -30,4 +30,55 @@
       <textarea></textarea>
     </div>
   </div>
+
+  <div class="module">
+    <p>Your Skills and Interests</p>
+    <div class="user-option-list">
+      <div class="column">
+
+        <div class="list-card" data-user-key="skills">
+          <div class="card-bar">
+            <input class="tag-textbox" type="text" max-length="20" placeholder="Add skills" />
+            <button class="tag-submit">Add <i class="fa fa-plus"></i></button>
+          </div>
+          <ul class="list">
+            {{#if skills}}
+              {{#each skills}}
+                <li>
+                  <span>{{capitalizeEveryWord this}}</span>
+                  <button class="remove-tag-btn"><i class="fa fa-remove"></i></button>
+                </li>
+              {{/each}}
+            {{else}}
+              <li class="empty-list"><i class="fa fa-exclamation"></i> This list is empty.</li>
+            {{/if}}
+          </ul>
+        </div>
+
+      </div>
+      <div class="column-divider"></div>
+      <div class="column">
+
+        <div class="list-card" data-user-key="interests">
+          <div class="card-bar">
+            <input class="tag-textbox" type="text" max-length="20" placeholder="Add interests" />
+            <button class="tag-submit">Add <i class="fa fa-plus"></i></button>
+          </div>
+          <ul class="list">
+            {{#if interests}}
+              {{#each interests}}
+                <li>
+                  <span>{{capitalizeEveryWord this}}</span>
+                  <button class="remove-tag-btn" data-tag="{{this}}"><i class="fa fa-remove"></i></button>
+                </li>
+              {{/each}}
+            {{else}}
+              <li class="empty-list"><i class="fa fa-exclamation"></i> This list is empty.</li>
+            {{/if}}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
