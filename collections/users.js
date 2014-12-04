@@ -91,9 +91,14 @@ Meteor.users.allow({
   update: function(userId, userProp, fieldNames, modifier) {
     // Remove from the fields names the protected fields.
     // If there is nothing left, then deny the update.
+    console.log(userId);
     if (userId === Meteor.userId()) {
       // Allow _.without to accept an array as an argument.
+      console.log(fieldNames);
+      console.log(modifier);
+      console.log(userProp);
       var validFieldsToUpdate = _.without.apply(_, [fieldNames].concat(Constants.PROTECTED_USER_FIELDS));
+      console.log(validFieldsToUpdate);
       if (validFieldsToUpdate.length > 0) {
         return true;
       }

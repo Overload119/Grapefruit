@@ -16,7 +16,7 @@
         </div>
 
         <div class="nav-right">
-          <a id="profile-btn" class="button-with-image">
+          <a id="profile-btn" class="button-with-image {{toggleActiveRouteNav 'usersSettings'}}" href="{{pathFor route='usersSettings'}}">
             <div class="image" style="{{profileBackgroundImage currentUser}}"></div>
             <span>{{ currentUser.firstName }}</span>
           </a>

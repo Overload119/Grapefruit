@@ -10,6 +10,28 @@ Template.registerHelper('formatName', function(user) {
   return result;
 });
 
+Template.registerHelper('simpleFormat', function(text, placeholder) {
+
+  if ((typeof(text) === 'undefined' || text.length === 0) && placeholder) {
+    // If there is no valid text, then return the placeholder.
+    return placeholder;
+  }
+
+  var paragraphs = text.split('\n\n');
+  var paragraphTags = _.map(paragraphs, function(paragraph) {
+    var lines = paragraph.split('\n');
+    if (lines.length > 1) {
+      return lines.join('<br/>');
+    } else {
+      return lines.join('');
+    }
+  });
+
+  return _.map(paragraphTags, function(paragraph) {
+    return '<p>' + paragraph + '</p>';
+  }).join('');
+});
+
 Template.registerHelper('capitalizeEveryWord', function(tag) {
   check(tag, String);
 

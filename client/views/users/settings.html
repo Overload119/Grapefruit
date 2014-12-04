@@ -1,5 +1,33 @@
 <template name="usersSettings">
   <div class="module">
-    <p>Welcome to your settings. It isn't working it</p>
+    <h1>Hey, {{ firstName }} {{lastName}}.</h1>
+    <p>This is your dashboard where you can update your public profile or configuring your settings.</p>
+  </div>
+
+  <div class="module">
+    <p>Select the kind of role you identify with.</p>
+    <div id="listedAsOptions" class="role-options" data-user-key="listedAs">
+      <div class="role {{maybeActiveLA 'designer'}}" data-role="designer">Designer</div>
+      <div class="role {{maybeActiveLA 'developer'}}" data-role="developer">Developer</div>
+      <div class="role {{maybeActiveLA 'business'}}" data-role="business">Biz. Dev.</div>
+    </div>
+    <p>Select the kinds of roles you're looking for.</p>
+    <div id="lookingForOptions" class="role-options" data-user-key="lookingFor">
+      <div class="role {{maybeActiveLF 'designer'}}" data-role="designer">Designer</div>
+      <div class="role {{maybeActiveLF 'developer'}}" data-role="developer">Developer</div>
+      <div class="role {{maybeActiveLF 'business'}}" data-role="business">Biz. Dev.</div>
+    </div>
+  </div>
+
+  <div class="module">
+    <p>Your Summary</p>
+    <div id="summaryPanel" class="editable-textarea">
+      <div class="preview">{{{ simpleFormat summary }}}</div>
+      <button>
+        <span class="icon"><i class="fa fa-edit"></i></span>
+        <span class="text">Edit</span>
+      </button>
+      <textarea></textarea>
+    </div>
   </div>
 </template>

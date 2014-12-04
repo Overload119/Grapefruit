@@ -7,6 +7,24 @@ body {
   }
 }
 
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: normal;
+  line-height: normal;
+}
+
+a {
+  color: @linkColor;
+  &:hover {
+    color: darken(@linkColor, 10%);
+  }
+}
+
+button, textarea, input {
+  outline: none;
+  border: 0;
+}
+
 .outer-wrapper {
   width: 640px;
   margin: 0 auto;
