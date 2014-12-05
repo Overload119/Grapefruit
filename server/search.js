@@ -25,6 +25,7 @@ Meteor.methods({
     }
 
     searchParams.term = searchParams.term.toLowerCase();
+    var userId = this.userId;
 
     var asyncDbLookup = function(callback) {
       _db.command({
@@ -32,6 +33,7 @@ Meteor.methods({
         near: [searchParams.lat, searchParams.lng],
         limit: 30,
         query: {
+          _id: { $ne: userId },
           $or: [
             { interests: searchParams.term },
             { skills: searchParams.term },

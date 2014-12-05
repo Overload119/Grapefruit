@@ -107,6 +107,10 @@ Meteor.methods({
   startOrContinueThreadWithUser: function(recipientId) {
     check(recipientId, String);
 
+    if (!this.userId) {
+      throw new Meteor.Error('You need to be logged in for that.');
+    }
+
     var recipient = Meteor.users.findOne(recipientId);
     var existingThread = Threads.findOne({
       isPrivate: true,
