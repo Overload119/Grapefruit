@@ -1,25 +1,13 @@
 Template.threadsInboxShow.helpers({
   lastThreadMessage: function() {
-    var lastMessage = Messages.findOne({ threadId: this._id }, {
-      sort: { createdAt: -1 }
-    });
-
-    if (lastMessage && lastMessage.content) {
-      return lastMessage.content;
+    if (this.lastActiveMessage && this.lastActiveMessage.content) {
+      return this.lastActiveMessage.content;
     } else {
       return 'This chat is empty.';
     }
   },
   lastThreadActiveDate: function() {
-    var lastMessage = Messages.findOne({ threadId: this._id }, {
-      sort: { createdAt: -1 }
-    });
-
-    if (lastMessage && lastMessage.createdAt) {
-      return lastMessage.createdAt;
-    } else {
-      return '';
-    }
+    return this.lastActiveAt;
   },
   threadThumbnail: function() {
     var recipient = Meteor.users.findOne(recipientIdInPrivateThread(this));
@@ -34,7 +22,7 @@ Template.threadsInboxShow.helpers({
     if (recipientUser) {
       return 'Chat with ' +  recipientUser.firstName;
     } else {
-      return 'Chat with ...'
+      return 'Chat with ?';
     }
   },
 });

@@ -1,6 +1,10 @@
 Template.usersInbox.helpers({
   hasThreads: function() {
-    return Threads.find({ isPrivate: true, memberIds: Meteor.userId() }).count() > 0;
+    return Threads.find({
+      isPrivate: true,
+      memberIds: Meteor.userId(),
+      messageCount: { $gt: 0 }
+    }).count() > 0;
   },
   threadLimit: function() {
     return Session.get('inboxThreadLimit');
@@ -22,8 +26,4 @@ Template.usersInbox.helpers({
 Template.usersInbox.created = function() {
   Session.setDefault('inboxThreadLimit', 10);
   Session.setDefault('threadsShown', 0);
-
-  Meteor.call('currentUserInbox', function(err, result) {
-    Session.set('userInbox', result);
-  });
 };

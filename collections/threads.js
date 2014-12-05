@@ -24,52 +24,30 @@ ThreadsSchema = new SimpleSchema({
   messageCount: {
     type: Number,
     defaultValue: 0
+  },
+  category: {
+    type: String,
+    optional: true
+  },
+  lastActiveUser: {
+    type: Object,
+    blackbox: true,
+    optional: true
+  },
+  lastActiveMessage: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  lastActiveAt: {
+    type: Date,
+    defaultValue: new Date()
   }
 });
 
 Threads.attachSchema(ThreadsSchema);
 
 Meteor.methods({
-  currentUserInbox: function() {
-    // Constructs an array of Inbox items.
-    // An Inbox item is an object that contains:
-    // { user: { name, image }, thread: { _id }, lastMessageContent: {} }
-
-    if (!this.userId)
-      throw new Meteor.Error('You must be logged in to do that.');
-
-    var threads = Threads.find({ memberId: this.userId, isPrivate: true }).fetch();
-    var results = [];
-
-    // For each thread, find the last message and the recipient.
-    _.each(threads, function(thread) {
-
-      var entry = {};
-
-      // It's possible that a thread was created but has no messages.
-      var lastMessage = Messages.find({ threadId: thread.id }, {
-        sort: { createdAt: -1 }, limit: 1
-      }).fetch();
-
-      if (lastMessage) {
-        entry.lastMessageContent = lastMessage.content;
-      }
-
-      entry.thread = thread;
-
-      var recipientId = _.without(thread.memberIds, this.userId)[0];
-
-      if (recipientId) {
-        user = Users.findOne(recipientId, { fields: Constants.PUBLIC_USER_FIELDS });
-        entry.user = user;
-      }
-
-      results.push(entry);
-
-    }.bind(this));
-
-    return results;
-  },
   sendMessageToThread: function(threadId, message) {
     check(threadId, String);
     check(message, String);
@@ -85,20 +63,39 @@ Meteor.methods({
     var thread = Threads.findOne(threadId);
     if (thread) {
 
-      Threads.update({ _id: thread._id }, {
-        $inc: { messageCount: 1 }
-      });
-
-      if (thread.isPrivate && !_.contains(thread.memberIds, this.userId)) {
-        throw new Meteor.Error('You cannot send messages to this thread');
-      }
-
-      Messages.insert({
+      var messageId = Messages.insert({
         fromId: this.userId,
         threadId: threadId,
         content: message,
         createdAt: new Date()
       });
+
+      // Build short references to the thread of the last poster and the last message.
+      var lastMessage = {
+        _id: messageId,
+        content: message
+      }
+
+      var lastUser = {
+        _id: Meteor.userId(),
+        largePictureUrl: Meteor.user().largePictureUrl,
+        pictureUrl: Meteor.user().pictureUrl,
+        firstName: Meteor.user().firstName,
+        lastName: Meteor.user().lastName
+      }
+
+      Threads.update({ _id: thread._id }, {
+        $inc: { messageCount: 1 },
+        $set: {
+          lastActiveUser: lastUser,
+          lastActiveMessage: lastMessage,
+          lastActiveAt: new Date()
+        }
+      });
+
+      if (thread.isPrivate && !_.contains(thread.memberIds, this.userId)) {
+        throw new Meteor.Error('You cannot send messages to this thread');
+      }
 
       return true;
     } else {
@@ -124,7 +121,8 @@ Meteor.methods({
       var newThreadId = Threads.insert({
         creatorId: this.userId,
         isPrivate: true,
-        memberIds: [recipientId, this.userId]
+        memberIds: [recipientId, this.userId],
+
       });
 
       return Threads.findOne({ _id: newThreadId });

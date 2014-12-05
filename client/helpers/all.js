@@ -12,9 +12,13 @@ Template.registerHelper('formatName', function(user) {
 
 Template.registerHelper('simpleFormat', function(text, placeholder) {
 
-  if ((typeof(text) === 'undefined' || text.length === 0) && placeholder) {
+  if (typeof(text) === 'undefined' || text.length === 0) {
     // If there is no valid text, then return the placeholder.
-    return placeholder;
+    if (typeof(placeholder) === 'string') {
+      return placeholder;
+    } else {
+      return '';
+    }
   }
 
   var paragraphs = text.split('\n\n');

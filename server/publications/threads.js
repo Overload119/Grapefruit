@@ -24,6 +24,14 @@ Meteor.publish('privateThreadMessages', function(threadId, limit) {
   return [];
 });
 
+Meteor.publish('privateThreadUsers', function(threadId, limit) {
+  if (this.userId) {
+    var userIds = _.pluck(Threads.findOne(threadId).memberIds);
+    return Meteor.users.find({ _id: { $in: userIds } }, { fields: Constants.PUBLIC_USER_FIELDS });
+  }
+  return [];
+});
+
 // Return the private threads that a user has.
 Meteor.publish('userPrivateThreads', function() {
   if (this.userId) {

@@ -7,8 +7,7 @@
   overflow-x: hidden;
   .bubble-left {
     float: left;
-    background-color: lighten(@badge, 10%);
-    .arrow(6px, #FFF, left, 50%, 1px, @baseBorderColor);
+    .arrow(6px, #FFF, right, 50%, 1px, @baseBorderColor);
     &.loading {
       .translate(-100px, 0);
     }
@@ -28,6 +27,7 @@
     position: relative;
     opacity: 1;
     border: 1px solid @baseBorderColor;
+    margin-top: 2px;
     .translate(0, 0);
     .transition-transform(500ms, opacity 500ms);
     &.loading {
