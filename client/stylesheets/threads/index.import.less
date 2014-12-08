@@ -1,0 +1,22 @@
+.thread-categories {
+  position: relative;
+  width: 100%;
+  background: darken(@baseColor, 4%);
+  border-bottom: 1px solid @baseBorderColor;
+  padding: 1em;
+  button {
+    padding: 0.5em;
+    margin-right: 0.5em;
+    border-radius: 4px;
+    border: 1px solid @baseBorderColor;
+    background: @baseColor;
+    color: @textColor;
+    &:hover {
+      text-decoration: underline;
+    }
+    &.active {
+      color: @accentColor;
+      border-color: @accentColor;
+    }
+  }
+}

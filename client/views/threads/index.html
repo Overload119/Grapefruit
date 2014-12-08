@@ -1,0 +1,28 @@
+<template name="threadsIndex">
+  <div class="thread-categories">
+    <p>Discussions happening near you...</p>
+    <button class="thread-btn">Q&amp;A</button>
+    <button class="thread-btn">Projects</button>
+    <button class="thread-btn">Events</button>
+  </div>
+
+  <div class="module">
+    {{#if hasThreads}}
+      {{#each threads}}
+        {{> threadsInboxShow this }}
+      {{/each}}
+    {{else}}
+      <p>You have no messages... yet.</p>
+    {{/if}}
+  </div>
+
+  <div class="module">
+    <div class="chat-screen">
+      hi
+    </div>
+    <div class="response-area">
+      <input class="message-content" type="text" placeholder="Enter your message here" />
+      <button class="send-message">Send</button>
+    </div>
+  </div>
+</template>
