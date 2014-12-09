@@ -4,6 +4,7 @@
   background: darken(@baseColor, 4%);
   border-bottom: 1px solid @baseBorderColor;
   padding: 1em;
+  margin-bottom: 1em;
   button {
     padding: 0.5em;
     margin-right: 0.5em;
@@ -12,11 +13,48 @@
     background: @baseColor;
     color: @textColor;
     &:hover {
-      text-decoration: underline;
+      color: @accentColor;
     }
     &.active {
       color: @accentColor;
       border-color: @accentColor;
     }
+  }
+}
+
+.discuss-create-p {
+  margin: .5em 0;
+}
+
+.discuss-create {
+  width: 100%;
+  height: 0px;
+  overflow: hidden;
+  .transition(height 500ms @easeOutExpo);
+  .help {
+    font-size: 0.8em;
+    font-style: italic;
+    color: @gray;
+    margin: 0.5em 0;
+  }
+  .thread-title {
+    border: 1px solid @baseBorderColor;
+    background: #FFF;
+    padding: .5em;
+    width: 100%;
+  }
+  .thread-content {
+    border: 1px solid @baseBorderColor;
+    background: #FFF;
+    padding: .5em;
+    width: 100%;
+    height: 12em;
+  }
+  &.active {
+    height: 20em;
+  }
+  button {
+    margin-top: 1em;
+    padding: .5em;
   }
 }

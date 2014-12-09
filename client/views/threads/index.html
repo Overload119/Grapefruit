@@ -1,28 +1,46 @@
 <template name="threadsIndex">
   <div class="thread-categories">
-    <p>Discussions happening near you...</p>
-    <button class="thread-btn">Q&amp;A</button>
-    <button class="thread-btn">Projects</button>
-    <button class="thread-btn">Events</button>
+    <p>Which kinds of discussions are you interested in?</p>
+    {{#each threadCategories}}
+      {{#if currentCategoryIs this.dbName}}
+        <button class="thread-btn active" data-category="{{this.dbName}}">{{this.friendlyName}}</button>
+      {{else}}
+        <button class="thread-btn" data-category="{{this.dbName}}">{{this.friendlyName}}</button>
+      {{/if}}
+    {{/each}}
   </div>
 
   <div class="module">
-    {{#if hasThreads}}
-      {{#each threads}}
-        {{> threadsInboxShow this }}
-      {{/each}}
+    <p class="discuss-create-p">
+      <i class="fa fa-plus-circle"></i>&nbsp;
+      <a href="#" id="discuss-create-btn">Create a discussion in '{{ currentCategoryName }}'</a>
+    </p>
+    <div class="discuss-create">
+      <input type="text" class="thread-title" placeholder="Title" autofocus="autofocus" />
+      <div class="help">
+        Your post contents can take advantage of <a href="http://www.wikiwand.com/en/Markdown" target="_blank">Markdown</a>.
+      </div>
+      <div id="editor" class="thread-content-container">
+        <textarea class="thread-content" max-length="500" placeholder="Contents"></textarea>
+      </div>
+      <button id="submit-thread-btn"><i class="fa fa-send"></i> Submit Thread</button>
+    </div>
+  </div>
+
+  <div class="module">
+    {{#if isLoadingThreads}}
+      <p><i class="fa fa-spin fa-spinner"></i> Loading discussions...</p>
     {{else}}
-      <p>You have no messages... yet.</p>
+      {{#if hasThreads}}
+        {{#each threads}}
+          {{> discussListItem this }}
+        {{/each}}
+        {{#if hasMoreThreads}}
+          <p><a href="#">View more</a></p>
+        {{/if}}
+      {{else}}
+        <p>No discussions have been started in '<b>{{ currentCategoryName }}</b>'.</p>
+      {{/if}}
     {{/if}}
-  </div>
-
-  <div class="module">
-    <div class="chat-screen">
-      hi
-    </div>
-    <div class="response-area">
-      <input class="message-content" type="text" placeholder="Enter your message here" />
-      <button class="send-message">Send</button>
-    </div>
   </div>
 </template>

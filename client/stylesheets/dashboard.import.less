@@ -66,14 +66,23 @@
   }
   .item-details {
     float: left;
+    width: 22em;
     .lead {
       color: darken(@textColor, 5%);
       font-size: 1.25em;
       margin: 0;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .sublead {
       color: @textColor;
       margin: 0;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }

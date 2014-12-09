@@ -5,6 +5,8 @@ Template.threadsShow.helpers({
       sort: { createdAt: -1 }, limit: Session.get('messageLimit')
     }).fetch();
 
+    this.messageCount = messages.length;
+
     // Get the latest messages, but sort them ASC to render correctly.
     return _.sortBy(messages, function(message) { return message.createdAt });
   },
@@ -44,6 +46,7 @@ Template.threadsShow.events({
 });
 
 Template.threadsShow.created = function() {
+  this.messageCount = 0;
   Session.setDefault('messageLimit', Constants.DEFAULT_MESSAGES_LIMIT);
   Session.setDefault('messages', []);
   Session.setDefault('moreMessagesLoading', false);

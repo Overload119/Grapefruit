@@ -9,6 +9,11 @@ ThreadsSchema = new SimpleSchema({
     type: Date,
     defaultValue: new Date()
   },
+  creator: {
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
   creatorId: {
     type: String,
     optional: false
@@ -16,6 +21,10 @@ ThreadsSchema = new SimpleSchema({
   isPrivate: {
     type: Boolean,
     defaultValue: false
+  },
+  title: {
+    type: String,
+    optional: true
   },
   memberIds: {
     type: [String],
@@ -46,6 +55,9 @@ ThreadsSchema = new SimpleSchema({
 });
 
 Threads.attachSchema(ThreadsSchema);
+
+var buildLastActiveUser = function() {
+}
 
 Meteor.methods({
   sendMessageToThread: function(threadId, message) {
@@ -86,6 +98,7 @@ Meteor.methods({
 
       Threads.update({ _id: thread._id }, {
         $inc: { messageCount: 1 },
+        $addToSet: { memberIds: this.userId },
         $set: {
           lastActiveUser: lastUser,
           lastActiveMessage: lastMessage,
@@ -103,6 +116,68 @@ Meteor.methods({
     }
 
     return false;
+  },
+  startThreadWithCategory: function(threadData) {
+    check(threadData, Object);
+
+    if (!this.userId) {
+      throw new Meteor.Error('You need to be logged in for that.');
+    }
+
+    var category = threadData.category;
+
+    var isValidCategory = _.contains(
+      _(Constants.THREAD_CATEGORIES).map(function(ctg) { return ctg.dbName }),
+      category);
+
+    if (!isValidCategory) {
+      throw new Meteor.Error(category + ' is not a valid category');
+    }
+
+    // Shallow reference to the thread creator.
+    var creator = {
+      _id: this.userId,
+      largePictureUrl: Meteor.user().largePictureUrl,
+      pictureUrl: Meteor.user().pictureUrl,
+      firstName: Meteor.user().firstName,
+      lastName: Meteor.user().lastName
+    };
+
+    var newThreadId = Threads.insert({
+      creatorId: this.userId,
+      creator: creator,
+      category: category,
+      messageCount: 1,
+      isPrivate: false,
+      memberIds: [ this.userId ],
+      title: threadData.title,
+      lastActiveMessage: {
+        _id: messageId,
+        content: threadData.content
+      }
+    });
+
+    // The content of the thread is the first message.
+    var messageId = Messages.insert({
+      fromId: this.userId,
+      threadId: newThreadId,
+      content: threadData.content,
+      createdAt: new Date()
+    });
+
+    // Update the thread after the message is created to give the.
+    Threads.update({ _id: newThreadId }, {
+      $set: {
+        lastActiveUser: creator,
+        lastActiveMessage: {
+          _id: messageId,
+          content: threadData.content
+        },
+        lastActiveAt: new Date()
+      }
+    });
+
+    return Threads.findOne(newThreadId);
   },
   startOrContinueThreadWithUser: function(recipientId) {
     check(recipientId, String);
@@ -126,7 +201,6 @@ Meteor.methods({
         creatorId: this.userId,
         isPrivate: true,
         memberIds: [recipientId, this.userId],
-
       });
 
       return Threads.findOne({ _id: newThreadId });

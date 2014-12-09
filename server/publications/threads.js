@@ -7,10 +7,19 @@ Meteor.publish('thread', function(threadId) {
   return [];
 });
 
+Meteor.publish('discussions', function(category, limit) {
+  if (this.userId) {
+    return Threads.find({ category: category }, {
+      sort: { lastActiveAt: -1 }, limit: (limit || Constants.DEFAULT_LIMIT)
+    });
+  }
+  return [];
+});
+
 Meteor.publish('threads', function(limit) {
   if (this.userId) {
     return Threads.find({ isPrivate: false, messageCount: { $gt: 0 }}, {
-      sort: { lastActiveAt: -1 }, limit: (limit || 30)
+      sort: { lastActiveAt: -1 }, limit: (limit || Constants.DEFAULT_LIMIT)
     });
   }
   return [];
