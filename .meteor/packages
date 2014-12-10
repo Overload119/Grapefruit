@@ -21,4 +21,5 @@ sacha:spin
 npm-container
 meteor-accounts-linkedin
 meteor-linkedin
+reywood:publish-composite
 

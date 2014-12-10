@@ -30,7 +30,7 @@ Template.discussBubble.rendered = function() {
   var scrollHeight = this.firstNode.parentElement.scrollHeight;
 
   var relativeScrollPos = (scrollTop / scrollHeight);
-  if (relativeScrollPos > 0.6) {
+  if (relativeScrollPos > 0.45) {
     this.firstNode.parentElement.scrollTop =
       this.firstNode.parentElement.scrollHeight;
   }

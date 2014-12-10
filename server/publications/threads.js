@@ -55,3 +55,20 @@ Meteor.publish('userPrivateThreads', function() {
   }
   return [];
 });
+
+// A composite gathering of a thread.
+Meteor.publishComposite('threadWithUsers', function(threadId) {
+  return {
+    find: function() {
+      return Threads.find({ _id: threadId }, { limit: 1 });
+    },
+    children: [
+      {
+        find: function(thread) {
+          return Meteor.users.find({ _id: { $in: thread.memberIds } },
+            { fields: Constants.PUBLIC_USER_FIELDS });
+        }
+      }
+    ]
+  }
+});
