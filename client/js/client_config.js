@@ -24,5 +24,3 @@ renderer.link = function(href, title, text) {
 
 Constants.MARKED_OPTIONS.renderer = renderer;
 marked.setOptions(Constants.MARKED_OPTIONS);
-
-console.log(Constants.MARKED_OPTIONS);

@@ -40,6 +40,11 @@ Template.threadsShow.events({
   },
   'click .send-message': function(event, template) {
     var messageContent = stripHtml($('.message-content').val());
+
+    if (!messageContent) {
+      return;
+    }
+
     $('.message-content').val('');
     Meteor.call('sendMessageToThread', template.data._id, messageContent);
   }

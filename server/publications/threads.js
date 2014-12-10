@@ -42,8 +42,8 @@ Meteor.publish('threadUsers', function(threadId, limit) {
       return [];
     }
 
-    var userIds = _.pluck(thread.memberIds);
-    return Meteor.users.find({ _id: { $in: userIds } }, { fields: Constants.PUBLIC_USER_FIELDS });
+    return Meteor.users.find({ _id: { $in: thread.memberIds } },
+      { fields: Constants.PUBLIC_USER_FIELDS });
   }
   return [];
 });

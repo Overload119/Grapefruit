@@ -25,12 +25,28 @@
     .bubble-content {
       float: right;
       width: ~"calc(100% - 5em)";
-      padding: 0 1em;
+      padding: 0 0 0 1em;
       .author-name {
-        font-weight: bold;
+        float: left;
+        max-width: 10em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: @darkTextColor;
+      }
+      .message-date {
+        float: right;
+        font-size: 0.8em;
       }
       .author-message {
+        float: left;
+        font-size: 0.95em;
+        clear: both;
+        padding: 0.5em 0 0 0;
         // TODO: Apply Markdown custom themes here.
+        blockquote {
+          font-size: 14px;
+        }
+
       }
     }
   }
@@ -52,14 +68,13 @@
   }
   .more-messages {
     position: relative;
-    width: ~"calc(100% + 2em)";
+    width: 100%;
     clear: both;
     background: @linkBlue;
     color: #FFF;
-    top: -1em;
-    left: -1em;
     border: 0;
     padding: 0.25em 0;
+    border-radius: 0;
     &:hover {
       background: lighten(@linkBlue, 4%);
     }

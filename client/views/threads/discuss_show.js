@@ -21,7 +21,7 @@ Template.discussShow.helpers({
   }
 });
 
-Template.threadsShow.events({
+Template.discussShow.events({
   'click #more-message-btn': function(evt, template) {
     var oldMessageLimit = Session.get('messageLimit');
     Session.set('messageLimit', oldMessageLimit + Constants.DEFAULT_MESSAGES_LIMIT);
@@ -32,28 +32,36 @@ Template.threadsShow.events({
         Session.set('moreMessagesLoading', false);
       });
   },
-  'keyup .message-content': function(event, template) {
-    // Enter is a shortcut to send a message.
-    if (event.keyCode === 13) {
+  'keydown .message-content': function(event, template) {
+    // ⌘+Enter is the shortcut in this case.
+    var enterIsPressed = event.keyCode === 13;
+    var metaIsPressed  = event.metaKey || event.ctrlKey;
+
+    if (enterIsPressed && metaIsPressed) {
       $('.send-message').click();
     }
   },
   'click .send-message': function(event, template) {
     var messageContent = stripHtml($('.message-content').val());
+
+    if (!messageContent) {
+      return;
+    }
+
     $('.message-content').val('');
     Meteor.call('sendMessageToThread', template.data._id, messageContent);
   }
 });
 
-Template.threadsShow.created = function() {
+Template.discussShow.created = function() {
   this.messageCount = 0;
   Session.setDefault('messageLimit', Constants.DEFAULT_MESSAGES_LIMIT);
   Session.setDefault('messages', []);
   Session.setDefault('moreMessagesLoading', false);
 }
 
-Template.threadsShow.rendered = function() {
+Template.discussShow.rendered = function() {
   // Scroll the chat to the bottom.
-  this.find('.chat-screen').scrollTop =
-    this.find('.chat-screen').scrollHeight;
+  this.find('.discuss-chat-screen').scrollTop =
+    this.find('.discuss-chat-screen').scrollHeight;
 };
