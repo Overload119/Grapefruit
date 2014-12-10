@@ -1,5 +1,12 @@
 <template name="discussShow">
   <div class="module">
+    <div class="discuss-header">
+      <h1>{{ title }}</h1>
+      <div class="discuss-users">
+        {{ pluralize memberIds 'member' }} in this discussion.
+        <a href="#">View All <i class="fa fa-long-arrow-right"></i></a>
+      </div>
+    </div>
     <div class="discuss-chat-screen">
       {{#if isChatEmpty}}
         <p class="empty-thread">This chat is currently empty.</p>

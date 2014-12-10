@@ -1,4 +1,10 @@
 Template.discussShow.helpers({
+  numberOfDiscussionMembers: function() {
+    return Meteor.users.find({ _id: { $in: thread.memberIds } }).count();
+  },
+  discussionMembers: function() {
+    return Meteor.users.find({ _id: { $in: thread.memberIds } });
+  },
   messages: function() {
     // Sort by ASC first, so the last element is the most recent.
     var messages = Messages.find({ threadId: this._id }, {

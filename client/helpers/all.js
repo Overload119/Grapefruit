@@ -50,15 +50,15 @@ Template.registerHelper('capitalizeEveryWord', function(tag) {
 Template.registerHelper('pluralize', function(arrOrNumber, word) {
   if (arrOrNumber instanceof Array) {
     if (arrOrNumber.length === 0 || arrOrNumber.length > 1) {
-      return word + 's';
+      return arrOrNumber.length + ' ' + word + 's';
     } else {
-      return word;
+      return arrOrNumber.length + ' ' + word;
     }
   } else if (typeof arrOrNumber === 'number') {
     if (arrOrNumber === 0 || arrOrNumber > 1) {
-      return word + 's';
+      return arrOrNumber + ' ' + word + 's';
     } else {
-      return word;
+      return arrOrNumber + ' ' + word;
     }
   } else {
     return '???';
