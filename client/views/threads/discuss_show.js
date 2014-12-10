@@ -1,4 +1,4 @@
-Template.threadsShow.helpers({
+Template.discussShow.helpers({
   messages: function() {
     // Sort by ASC first, so the last element is the most recent.
     var messages = Messages.find({ threadId: this._id }, {

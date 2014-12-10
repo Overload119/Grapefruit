@@ -120,7 +120,7 @@
     id = id || '';
     var headID = context.getElementsByTagName("head")[0]
       , cssNode = context.createElement('link');
-    
+
     _applyAttrs(cssNode, {
       type: 'text/css'
     , id: id
@@ -170,7 +170,7 @@
     content = content.replace(/</g, '&lt;');
     content = content.replace(/>/g, '&gt;');
     content = content.replace(/\n/g, '<br>');
-    
+
     // Make sure to there aren't two spaces in a row (replace one with &nbsp;)
     // If you find and replace every space with a &nbsp; text will not wrap.
     // Hence the name (Non-Breaking-SPace).
@@ -362,7 +362,7 @@
         };
 
     self.settings = _mergeObjs(true, defaults, opts);
-    
+
     var buttons = self.settings.button;
     self._fullscreenEnabled = typeof(buttons) === 'object' ? typeof buttons.fullscreen === 'undefined' || buttons.fullscreen : buttons === true;
     self._editEnabled = typeof(buttons) === 'object' ? typeof buttons.edit === 'undefined' || buttons.edit : buttons === true;
@@ -407,7 +407,7 @@
     else if (typeof self.settings.container == 'object') {
       self.element = self.settings.container;
     }
-    
+
     // Figure out the file name. If no file name is given we'll use the ID.
     // If there's no ID either we'll use a namespaced file name that's incremented
     // based on the calling order. As long as it doesn't change, drafts will be saved.
@@ -560,7 +560,7 @@
                     (self._fullscreenEnabled ? '<button title="' + this.settings.string.toggleFullscreen + '" class="epiceditor-fullscreen-btn"></button>' : '') +
                   '</div>' +
                 '</div>'
-    
+
     // The previewer is just an empty box for the generated HTML to go into
     , previewer: '<div id="epiceditor-preview"></div>'
     , editor: '<!doctype HTML>'
@@ -576,7 +576,7 @@
     self.element.style.height = self.element.offsetHeight + 'px';
 
     iframeElement = document.getElementById(self._instanceId);
-    
+
     // Store a reference to the iframeElement itself
     self.iframeElement = iframeElement;
 
@@ -596,7 +596,7 @@
     // Need something for... you guessed it, Firefox
     self.editorIframeDocument.write(_HtmlTemplates.editor);
     self.editorIframeDocument.close();
-    
+
     // Setup the previewer iframe
     self.previewerIframeDocument = _getIframeInnards(self.previewerIframe);
     self.previewerIframeDocument.open();
@@ -613,10 +613,10 @@
 
     // Insert Base Stylesheet
     _insertCSSLink(self.settings.theme.base, self.iframe, 'theme');
-    
+
     // Insert Editor Stylesheet
     _insertCSSLink(self.settings.theme.editor, self.editorIframeDocument, 'theme');
-    
+
     // Insert Previewer Stylesheet
     _insertCSSLink(self.settings.theme.preview, self.previewerIframeDocument, 'theme');
 
@@ -630,9 +630,9 @@
     // Now grab the editor and previewer for later use
     self.editor = self.editorIframeDocument.body;
     self.previewer = self.previewerIframeDocument.getElementById('epiceditor-preview');
-   
+
     self.editor.contentEditable = true;
- 
+
     // Firefox's <body> gets all fucked up so, to be sure, we need to hardcode it
     self.iframe.body.style.height = this.element.offsetHeight + 'px';
 
@@ -844,7 +844,7 @@
         }
       }, 250);
     });
-    
+
     fsElement = self.iframeElement;
 
     // Sets up the onclick event on utility buttons
@@ -921,7 +921,7 @@
       }
       mousePos = { y: e.pageY, x: e.pageX };
     }
- 
+
     // Add keyboard shortcuts for convenience.
     function shortcutHandler(e) {
       if (e.keyCode == self.settings.shortcut.modifier) { isMod = true } // check for modifier press(default is alt key), save to var
@@ -968,7 +968,7 @@
       }
 
     }
-    
+
     function shortcutUpHandler(e) {
       if (e.keyCode == self.settings.shortcut.modifier) { isMod = false }
       if (e.keyCode == 17) { isCtrl = false }
@@ -999,7 +999,7 @@
 
     // Hide and show the util bar based on mouse movements
     eventableIframes = [self.previewerIframeDocument, self.editorIframeDocument];
-    
+
     for (i = 0; i < eventableIframes.length; i++) {
       eventableIframes[i].addEventListener('mousemove', function (e) {
         utilBarHandler(e);
@@ -1091,7 +1091,7 @@
       ['keydown', 'keyup', 'paste', 'cut'].forEach(function (ev) {
         self.getElement('editor').addEventListener(ev, boundAutogrow);
       });
-      
+
       self.on('__update', boundAutogrow);
       self.on('edit', function () {
         setTimeout(boundAutogrow, 50)
@@ -1570,7 +1570,7 @@
     content = content || '';
     kind = kind || 'md';
     meta = meta || {};
-  
+
     if (JSON.parse(this._storage[self.settings.localStorageName])[name] === undefined) {
       isNew = true;
     }
@@ -1632,7 +1632,7 @@
 
     name = name || self.settings.file.name;
     kind = kind || 'text';
-   
+
     file = self._getFileStore(name, _isPreviewDraft);
 
     // If the file doesn't exist just return early with undefined
@@ -1641,7 +1641,7 @@
     }
 
     content = file.content;
-   
+
     switch (kind) {
     case 'html':
       content = _sanitizeRawContent(content);
@@ -1667,7 +1667,7 @@
   EpicEditor.prototype.getFiles = function (name, excludeContent) {
     var file
       , data = this._getFileStore(name);
-    
+
     if (name) {
       if (data !== undefined) {
         if (excludeContent) {
@@ -1848,7 +1848,7 @@
 
 /**
  * marked - a markdown parser
- * Copyright (c) 2011-2013, Christopher Jeffrey. (MIT Licensed)
+ * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
  * https://github.com/chjj/marked
  */
 
@@ -1865,13 +1865,13 @@ var block = {
   hr: /^( *[-*_]){3,} *(?:\n+|$)/,
   heading: /^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,
   nptable: noop,
-  lheading: /^([^\n]+)\n *(=|-){3,} *\n*/,
-  blockquote: /^( *>[^\n]+(\n[^\n]+)*\n*)+/,
-  list: /^( *)(bull) [\s\S]+?(?:hr|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
-  html: /^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,
-  def: /^ *\[([^\]]+)\]: *([^\s]+)(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,
+  lheading: /^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,
+  blockquote: /^( *>[^\n]+(\n(?!def)[^\n]+)*\n*)+/,
+  list: /^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
+  html: /^ *(?:comment *(?:\n|\s*$)|closed *(?:\n{2,}|\s*$)|closing *(?:\n{2,}|\s*$))/,
+  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,
   table: noop,
-  paragraph: /^([^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+\n*/,
+  paragraph: /^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,
   text: /^[^\n]+/
 };
 
@@ -1883,13 +1883,18 @@ block.item = replace(block.item, 'gm')
 
 block.list = replace(block.list)
   (/bull/g, block.bullet)
-  ('hr', /\n+(?=(?: *[-*_]){3,} *(?:\n+|$))/)
+  ('hr', '\\n+(?=\\1?(?:[-*_] *){3,}(?:\\n+|$))')
+  ('def', '\\n+(?=' + block.def.source + ')')
+  ();
+
+block.blockquote = replace(block.blockquote)
+  ('def', block.def)
   ();
 
 block._tag = '(?!(?:'
   + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code'
   + '|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo'
-  + '|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|@)\\b';
+  + '|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|[^\\w\\s@]*@)\\b';
 
 block.html = replace(block.html)
   ('comment', /<!--[\s\S]*?-->/)
@@ -1918,12 +1923,14 @@ block.normal = merge({}, block);
  */
 
 block.gfm = merge({}, block.normal, {
-  fences: /^ *(`{3,}|~{3,}) *(\w+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,
+  fences: /^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,
   paragraph: /^/
 });
 
 block.gfm.paragraph = replace(block.paragraph)
-  ('(?!', '(?!' + block.gfm.fences.source.replace('\\1', '\\2') + '|')
+  ('(?!', '(?!'
+    + block.gfm.fences.source.replace('\\1', '\\2') + '|'
+    + block.list.source.replace('\\1', '\\3') + '|')
   ();
 
 /**
@@ -1987,11 +1994,13 @@ Lexer.prototype.lex = function(src) {
  * Lexing
  */
 
-Lexer.prototype.token = function(src, top) {
+Lexer.prototype.token = function(src, top, bq) {
   var src = src.replace(/^ +$/gm, '')
     , next
     , loose
     , cap
+    , bull
+    , b
     , item
     , space
     , i
@@ -2108,7 +2117,7 @@ Lexer.prototype.token = function(src, top) {
       // Pass `top` to keep the current
       // "toplevel" state. This is exactly
       // how markdown.pl works.
-      this.token(cap, top);
+      this.token(cap, top, true);
 
       this.tokens.push({
         type: 'blockquote_end'
@@ -2120,10 +2129,11 @@ Lexer.prototype.token = function(src, top) {
     // list
     if (cap = this.rules.list.exec(src)) {
       src = src.substring(cap[0].length);
+      bull = cap[2];
 
       this.tokens.push({
         type: 'list_start',
-        ordered: isFinite(cap[2])
+        ordered: bull.length > 1
       });
 
       // Get each top-level item.
@@ -2150,12 +2160,22 @@ Lexer.prototype.token = function(src, top) {
             : item.replace(/^ {1,4}/gm, '');
         }
 
+        // Determine whether the next list item belongs here.
+        // Backpedal if it does not belong in this list.
+        if (this.options.smartLists && i !== l - 1) {
+          b = block.bullet.exec(cap[i + 1])[0];
+          if (bull !== b && !(bull.length > 1 && b.length > 1)) {
+            src = cap.slice(i + 1).join('\n') + src;
+            i = l - 1;
+          }
+        }
+
         // Determine whether item is loose or not.
         // Use: /(^|\n)(?! )[^\n]+\n\n(?!\s*$)/
         // for discount behavior.
         loose = next || /\n\n(?!\s*$)/.test(item);
         if (i !== l - 1) {
-          next = item[item.length-1] === '\n';
+          next = item.charAt(item.length - 1) === '\n';
           if (!loose) loose = next;
         }
 
@@ -2166,7 +2186,7 @@ Lexer.prototype.token = function(src, top) {
         });
 
         // Recurse.
-        this.token(item, false);
+        this.token(item, false, bq);
 
         this.tokens.push({
           type: 'list_item_end'
@@ -2187,14 +2207,14 @@ Lexer.prototype.token = function(src, top) {
         type: this.options.sanitize
           ? 'paragraph'
           : 'html',
-        pre: cap[1] === 'pre',
+        pre: cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style',
         text: cap[0]
       });
       continue;
     }
 
     // def
-    if (top && (cap = this.rules.def.exec(src))) {
+    if ((!bq && top) && (cap = this.rules.def.exec(src))) {
       src = src.substring(cap[0].length);
       this.tokens.links[cap[1].toLowerCase()] = {
         href: cap[2],
@@ -2242,7 +2262,9 @@ Lexer.prototype.token = function(src, top) {
       src = src.substring(cap[0].length);
       this.tokens.push({
         type: 'paragraph',
-        text: cap[0]
+        text: cap[1].charAt(cap[1].length - 1) === '\n'
+          ? cap[1].slice(0, -1)
+          : cap[1]
       });
       continue;
     }
@@ -2272,7 +2294,7 @@ Lexer.prototype.token = function(src, top) {
  */
 
 var inline = {
-  escape: /^\\([\\`*{}\[\]()#+\-.!_>|])/,
+  escape: /^\\([\\`*{}\[\]()#+\-.!_>])/,
   autolink: /^<([^ >]+(@|:\/)[^ >]+)>/,
   url: noop,
   tag: /^<!--[\s\S]*?-->|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,
@@ -2281,14 +2303,14 @@ var inline = {
   nolink: /^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,
   strong: /^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,
   em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
-  code: /^(`+)([\s\S]*?[^`])\1(?!`)/,
+  code: /^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,
   br: /^ {2,}\n(?!\s*$)/,
   del: noop,
   text: /^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/
 };
 
-inline._inside = /(?:\[[^\]]*\]|[^\]]|\](?=[^\[]*\]))*/;
-inline._href = /\s*<?([^\s]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;
+inline._inside = /(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;
+inline._href = /\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;
 
 inline.link = replace(inline.link)
   ('inside', inline._inside)
@@ -2319,9 +2341,9 @@ inline.pedantic = merge({}, inline.normal, {
  */
 
 inline.gfm = merge({}, inline.normal, {
-  escape: replace(inline.escape)('])', '~])')(),
-  url: /^(https?:\/\/[^\s]+[^.,:;"')\]\s])/,
-  del: /^~{2,}([\s\S]+?)~{2,}/,
+  escape: replace(inline.escape)('])', '~|])')(),
+  url: /^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,
+  del: /^~~(?=\S)([\s\S]*?\S)~~/,
   text: replace(inline.text)
     (']|', '~]|')
     ('|', '|https?://|')
@@ -2345,6 +2367,8 @@ function InlineLexer(links, options) {
   this.options = options || marked.defaults;
   this.links = links;
   this.rules = inline.normal;
+  this.renderer = this.options.renderer || new Renderer;
+  this.renderer.options = this.options;
 
   if (!this.links) {
     throw new
@@ -2372,8 +2396,8 @@ InlineLexer.rules = inline;
  * Static Lexing/Compiling Method
  */
 
-InlineLexer.output = function(src, links, opt) {
-  var inline = new InlineLexer(links, opt);
+InlineLexer.output = function(src, links, options) {
+  var inline = new InlineLexer(links, options);
   return inline.output(src);
 };
 
@@ -2400,7 +2424,7 @@ InlineLexer.prototype.output = function(src) {
     if (cap = this.rules.autolink.exec(src)) {
       src = src.substring(cap[0].length);
       if (cap[2] === '@') {
-        text = cap[1][6] === ':'
+        text = cap[1].charAt(6) === ':'
           ? this.mangle(cap[1].substring(7))
           : this.mangle(cap[1]);
         href = this.mangle('mailto:') + text;
@@ -2408,29 +2432,26 @@ InlineLexer.prototype.output = function(src) {
         text = escape(cap[1]);
         href = text;
       }
-      out += '<a href="'
-        + href
-        + '">'
-        + text
-        + '</a>';
+      out += this.renderer.link(href, null, text);
       continue;
     }
 
     // url (gfm)
-    if (cap = this.rules.url.exec(src)) {
+    if (!this.inLink && (cap = this.rules.url.exec(src))) {
       src = src.substring(cap[0].length);
       text = escape(cap[1]);
       href = text;
-      out += '<a href="'
-        + href
-        + '">'
-        + text
-        + '</a>';
+      out += this.renderer.link(href, null, text);
       continue;
     }
 
     // tag
     if (cap = this.rules.tag.exec(src)) {
+      if (!this.inLink && /^<a /i.test(cap[0])) {
+        this.inLink = true;
+      } else if (this.inLink && /^<\/a>/i.test(cap[0])) {
+        this.inLink = false;
+      }
       src = src.substring(cap[0].length);
       out += this.options.sanitize
         ? escape(cap[0])
@@ -2441,10 +2462,12 @@ InlineLexer.prototype.output = function(src) {
     // link
     if (cap = this.rules.link.exec(src)) {
       src = src.substring(cap[0].length);
+      this.inLink = true;
       out += this.outputLink(cap, {
         href: cap[2],
         title: cap[3]
       });
+      this.inLink = false;
       continue;
     }
 
@@ -2455,61 +2478,55 @@ InlineLexer.prototype.output = function(src) {
       link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
       link = this.links[link.toLowerCase()];
       if (!link || !link.href) {
-        out += cap[0][0];
+        out += cap[0].charAt(0);
         src = cap[0].substring(1) + src;
         continue;
       }
+      this.inLink = true;
       out += this.outputLink(cap, link);
+      this.inLink = false;
       continue;
     }
 
     // strong
     if (cap = this.rules.strong.exec(src)) {
       src = src.substring(cap[0].length);
-      out += '<strong>'
-        + this.output(cap[2] || cap[1])
-        + '</strong>';
+      out += this.renderer.strong(this.output(cap[2] || cap[1]));
       continue;
     }
 
     // em
     if (cap = this.rules.em.exec(src)) {
       src = src.substring(cap[0].length);
-      out += '<em>'
-        + this.output(cap[2] || cap[1])
-        + '</em>';
+      out += this.renderer.em(this.output(cap[2] || cap[1]));
       continue;
     }
 
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
-      out += '<code>'
-        + escape(cap[2], true)
-        + '</code>';
+      out += this.renderer.codespan(escape(cap[2], true));
       continue;
     }
 
     // br
     if (cap = this.rules.br.exec(src)) {
       src = src.substring(cap[0].length);
-      out += '<br>';
+      out += this.renderer.br();
       continue;
     }
 
     // del (gfm)
     if (cap = this.rules.del.exec(src)) {
       src = src.substring(cap[0].length);
-      out += '<del>'
-        + this.output(cap[1])
-        + '</del>';
+      out += this.renderer.del(this.output(cap[1]));
       continue;
     }
 
     // text
     if (cap = this.rules.text.exec(src)) {
       src = src.substring(cap[0].length);
-      out += escape(cap[0]);
+      out += escape(this.smartypants(cap[0]));
       continue;
     }
 
@@ -2527,31 +2544,33 @@ InlineLexer.prototype.output = function(src) {
  */
 
 InlineLexer.prototype.outputLink = function(cap, link) {
-  if (cap[0][0] !== '!') {
-    return '<a href="'
-      + escape(link.href)
-      + '"'
-      + (link.title
-      ? ' title="'
-      + escape(link.title)
-      + '"'
-      : '')
-      + '>'
-      + this.output(cap[1])
-      + '</a>';
-  } else {
-    return '<img src="'
-      + escape(link.href)
-      + '" alt="'
-      + escape(cap[1])
-      + '"'
-      + (link.title
-      ? ' title="'
-      + escape(link.title)
-      + '"'
-      : '')
-      + '>';
-  }
+  var href = escape(link.href)
+    , title = link.title ? escape(link.title) : null;
+
+  return cap[0].charAt(0) !== '!'
+    ? this.renderer.link(href, title, this.output(cap[1]))
+    : this.renderer.image(href, title, escape(cap[1]));
+};
+
+/**
+ * Smartypants Transformations
+ */
+
+InlineLexer.prototype.smartypants = function(text) {
+  if (!this.options.smartypants) return text;
+  return text
+    // em-dashes
+    .replace(/--/g, '\u2014')
+    // opening singles
+    .replace(/(^|[-\u2014/(\[{"\s])'/g, '$1\u2018')
+    // closing singles & apostrophes
+    .replace(/'/g, '\u2019')
+    // opening doubles
+    .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, '$1\u201c')
+    // closing doubles
+    .replace(/"/g, '\u201d')
+    // ellipses
+    .replace(/\.{3}/g, '\u2026');
 };
 
 /**
@@ -2576,6 +2595,149 @@ InlineLexer.prototype.mangle = function(text) {
 };
 
 /**
+ * Renderer
+ */
+
+function Renderer(options) {
+  this.options = options || {};
+}
+
+Renderer.prototype.code = function(code, lang, escaped) {
+  if (this.options.highlight) {
+    var out = this.options.highlight(code, lang);
+    if (out != null && out !== code) {
+      escaped = true;
+      code = out;
+    }
+  }
+
+  if (!lang) {
+    return '<pre><code>'
+      + (escaped ? code : escape(code, true))
+      + '\n</code></pre>';
+  }
+
+  return '<pre><code class="'
+    + this.options.langPrefix
+    + escape(lang, true)
+    + '">'
+    + (escaped ? code : escape(code, true))
+    + '\n</code></pre>\n';
+};
+
+Renderer.prototype.blockquote = function(quote) {
+  return '<blockquote>\n' + quote + '</blockquote>\n';
+};
+
+Renderer.prototype.html = function(html) {
+  return html;
+};
+
+Renderer.prototype.heading = function(text, level, raw) {
+  return '<h'
+    + level
+    + ' id="'
+    + this.options.headerPrefix
+    + raw.toLowerCase().replace(/[^\w]+/g, '-')
+    + '">'
+    + text
+    + '</h'
+    + level
+    + '>\n';
+};
+
+Renderer.prototype.hr = function() {
+  return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
+};
+
+Renderer.prototype.list = function(body, ordered) {
+  var type = ordered ? 'ol' : 'ul';
+  return '<' + type + '>\n' + body + '</' + type + '>\n';
+};
+
+Renderer.prototype.listitem = function(text) {
+  return '<li>' + text + '</li>\n';
+};
+
+Renderer.prototype.paragraph = function(text) {
+  return '<p>' + text + '</p>\n';
+};
+
+Renderer.prototype.table = function(header, body) {
+  return '<table>\n'
+    + '<thead>\n'
+    + header
+    + '</thead>\n'
+    + '<tbody>\n'
+    + body
+    + '</tbody>\n'
+    + '</table>\n';
+};
+
+Renderer.prototype.tablerow = function(content) {
+  return '<tr>\n' + content + '</tr>\n';
+};
+
+Renderer.prototype.tablecell = function(content, flags) {
+  var type = flags.header ? 'th' : 'td';
+  var tag = flags.align
+    ? '<' + type + ' style="text-align:' + flags.align + '">'
+    : '<' + type + '>';
+  return tag + content + '</' + type + '>\n';
+};
+
+// span level renderer
+Renderer.prototype.strong = function(text) {
+  return '<strong>' + text + '</strong>';
+};
+
+Renderer.prototype.em = function(text) {
+  return '<em>' + text + '</em>';
+};
+
+Renderer.prototype.codespan = function(text) {
+  return '<code>' + text + '</code>';
+};
+
+Renderer.prototype.br = function() {
+  return this.options.xhtml ? '<br/>' : '<br>';
+};
+
+Renderer.prototype.del = function(text) {
+  return '<del>' + text + '</del>';
+};
+
+Renderer.prototype.link = function(href, title, text) {
+  if (this.options.sanitize) {
+    try {
+      var prot = decodeURIComponent(unescape(href))
+        .replace(/[^\w:]/g, '')
+        .toLowerCase();
+    } catch (e) {
+      return '';
+    }
+    if (prot.indexOf('javascript:') === 0) {
+      return '';
+    }
+  }
+  var out = '<a href="' + href + '"';
+  if (title) {
+    out += ' title="' + title + '"';
+  }
+  out += '>' + text + '</a>';
+  return out;
+};
+
+Renderer.prototype.image = function(href, title, text) {
+  var out = '<img src="' + href + '" alt="' + text + '"';
+  if (title) {
+    out += ' title="' + title + '"';
+  }
+  out += this.options.xhtml ? '/>' : '>';
+  return out;
+};
+
+/**
  * Parsing & Compiling
  */
 
@@ -2583,14 +2745,17 @@ function Parser(options) {
   this.tokens = [];
   this.token = null;
   this.options = options || marked.defaults;
+  this.options.renderer = this.options.renderer || new Renderer;
+  this.renderer = this.options.renderer;
+  this.renderer.options = this.options;
 }
 
 /**
  * Static Parse Method
  */
 
-Parser.parse = function(src, options) {
-  var parser = new Parser(options);
+Parser.parse = function(src, options, renderer) {
+  var parser = new Parser(options, renderer);
   return parser.parse(src);
 };
 
@@ -2599,7 +2764,7 @@ Parser.parse = function(src, options) {
  */
 
 Parser.prototype.parse = function(src) {
-  this.inline = new InlineLexer(src.links, this.options);
+  this.inline = new InlineLexer(src.links, this.options, this.renderer);
   this.tokens = src.reverse();
 
   var out = '';
@@ -2623,7 +2788,7 @@ Parser.prototype.next = function() {
  */
 
 Parser.prototype.peek = function() {
-  return this.tokens[this.tokens.length-1] || 0;
+  return this.tokens[this.tokens.length - 1] || 0;
 };
 
 /**
@@ -2650,76 +2815,53 @@ Parser.prototype.tok = function() {
       return '';
     }
     case 'hr': {
-      return '<hr>\n';
+      return this.renderer.hr();
     }
     case 'heading': {
-      return '<h'
-        + this.token.depth
-        + '>'
-        + this.inline.output(this.token.text)
-        + '</h'
-        + this.token.depth
-        + '>\n';
+      return this.renderer.heading(
+        this.inline.output(this.token.text),
+        this.token.depth,
+        this.token.text);
     }
     case 'code': {
-      if (this.options.highlight) {
-        var code = this.options.highlight(this.token.text, this.token.lang);
-        if (code != null && code !== this.token.text) {
-          this.token.escaped = true;
-          this.token.text = code;
-        }
-      }
-
-      if (!this.token.escaped) {
-        this.token.text = escape(this.token.text, true);
-      }
-
-      return '<pre><code'
-        + (this.token.lang
-        ? ' class="lang-'
-        + this.token.lang
-        + '"'
-        : '')
-        + '>'
-        + this.token.text
-        + '</code></pre>\n';
+      return this.renderer.code(this.token.text,
+        this.token.lang,
+        this.token.escaped);
     }
     case 'table': {
-      var body = ''
-        , heading
+      var header = ''
+        , body = ''
         , i
         , row
         , cell
+        , flags
         , j;
 
       // header
-      body += '<thead>\n<tr>\n';
+      cell = '';
       for (i = 0; i < this.token.header.length; i++) {
-        heading = this.inline.output(this.token.header[i]);
-        body += this.token.align[i]
-          ? '<th align="' + this.token.align[i] + '">' + heading + '</th>\n'
-          : '<th>' + heading + '</th>\n';
+        flags = { header: true, align: this.token.align[i] };
+        cell += this.renderer.tablecell(
+          this.inline.output(this.token.header[i]),
+          { header: true, align: this.token.align[i] }
+        );
       }
-      body += '</tr>\n</thead>\n';
+      header += this.renderer.tablerow(cell);
 
-      // body
-      body += '<tbody>\n'
       for (i = 0; i < this.token.cells.length; i++) {
         row = this.token.cells[i];
-        body += '<tr>\n';
-        for (j = 0; j < row.length; j++) {
-          cell = this.inline.output(row[j]);
-          body += this.token.align[j]
-            ? '<td align="' + this.token.align[j] + '">' + cell + '</td>\n'
-            : '<td>' + cell + '</td>\n';
-        }
-        body += '</tr>\n';
-      }
-      body += '</tbody>\n';
 
-      return '<table>\n'
-        + body
-        + '</table>\n';
+        cell = '';
+        for (j = 0; j < row.length; j++) {
+          cell += this.renderer.tablecell(
+            this.inline.output(row[j]),
+            { header: false, align: this.token.align[j] }
+          );
+        }
+
+        body += this.renderer.tablerow(cell);
+      }
+      return this.renderer.table(header, body);
     }
     case 'blockquote_start': {
       var body = '';
@@ -2728,25 +2870,17 @@ Parser.prototype.tok = function() {
         body += this.tok();
       }
 
-      return '<blockquote>\n'
-        + body
-        + '</blockquote>\n';
+      return this.renderer.blockquote(body);
     }
     case 'list_start': {
-      var type = this.token.ordered ? 'ol' : 'ul'
-        , body = '';
+      var body = ''
+        , ordered = this.token.ordered;
 
       while (this.next().type !== 'list_end') {
         body += this.tok();
       }
 
-      return '<'
-        + type
-        + '>\n'
-        + body
-        + '</'
-        + type
-        + '>\n';
+      return this.renderer.list(body, ordered);
     }
     case 'list_item_start': {
       var body = '';
@@ -2757,9 +2891,7 @@ Parser.prototype.tok = function() {
           : this.tok();
       }
 
-      return '<li>'
-        + body
-        + '</li>\n';
+      return this.renderer.listitem(body);
     }
     case 'loose_item_start': {
       var body = '';
@@ -2768,24 +2900,19 @@ Parser.prototype.tok = function() {
         body += this.tok();
       }
 
-      return '<li>'
-        + body
-        + '</li>\n';
+      return this.renderer.listitem(body);
     }
     case 'html': {
-      return !this.token.pre && !this.options.pedantic
+      var html = !this.token.pre && !this.options.pedantic
         ? this.inline.output(this.token.text)
         : this.token.text;
+      return this.renderer.html(html);
     }
     case 'paragraph': {
-      return '<p>'
-        + this.inline.output(this.token.text)
-        + '</p>\n';
+      return this.renderer.paragraph(this.inline.output(this.token.text));
     }
     case 'text': {
-      return '<p>'
-        + this.parseText()
-        + '</p>\n';
+      return this.renderer.paragraph(this.parseText());
     }
   }
 };
@@ -2801,6 +2928,19 @@ function escape(html, encode) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+function unescape(html) {
+  return html.replace(/&([#\w]+);/g, function(_, n) {
+    n = n.toLowerCase();
+    if (n === 'colon') return ':';
+    if (n.charAt(0) === '#') {
+      return n.charAt(1) === 'x'
+        ? String.fromCharCode(parseInt(n.substring(2), 16))
+        : String.fromCharCode(+n.substring(1));
+    }
+    return '';
+  });
 }
 
 function replace(regex, opt) {
@@ -2835,17 +2975,90 @@ function merge(obj) {
   return obj;
 }
 
+
 /**
  * Marked
  */
 
-function marked(src, opt) {
+function marked(src, opt, callback) {
+  if (callback || typeof opt === 'function') {
+    if (!callback) {
+      callback = opt;
+      opt = null;
+    }
+
+    opt = merge({}, marked.defaults, opt || {});
+
+    var highlight = opt.highlight
+      , tokens
+      , pending
+      , i = 0;
+
+    try {
+      tokens = Lexer.lex(src, opt)
+    } catch (e) {
+      return callback(e);
+    }
+
+    pending = tokens.length;
+
+    var done = function(err) {
+      if (err) {
+        opt.highlight = highlight;
+        return callback(err);
+      }
+
+      var out;
+
+      try {
+        out = Parser.parse(tokens, opt);
+      } catch (e) {
+        err = e;
+      }
+
+      opt.highlight = highlight;
+
+      return err
+        ? callback(err)
+        : callback(null, out);
+    };
+
+    if (!highlight || highlight.length < 3) {
+      return done();
+    }
+
+    delete opt.highlight;
+
+    if (!pending) return done();
+
+    for (; i < tokens.length; i++) {
+      (function(token) {
+        if (token.type !== 'code') {
+          return --pending || done();
+        }
+        return highlight(token.text, token.lang, function(err, code) {
+          if (err) return done(err);
+          if (code == null || code === token.text) {
+            return --pending || done();
+          }
+          token.text = code;
+          token.escaped = true;
+          --pending || done();
+        });
+      })(tokens[i]);
+    }
+
+    return;
+  }
   try {
+    if (opt) opt = merge({}, marked.defaults, opt);
     return Parser.parse(Lexer.lex(src, opt), opt);
   } catch (e) {
     e.message += '\nPlease report this to https://github.com/chjj/marked.';
     if ((opt || marked.defaults).silent) {
-      return 'An error occured:\n' + e.message;
+      return '<p>An error occured:</p><pre>'
+        + escape(e.message + '', true)
+        + '</pre>';
     }
     throw e;
   }
@@ -2857,7 +3070,7 @@ function marked(src, opt) {
 
 marked.options =
 marked.setOptions = function(opt) {
-  marked.defaults = opt;
+  merge(marked.defaults, opt);
   return marked;
 };
 
@@ -2867,8 +3080,14 @@ marked.defaults = {
   breaks: false,
   pedantic: false,
   sanitize: false,
+  smartLists: false,
   silent: false,
-  highlight: null
+  highlight: null,
+  langPrefix: 'lang-',
+  smartypants: false,
+  headerPrefix: '',
+  renderer: new Renderer,
+  xhtml: false
 };
 
 /**
@@ -2878,6 +3097,8 @@ marked.defaults = {
 marked.Parser = Parser;
 marked.parser = Parser.parse;
 
+marked.Renderer = Renderer;
+
 marked.Lexer = Lexer;
 marked.lexer = Lexer.lex;
 
@@ -2886,7 +3107,7 @@ marked.inlineLexer = InlineLexer.output;
 
 marked.parse = marked;
 
-if (typeof module !== 'undefined') {
+if (typeof module !== 'undefined' && typeof exports === 'object') {
   module.exports = marked;
 } else if (typeof define === 'function' && define.amd) {
   define(function() { return marked; });

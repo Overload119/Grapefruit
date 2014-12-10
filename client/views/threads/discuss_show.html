@@ -1,12 +1,25 @@
 <template name="discussShow">
-  <a class="thread user-list-item" href="{{ pathFor route='discussShow' }}">
-    <div class="profile-image" style="{{ threadThumbnail }}"></div>
-    <div class="item-details">
-      <p class="lead">{{ threadTitle }}</p>
-      <p class="sublead">{{ lastThreadMessage }}</p>
+  <div class="module">
+    <div class="discuss-chat-screen">
+      {{#if isChatEmpty}}
+        <p class="empty-thread">This chat is currently empty.</p>
+      {{else}}
+        {{#if hasMoreMessages}}
+          {{#if moreMessagesLoading}}
+            <div class="more-messages">Loading...</div>
+          {{else}}
+            <button id="more-message-btn" class="more-messages">Load More Messages</button>
+          {{/if}}
+        {{/if}}
+        {{#each messages}}
+          {{> discussBubble this}}
+        {{/each}}
+      {{/if}}
     </div>
-    <div class="profile-meta">
-      <p class="meta">{{ relativeTimeAgo lastThreadActiveDate }}</p>
-    </div>
-  </a>
+  </div>
+
+  <div class="response-area">
+    <textarea row="3" class="message-content" placeholder="Enter your message here"></textarea>
+    <button class="send-message">Send</button>
+  </div>
 </template>

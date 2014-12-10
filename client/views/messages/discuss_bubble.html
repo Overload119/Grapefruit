@@ -1,0 +1,9 @@
+<template name="discussBubble">
+  <div class="bubble loading">
+    <div class="bubble-image" style="{{authorImageStyle}}"></div>
+    <div class="bubble-content">
+      <a class="author-name" href="{{pathFor route='usersShow' data=getAuthor}}">{{ authorName }}</a>
+      <div class="author-message">{{{ contentAsHtml }}}</div>
+    </div>
+  </div>
+</template>

@@ -27,12 +27,8 @@ Meteor.publish('threads', function(limit) {
 
 Meteor.publish('threadMessages', function(threadId, limit) {
   if (this.userId) {
-    if (!limit) {
-      limit = Constants.DEFAULT_MESSAGES_LIMIT;
-    }
-
     return Messages.find({ threadId: threadId }, {
-      sort: { createdAt: -1 }, limit: limit
+      sort: { createdAt: -1 }, limit: limit || Constants.DEFAULT_MESSAGES_LIMIT
     });
   }
   return [];

@@ -17,7 +17,6 @@ iron:router
 meteorhacks:kadira
 meteorhacks:fast-render
 meteorhacks:npm
-chuangbo:marked
 sacha:spin
 npm-container
 meteor-accounts-linkedin
