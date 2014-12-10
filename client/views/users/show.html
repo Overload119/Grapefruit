@@ -11,6 +11,7 @@
     </div>
     <div class="inner">
       {{#if listedAs}}
+        <p>I am a...</p>
         <ul class="profile-tags">
           {{#each listedAs}}
             <li>{{ capitalizeEveryWord this }}</li>
@@ -19,7 +20,7 @@
       {{/if}}
 
       {{#if lookingFor}}
-        <p>Looking For:</p>
+        <p>I am looking for a...</p>
         <ul class="profile-tags">
           {{#each lookingFor}}
             <li>{{ capitalizeEveryWord this }}</li>
@@ -43,7 +44,7 @@
 
     {{#if interests}}
       <div class="user-section">
-        <h3>Interests</h3>
+        <h3>{{ pluralize interests 'Interest' }}</h3>
         <ul class="tag-list">
           {{#each interests}}
             <li>{{ capitalizeEveryWord this }}</li>
@@ -74,15 +75,17 @@
       </div>
     {{/if}}
 
-    <p>
-      <a href="{{ linkedInUrl }}" target="_blank">View {{ firstName }}'s full profile on LinkedIn <i class="fa fa-long-arrow-right"></i></a>
-    </p>
+    <div class="user-bottom-section">
+      <p>
+        <a href="{{ linkedInUrl }}" target="_blank">View {{ firstName }}'s full profile on LinkedIn <i class="fa fa-long-arrow-right"></i></a>
+      </p>
 
-    <p>
-      <button class="send-message-cta">
-        <i class="fa fa-envelope"></i>  Send {{firstName}} a Message
-      </button>
-    </p>
+      <p>
+        <button class="send-message-cta">
+          <i class="fa fa-envelope"></i>  Send {{firstName}} a Message
+        </button>
+      </p>
+    </div>
   </div>
 
 </template>

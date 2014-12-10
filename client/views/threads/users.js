@@ -1,6 +1,6 @@
-Template.usersSearch.helpers({
-  isLoginConfigured: function() {
-    return Accounts.loginServicesConfigured();
+Template.threadsUsers.helpers({
+  usersInThread: function() {
+    return Meteor.users.find({ _id: { $in: this.memberIds } });
   },
   isSearching: function() {
     return Session.get('searchQuery').trim() !== '';
@@ -30,7 +30,14 @@ Template.usersSearch.helpers({
   }
 });
 
-Template.usersSearch.events({
+Template.threadsUsers.events({
+  'click .clear-search-btn': function(evt, template) {
+    evt.preventDefault();
+
+    $('#search-bar').val('');
+    Session.set('searchQuery', '');
+    Session.set('isSearchingLoading', false);
+  },
   'click .suggestion': function(evt, template) {
     var keywordContent = $(evt.currentTarget).data('rawcontent');
     $('#search-bar').val(keywordContent);
@@ -40,8 +47,7 @@ Template.usersSearch.events({
     var searchQueryParams = {
       term: keywordContent,
       lat: Meteor.user().location[0],
-      lng: Meteor.user().location[1],
-      searchType: 'geo'
+      lng: Meteor.user().location[1]
     };
 
     Session.set('isSearchLoading', true);
@@ -52,6 +58,7 @@ Template.usersSearch.events({
   },
   'keyup #search-bar': function(evt, template) {
     var currentTerms = $(evt.currentTarget).val();
+    Session.set('searchQuery', currentTerms);
 
     if (currentTerms.length === 0) {
       Session.set('suggestedKeywords', []);
@@ -69,8 +76,8 @@ Template.usersSearch.events({
     if (evt.keyCode === 13) {
       var searchQueryParams = {
         term: $(evt.currentTarget).val(),
-        lat: Meteor.user().location[0],
-        lng: Meteor.user().location[1]
+        searchType: 'users_in_thread',
+        threadId: this._id
       };
 
       Session.set('searchQuery', searchQueryParams.term);
@@ -83,7 +90,7 @@ Template.usersSearch.events({
   }
 });
 
-Template.usersSearch.created = function() {
+Template.threadsUsers.created = function() {
   // Keywords are subscribed and waitedOn in the router.
   this.keywordFuzzySearch = new Fuse(Keywords.find({}).fetch(), { keys: ['content'], id: '_id' });
   Session.setDefault('searchQuery', '');

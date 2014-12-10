@@ -20,3 +20,10 @@ MessageSchema = new SimpleSchema({
 });
 
 Messages.attachSchema(MessageSchema);
+
+Messages.after.insert(function(userId, doc) {
+  // After a message is added, then add the threadId to the users threadIds.
+  Meteor.users.update({ _id: userId }, {
+    $addToSet: { threadIds: doc.threadId }
+  });
+});

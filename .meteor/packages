@@ -9,17 +9,24 @@ less
 spiderable
 underscore
 accounts-password
+service-configuration
+
 aldeed:simple-schema
 aldeed:collection2
+
 mrt:moment
-service-configuration
 iron:router
+
 meteorhacks:kadira
 meteorhacks:fast-render
 meteorhacks:npm
+
 sacha:spin
+
 npm-container
 meteor-accounts-linkedin
 meteor-linkedin
+
 reywood:publish-composite
+matb33:collection-hooks
 

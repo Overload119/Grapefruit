@@ -70,6 +70,16 @@ Schema.User = new SimpleSchema({
     type: Date,
     optional: true
   },
+  threadIds: {
+    type: [String],
+    defaultValue: [],
+    optional: false
+  },
+  subscribedThreadIds: {
+    type: [String],
+    defaultValue: [],
+    optional: false
+  },
   isTutorialComplete: {
     type: Boolean,
     defaultValue: false

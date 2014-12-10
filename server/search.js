@@ -15,8 +15,10 @@ Meteor.methods({
     // Limit of 100 is also enforced by $near.
     // TODO Incorporate recently active
     check(searchParams, Object);
+    check(searchParams.searchType, String);
 
-    if (!this.userId) {
+    var userId = this.userId;
+    if (!userId) {
       throw new Meteor.Error('User is not logged in');
     }
 
@@ -25,38 +27,63 @@ Meteor.methods({
     }
 
     searchParams.term = searchParams.term.toLowerCase();
-    var userId = this.userId;
 
-    var asyncDbLookup = function(callback) {
-      _db.command({
-        geoNear: 'users',
-        near: [searchParams.lat, searchParams.lng],
-        limit: 30,
-        query: {
-          _id: { $ne: userId },
+    var searchResult;
+    switch (searchParams.searchType) {
+      case 'geo':
+        check(searchParams.lat, Number);
+        check(searchParams.lng, Number);
+        var asyncDbLookup = function(callback) {
+          _db.command({
+            geoNear: 'users',
+            near: [searchParams.lat, searchParams.lng],
+            limit: 30,
+            query: {
+              _id: { $ne: userId }, //ignore the searcher.
+              $or: [
+                { interests: searchParams.term },
+                { skills: searchParams.term },
+                { jobExperience: searchParams.term },
+                { listedAs: searchParams.term }
+              ]
+            }
+          }, function(err, res) {
+            var results = [];
+
+            // Pluck only the fields we want.
+            if (res.results && res.results.length > 0) {
+              results = _.map(res.results, function(entry) {
+                var mappedEntry = _.pick(entry.obj, '_id', 'pictureUrl', 'headline', 'firstName');
+                mappedEntry.distance = entry.dis;
+                return mappedEntry
+              });
+            }
+
+            callback(null, results);
+          });
+        };
+
+        var syncDbLookup = Meteor.wrapAsync(asyncDbLookup);
+        searchResult = syncDbLookup();
+        break;
+      case 'users_in_thread':
+        check(searchParams.threadId, String);
+
+        searchResult = Meteor.users.find({
+          threadIds: searchParams.threadId,
           $or: [
             { interests: searchParams.term },
             { skills: searchParams.term },
-            { jobExperience: searchParams.term }
+            { jobExperience: searchParams.term },
+            { listedAs: searchParams.term }
           ]
-        }
-      }, function(err, res) {
-        var results = [];
+        }, { limit: 30 }).fetch();
+        break;
+      default:
+        throw new Meteor.Error('Unrecognized search type: ' + searchParams.searchType);
+        break;
+    }
 
-        // Pluck only the fields we want.
-        if (res.results && res.results.length > 0) {
-          results = _.map(res.results, function(entry) {
-            var mappedEntry = _.pick(entry.obj, '_id', 'pictureUrl', 'headline', 'firstName');
-            mappedEntry.distance = entry.dis;
-            return mappedEntry
-          });
-        }
-
-        callback(null, results);
-      });
-    };
-
-    var syncDbLookup = Meteor.wrapAsync(asyncDbLookup);
-    return syncDbLookup();
+    return searchResult;
   }
 });

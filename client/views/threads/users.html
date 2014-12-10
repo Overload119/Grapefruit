@@ -1,6 +1,11 @@
-<template name="usersSearch">
+<template name="threadsUsers">
+
+  <div class="module">
+    <a href="javascript: history.back();"><i class="fa fa-long-arrow-left"></i> Back</a>
+  </div>
+
   <div class="top-bar">
-    <input id="search-bar" class="search-bar" type="search" placeholder="Search for skills, work experience, role, or interests..." value="{{ searchQuery }}"/>
+    <input id="search-bar" class="search-bar" type="search" placeholder="Search skills and interests for users in this discussion..." value="{{ searchQuery }}"/>
     {{#if suggestedKeywords}}
       <div class="suggestions">
         {{#each suggestedKeywords}}
@@ -10,8 +15,14 @@
     {{/if}}
   </div>
 
-  {{#if isSearching}}
-    <div class="search-results">
+  <div class="search-results">
+    <h3>
+      People participating in '{{ title }}'...
+      {{#if isSearching}}
+        <a href="#" class="clear-search-btn">Clear search</a>
+      {{/if}}
+    </h3>
+    {{#if isSearching}}
       {{#if searchResults}}
         <div class="search-results-container">
           {{#each searchResults}}
@@ -20,9 +31,6 @@
               <div class="item-details">
                 <p class="lead">{{ firstName }}</p>
                 <p class="sublead">{{ headline }}</p>
-              </div>
-              <div class="profile-meta">
-                <p class="meta">{{ distanceAwayInKm distance }}</p>
               </div>
             </a>
           {{/each}}
@@ -37,6 +45,19 @@
           <p><i>Tip: Clicking one of the suggested keyword will guarantee a result.</i></p>
         {{/if}}
       {{/if}}
-    </div>
-  {{/if}}
+    {{else}}
+      <!-- Show a list of all the users in this discussion. -->
+      <div class="search-results-container">
+        {{#each usersInThread}}
+          <a class="user-list-item" href="{{ pathFor route='usersShow'}}">
+            <div class="profile-image" style="{{ profileBackgroundImage this }}"></div>
+            <div class="item-details">
+              <p class="lead">{{ firstName }}</p>
+              <p class="sublead">{{ headline }}</p>
+            </div>
+          </a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
 </template>

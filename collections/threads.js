@@ -56,9 +56,6 @@ ThreadsSchema = new SimpleSchema({
 
 Threads.attachSchema(ThreadsSchema);
 
-var buildLastActiveUser = function() {
-}
-
 Meteor.methods({
   sendMessageToThread: function(threadId, message) {
     check(threadId, String);
