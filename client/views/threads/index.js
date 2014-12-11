@@ -20,6 +20,14 @@ Template.threadsIndex.helpers({
     }
     return 'Unknown Category';
   },
+  currentCategoryDescription: function() {
+    for (var i = 0; i < Constants.THREAD_CATEGORIES.length; i++) {
+      if (Constants.THREAD_CATEGORIES[i].dbName === Session.get('currentCategory')) {
+        return Constants.THREAD_CATEGORIES[i].description;
+      }
+    }
+    return 'Unknown Description';
+  },
   threads: function() {
     return Threads.find({ category: Session.get('currentCategory') }, threadLimitOptions);
   },

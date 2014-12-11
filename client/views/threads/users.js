@@ -3,19 +3,19 @@ Template.threadsUsers.helpers({
     return Meteor.users.find({ _id: { $in: this.memberIds } });
   },
   isSearching: function() {
-    return Session.get('searchQuery').trim() !== '';
+    return Session.get('tu_searchQuery').trim() !== '';
   },
   searchResults: function() {
-    return Session.get('searchResults');
+    return Session.get('tu_searchResults');
   },
   suggestedKeywords: function() {
-    return Session.get('suggestedKeywords');
+    return Session.get('tu_suggestedKeywords');
   },
   isSearchLoading: function() {
-    return Session.get('isSearchLoading');
+    return Session.get('tu_isSearchLoading');
   },
   searchQuery: function() {
-    return Session.get('searchQuery');
+    return Session.get('tu_searchQuery');
   },
   formatKeyword: function(keyword) {
     if (typeof keyword !== 'string') {
@@ -30,38 +30,36 @@ Template.threadsUsers.helpers({
   }
 });
 
+var triggerSearch = function() {
+}
+
+Template.threadsUsers.triggerSearch = function() {
+
+};
+
 Template.threadsUsers.events({
   'click .clear-search-btn': function(evt, template) {
     evt.preventDefault();
 
     $('#search-bar').val('');
-    Session.set('searchQuery', '');
-    Session.set('isSearchingLoading', false);
+    Session.set('tu_searchQuery', '');
+    Session.set('tu_suggestedKeywords', []);
+    Session.set('tu_searchResults', []);
+    Session.set('tu_isSearchingLoading', false);
   },
   'click .suggestion': function(evt, template) {
     var keywordContent = $(evt.currentTarget).data('rawcontent');
     $('#search-bar').val(keywordContent);
-    Session.set('searchQuery', keywordContent);
+    Session.set('tu_searchQuery', keywordContent);
 
-    // Send a search request.
-    var searchQueryParams = {
-      term: keywordContent,
-      lat: Meteor.user().location[0],
-      lng: Meteor.user().location[1]
-    };
-
-    Session.set('isSearchLoading', true);
-    Meteor.call('searchQuery', searchQueryParams, function(err, result) {
-      Session.set('searchResults', result);
-      Session.set('isSearchLoading', false);
-    });
+    template.triggerSearch();
   },
   'keyup #search-bar': function(evt, template) {
     var currentTerms = $(evt.currentTarget).val();
-    Session.set('searchQuery', currentTerms);
+    Session.set('tu_searchQuery', currentTerms);
 
     if (currentTerms.length === 0) {
-      Session.set('suggestedKeywords', []);
+      Session.set('tu_suggestedKeywords', []);
       return;
     }
 
@@ -69,31 +67,45 @@ Template.threadsUsers.events({
       // Only start fuzzy search after 2 character to make it more responsive.
       var suggestedTermIds = template.keywordFuzzySearch.search(currentTerms);
       var suggestedKeywords = Keywords.find({ _id: { $in: suggestedTermIds } } ).fetch();
-      Session.set('suggestedKeywords', suggestedKeywords);
+      Session.set('tu_suggestedKeywords', suggestedKeywords);
     }
 
     // If they hit Enter, start a search.
     if (evt.keyCode === 13) {
-      var searchQueryParams = {
-        term: $(evt.currentTarget).val(),
-        searchType: 'users_in_thread',
-        threadId: this._id
-      };
-
-      Session.set('searchQuery', searchQueryParams.term);
-      Session.set('isSearchLoading', true);
-      Meteor.call('searchQuery', searchQueryParams, function(err, result) {
-        Session.set('searchResults', result);
-        Session.set('isSearchLoading', false);
-      });
+      template.triggerSearch();
     }
+
+    // Create a timeout after 1 second automatically do a search.
+    clearTimeout(template.triggerSearchTimeout);
+    template.triggerSearchTimeout = setTimeout(template.triggerSearch, 1100);
   }
 });
 
 Template.threadsUsers.created = function() {
   // Keywords are subscribed and waitedOn in the router.
   this.keywordFuzzySearch = new Fuse(Keywords.find({}).fetch(), { keys: ['content'], id: '_id' });
-  Session.setDefault('searchQuery', '');
-  Session.setDefault('isSearchLoading', false);
-  Session.setDefault('suggestedKeywords', []);
+  this.triggerSearchTimeout = null;
+  this.triggerSearch = function() {
+    var searchTerm = Session.get('tu_searchQuery');
+
+    var searchParams = {
+      term: searchTerm,
+      searchType: 'users_in_thread',
+      threadId: this.data._id
+    };
+
+    Session.set('tu_isSearchLoading', true);
+    Meteor.call('searchQuery', searchParams, function(err, result) {
+      console.log(result);
+      console.log(err);
+      console.log(searchParams);
+
+      Session.set('tu_searchResults', result);
+      Session.set('tu_isSearchLoading', false);
+    });
+  }.bind(this);
+
+  Session.set('tu_searchQuery', '');
+  Session.set('tu_isSearchLoading', false);
+  Session.set('tu_suggestedKeywords', []);
 }

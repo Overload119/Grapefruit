@@ -14,9 +14,9 @@ Template.messagesBubble.rendered = function() {
   // Only do this if the scrolling is relatively close to the bottom
   // (Avoid if user was scrolling previous messages)
   var scrollTop = this.firstNode.parentElement.scrollTop;
-  var scrollHeight = this.firstNode.parentElement.scrollHeight;
+  var elementHeight = this.firstNode.parentElement.offsetHeight;
 
-  var relativeScrollPos = (scrollTop / scrollHeight);
+  var relativeScrollPos = (scrollTop / elementHeight);
   if (relativeScrollPos > 0.6) {
     this.firstNode.parentElement.scrollTop =
       this.firstNode.parentElement.scrollHeight;

@@ -57,29 +57,34 @@ Template.usersSettings.events({
     }
   },
   'click .tag-submit': function(evt, template) {
-    var el = $(evt.currentTarget);
-    var txtbox = el.siblings('.tag-textbox');
-    var userKey = el.closest('.list-card').data('user-key');
-    var payload = {}
-    payload[ userKey ] = txtbox.val();
+    var el        = $(evt.currentTarget);
+    var txtbox    = el.siblings('.tag-textbox');
+    var userKey   = el.closest('.list-card').data('user-key');
+    var payload   = {}
+    var value     = txtbox.val();
 
-    if (txtbox.val() === '') {
+    if (!value) {
       return;
     }
 
-    if (_.contains(template.data.interests, txtbox.val().toLowerCase())) {
+    value = value.toLowerCase();
+    if (_.contains(template.data[ userKey ], value)) {
       txtbox.notify(txtbox.val() + ' has already been added.', { position: 'top left' });
       txtbox.val('');
       return;
     }
 
+    payload[ userKey ] = txtbox.val();
     txtbox.val('');
 
     Meteor.users.update({ _id: this._id }, {
       $addToSet: payload
     });
 
-    // Scroll to bottom if possible.
+    // After adding the interest or the skill, update the keyword associated with it.
+    Meteor.call('insertOrUpdateKeyword', value);
+
+    // Scroll to bottom if possible and animate the new addition.
     var newEl = el.closest('.list-card').find('.list li:last').addClass('appear');
     el.closest('.list-card').find('.list').scrollToBottom(500);
     Meteor.defer(function() {
@@ -92,6 +97,8 @@ Template.usersSettings.events({
     var userKey = el.closest('.list-card').data('user-key');
     var payload = {};
     payload[ userKey ] = tag;
+
+    Meteor.call('removeKeyword', tag);
 
     // Must use template.data here because `this` changed scope since this element is in a
     // #each loop.

@@ -20,6 +20,7 @@ iron:router
 meteorhacks:kadira
 meteorhacks:fast-render
 meteorhacks:npm
+meteorhacks:subs-manager
 
 sacha:spin
 

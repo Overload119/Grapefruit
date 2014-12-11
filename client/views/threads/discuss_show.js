@@ -11,7 +11,7 @@ Template.discussShow.helpers({
   messages: function() {
     // Sort by ASC first, so the last element is the most recent.
     var messages = Messages.find({ threadId: this._id }, {
-      sort: { createdAt: -1 }, limit: Session.get('messageLimit')
+      sort: { createdAt: -1 }, limit: Session.get('ds_messageLimit')
     }).fetch();
 
     this.messageCount = messages.length;
@@ -20,10 +20,10 @@ Template.discussShow.helpers({
     return _.sortBy(messages, function(message) { return message.createdAt });
   },
   moreMessagesLoading: function() {
-    return Session.get('moreMessagesLoading');
+    return Session.get('ds_moreMessagesLoading');
   },
   hasMoreMessages: function() {
-    return this.messageCount > Session.get('messageLimit');
+    return this.messageCount > Session.get('ds_messageLimit');
   },
   isChatEmpty: function() {
     return this.messageCount === 0;
@@ -32,13 +32,13 @@ Template.discussShow.helpers({
 
 Template.discussShow.events({
   'click #more-message-btn': function(evt, template) {
-    var oldMessageLimit = Session.get('messageLimit');
-    Session.set('messageLimit', oldMessageLimit + Constants.DEFAULT_MESSAGES_LIMIT);
+    var oldMessageLimit = Session.get('ds_messageLimit');
+    Session.set('ds_messageLimit', oldMessageLimit + Constants.DEFAULT_MESSAGES_LIMIT);
 
     // Subscribe to more messages!
-    Meteor.subscribe('threadMessages', template.data._id, Session.get('messageLimit'),
+    Meteor.subscribe('threadMessages', template.data._id, Session.get('ds_messageLimit'),
       function onReady() {
-        Session.set('moreMessagesLoading', false);
+        Session.set('ds_moreMessagesLoading', false);
       });
   },
   'keydown .message-content': function(event, template) {
@@ -78,9 +78,8 @@ Template.discussShow.events({
 
 Template.discussShow.created = function() {
   this.messageCount = 0;
-  Session.setDefault('messageLimit', Constants.DEFAULT_MESSAGES_LIMIT);
-  Session.setDefault('messages', []);
-  Session.setDefault('moreMessagesLoading', false);
+  Session.setDefault('ds_messageLimit', Constants.DEFAULT_MESSAGES_LIMIT);
+  Session.setDefault('ds_moreMessagesLoading', false);
 }
 
 Template.discussShow.rendered = function() {
