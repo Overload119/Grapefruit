@@ -88,6 +88,14 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     defaultValue: true
   },
+  isMessagable: {
+    type: Boolean,
+    defaultValue: true
+  },
+  autoSubscribe: {
+    type: Boolean,
+    defaultValue: true
+  },
   services: {
     type: Object,
     optional: true,

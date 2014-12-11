@@ -1,4 +1,7 @@
 Template.usersShow.helpers({
+  userIsMessagable: function() {
+    return Meteor.userId() !== this._id && this.isMessagable;
+  },
   showSummaryOrPlaceholder: function(summaryText) {
     if (summaryText) {
       var textLines = summaryText.split('\n');

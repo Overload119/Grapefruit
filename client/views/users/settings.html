@@ -2,6 +2,16 @@
   <div class="module">
     <h3>Hey, {{ firstName }} {{lastName}}.</h3>
     <p>This is your dashboard where you can update your public profile or configuring your settings.</p>
+    <div class="checkboxes">
+      <label>
+        <input id="isMessagableToggle" type="checkbox" checked={{isMessagable}} />
+        Allow others to send me messages.
+      </label>
+      <label>
+        <input id="autoSubscribeToggle" type="checkbox" checked={{autoSubscribe}} />
+        Automatically subscribe to discussions I create.
+      </label>
+    </div>
   </div>
 
   <div class="module">

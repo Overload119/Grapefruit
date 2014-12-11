@@ -16,6 +16,14 @@ Template.usersSettings.helpers({
 });
 
 Template.usersSettings.events({
+  'change #isMessagableToggle': function(evt, template) {
+    var newValue = $(evt.currentTarget).is(':checked');
+    Meteor.users.update({ _id: this._id }, { $set: { isMessagable: newValue } });
+  },
+  'change #autoSubscribeToggle': function(evt, template) {
+    var newValue = $(evt.currentTarget).is(':checked');
+    Meteor.users.update({ _id: this._id }, { $set: { autoSubscribe: newValue } });
+  },
   'click #summaryPanel button': function(evt, template) {
     var el        = $(evt.currentTarget);
     var panel     = $('#summaryPanel');
