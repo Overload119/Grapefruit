@@ -1,4 +1,7 @@
 Template.discussShow.helpers({
+  isSubscribed: function() {
+    return _.contains(Meteor.user().subscribedThreadIds, this._id);
+  },
   numberOfDiscussionMembers: function() {
     return Meteor.users.find({ _id: { $in: thread.memberIds } }).count();
   },
@@ -47,8 +50,22 @@ Template.discussShow.events({
       $('.send-message').click();
     }
   },
+  'change #subscribeToggle': function(evt, template) {
+    var subscribe = $(evt.currentTarget).is(':checked');
+
+    if (subscribe) {
+      Meteor.users.update({ _id: Meteor.userId() }, {
+        $addToSet: { subscribedThreadIds: this._id }
+      });
+    } else {
+      Meteor.users.update({ _id: Meteor.userId() }, {
+        $pull: { subscribedThreadIds: this._id }
+      });
+    }
+  },
   'click .send-message': function(event, template) {
     var messageContent = stripHtml($('.message-content').val());
+    var subscribe      = $('.subscribe input').is(':checked');
 
     if (!messageContent) {
       return;

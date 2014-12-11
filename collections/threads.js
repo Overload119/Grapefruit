@@ -103,6 +103,13 @@ Meteor.methods({
         }
       });
 
+      // After a message is sent, possibly subscribe the user to the thread.
+      if (Meteor.user().autoSubscribe) {
+        Meteor.users.update({ _id: this.userId }, {
+          $addToSet: { subscribedThreadIds: threadId }
+        });
+      }
+
       if (thread.isPrivate && !_.contains(thread.memberIds, this.userId)) {
         throw new Meteor.Error('You cannot send messages to this thread');
       }

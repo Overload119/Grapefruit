@@ -47,16 +47,29 @@ Template.registerHelper('capitalizeEveryWord', function(tag) {
   return result.trim();
 });
 
+pluralizeWord = function(word) {
+  var pluralWord = word;
+  switch(word) {
+    case 'person':
+      pluralWord = 'people';
+      break;
+    default:
+      pluralWord = pluralWord + 's';
+      break;
+  }
+  return pluralWord;
+}
+
 Template.registerHelper('pluralize', function(arrOrNumber, word) {
   if (arrOrNumber instanceof Array) {
     if (arrOrNumber.length === 0 || arrOrNumber.length > 1) {
-      return arrOrNumber.length + ' ' + word + 's';
+      return arrOrNumber.length + ' ' + pluralizeWord(word);
     } else {
       return arrOrNumber.length + ' ' + word;
     }
   } else if (typeof arrOrNumber === 'number') {
     if (arrOrNumber === 0 || arrOrNumber > 1) {
-      return arrOrNumber + ' ' + word + 's';
+      return arrOrNumber + ' ' + pluralizeWord(word);
     } else {
       return arrOrNumber + ' ' + word;
     }
