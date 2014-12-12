@@ -24,17 +24,33 @@ label {
   font-weight: normal;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 .5em 0;
+}
+
+p {
+  margin: 0 0 .5em 0;
+}
+
 button, textarea, input {
   outline: none;
   border: 0;
 }
 
 button {
-  color: #FFF;
-  background: @buttonColor;
+  color: @buttonColor;
+  background: #FFF;
   border-radius: 4px;
+  border: 1px solid @baseBorderColor;
+  padding: .5em .6em;
+  .box-shadow(0 1px 0 0 rgba(0, 0, 0, 0.05));
   &:hover {
-    background: lighten(@buttonColor, 5%);
+    border-color: darken(@baseBorderColor, 3%);
+    .box-shadow(0 1px 0 0 rgba(0, 0, 0, 0.08));
+  }
+  &:active {
+    .box-shadow(inset 0 1px 1px 1px rgba(0, 0, 0, 0.1));
+    background: darken(@baseColor, 1%);
   }
 }
 
@@ -70,5 +86,27 @@ button {
   .module-title {
     font-size: 1.5em;
     margin-bottom: 0.5em;
+  }
+}
+
+.sort-bar {
+  border-bottom: 1px solid @baseBorderColor;
+  button {
+    background: none;
+    box-shadow: none;
+    padding: .5em;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    position: relative;
+    top: 1px;
+    margin-right: 1em;
+    &:hover {
+      color: @accentColor;
+    }
+    &.active {
+      color: @accentColor;
+      border-bottom: 1px solid @accentColor;
+    }
   }
 }

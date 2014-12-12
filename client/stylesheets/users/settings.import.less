@@ -49,6 +49,9 @@
     bottom: 0px;
     border-radius: 4px 0 0 0;
     padding: .25em .5em;
+    box-shadow: none;
+    border-right: 0;
+    border-bottom: 0;
   }
   &.editing {
     background: #FFF;
@@ -92,6 +95,10 @@
       }
       .tag-submit {
         border-radius: 4px;
+        float: right;
+        margin-top: 3px;
+        margin-right: 3px;
+        padding: .25em;
         @media (min-device-width : 320px) and (max-device-width : 480px) {
           width: 100%;
         }
@@ -124,6 +131,8 @@
           width: 1.75em;
           float: right;
           border-radius: 4px;
+          padding: .25em 0;
+          color: #FFF;
           background: @errorColor;
           &:hover {
             background: darken(@errorColor, 4%);
