@@ -5,15 +5,13 @@
   </div>
 
   <div class="search-results">
-    <h3>
-      People participating in '{{ title }}'...
-      {{#if isSearching}}
-        <a href="#" class="clear-search-btn">Clear search</a>
-      {{/if}}
-    </h3>
+    <h3>People participating in '{{ title }}'...</h3>
 
     <div class="top-bar">
       <input id="search-bar" class="search-bar" type="search" placeholder="Search skills and interests for users in this discussion..." value="{{ searchQuery }}"/>
+      {{#if isSearching}}
+        <a href="#" class="clear-search-btn">Clear search</a>
+      {{/if}}
       {{#if suggestedKeywords}}
         <div class="suggestions">
           {{#each suggestedKeywords}}
@@ -38,6 +36,9 @@
                   <p class="lead">{{ firstName }}</p>
                   <p class="sublead">{{ headline }}</p>
                 </div>
+                <div class="profile-meta" title="{{#each listedAs}}{{formatRole this}}<br/>{{/each}}">
+                  <div class="role"><i class="fa fa-info"></i></div>
+                </div>
               </a>
             {{/each}}
           </div>
@@ -54,6 +55,11 @@
             <div class="item-details">
               <p class="lead">{{ firstName }}</p>
               <p class="sublead">{{ headline }}</p>
+            </div>
+            <div class="profile-meta">
+              <div class="profile-meta" title="{{#each listedAs}}{{formatRole this}}<br/>{{/each}}">
+                <div class="role"><i class="fa fa-info"></i></div>
+              </div>
             </div>
           </a>
         {{/each}}

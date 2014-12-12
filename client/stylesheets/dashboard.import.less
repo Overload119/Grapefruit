@@ -52,16 +52,24 @@
   .profile-image {
     width: 3em;
     height: 100%;
-    background-size: contain;
+    background-size: cover;
     background-color: @baseColor;
     background-repeat: no-repeat;
     float: left;
     margin-right: 1em;
+    border-radius: 4px;
+    border: 1px solid @baseBorderColor;
   }
   .profile-meta {
     float: right;
     .meta {
       color: lighten(@textColor, 3%);
+    }
+    .role {
+      padding: 0 .5em;
+      color: @accentColor;
+      float: right;
+      border-radius: 4px;
     }
   }
   .item-details {
@@ -92,13 +100,14 @@
   background: @baseColor;
   border-radius: 4px;
   padding: 1em;
+  .clear-search-btn {
+    color: @lightTextColor;
+    float: right;
+    font-size: 0.8em;
+  }
   h3 {
-    margin: 0 0 1em 0;
-    .clear-search-btn {
-      color: @lightTextColor;
-      float: right;
-      font-size: 0.6em;
-    }
+    margin: 1em 0 0 0;
+    text-align: center;
   }
   .search-results-container {
     max-height: 40em;

@@ -10,6 +10,24 @@ Template.registerHelper('formatName', function(user) {
   return result;
 });
 
+Template.registerHelper('formatRole', function(roleStr) {
+  var result = '';
+  switch(roleStr) {
+    case 'developer':
+      result = 'Developer';
+      break;
+    case 'business':
+      result = 'Business Developer';
+      break;
+    case 'designer':
+      result = 'Designer';
+      break;
+    default:
+      break;
+  }
+  return result;
+});
+
 Template.registerHelper('simpleFormat', function(text, placeholder) {
 
   if (typeof(text) === 'undefined' || text.length === 0) {

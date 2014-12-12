@@ -1,4 +1,9 @@
 Template.threadsUsers.helpers({
+  rolesForUser: function() {
+    var user = Meteor.users.findOne(this._id);
+    debugger
+    return user.listedAs || [];
+  },
   usersInThread: function() {
     return Meteor.users.find({ _id: { $in: this.memberIds } });
   },
@@ -30,14 +35,20 @@ Template.threadsUsers.helpers({
   }
 });
 
-var triggerSearch = function() {
-}
-
-Template.threadsUsers.triggerSearch = function() {
-
-};
-
 Template.threadsUsers.events({
+  'mouseover .profile-meta': function(evt, template) {
+    var el = $(evt.currentTarget);
+
+    if (!el.hasClass('tooltipstered')) {
+      el.tooltipster({
+        theme: 'tooltipster-light',
+        contentAsHTML: true,
+        animation: 'grow',
+        speed: 250,
+        position: 'left'
+      });
+    }
+  },
   'click .clear-search-btn': function(evt, template) {
     evt.preventDefault();
 
@@ -81,6 +92,16 @@ Template.threadsUsers.events({
   }
 });
 
+Template.threadsUsers.rendered = function() {
+  $('.profile-meta').tooltipster({
+    theme: 'tooltipster-light',
+    contentAsHTML: true,
+    animation: 'grow',
+    speed: 250,
+    position: 'left'
+  });
+}
+
 Template.threadsUsers.created = function() {
   // Keywords are subscribed and waitedOn in the router.
   this.keywordFuzzySearch = new Fuse(Keywords.find({}).fetch(), { keys: ['content'], id: '_id' });
@@ -96,10 +117,6 @@ Template.threadsUsers.created = function() {
 
     Session.set('tu_isSearchLoading', true);
     Meteor.call('searchQuery', searchParams, function(err, result) {
-      console.log(result);
-      console.log(err);
-      console.log(searchParams);
-
       Session.set('tu_searchResults', result);
       Session.set('tu_isSearchLoading', false);
     });
