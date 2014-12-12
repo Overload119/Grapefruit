@@ -14,6 +14,7 @@ Template.layout.rendered = function() {
     contentAsHTML: true,
     animation: 'grow',
     speed: 250,
-    position: 'left'
+    position: 'bottom',
+    offsetY: -15
   });
 }
