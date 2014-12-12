@@ -1,28 +1,32 @@
 <template name="layout">
   <div class="outer-wrapper">
+    <nav class="nav">
+      <div class="nav-left">
+        <a id="inbox-btn" class="{{toggleActiveRouteNav 'usersInbox'}}" href="{{ pathFor route='usersInbox'}}">
+          <i class="fa fa-envelope"></i>
+        </a>
 
-    {{#if shouldShowNav}}
-      <nav class="nav">
-        <div class="nav-left">
-          <a id="search-btn" class="{{toggleActiveRouteNav 'usersSearch'}}" href="{{ pathFor route='usersSearch' }}">
-            <i class="fa fa-search"></i>
-          </a>
-          <a id="inbox-btn" class="{{toggleActiveRouteNav 'usersInbox'}}" href="{{ pathFor route='usersInbox'}}">
-            <i class="fa fa-envelope"></i>
-          </a>
-          <a id="discuss-btn" class="{{toggleActiveRouteNav 'threadsIndex'}}" href="{{pathFor route='threadsIndex'}}">
-            <i class="fa fa-comments"></i>
-          </a>
-        </div>
+        <a id="discuss-btn" class="{{toggleActiveRouteNav 'threadsIndex'}}" href="{{pathFor route='threadsIndex'}}">
+          <i class="fa fa-comments"></i>
+        </a>
 
-        <div class="nav-right">
-          <a id="profile-btn" class="button-with-image {{toggleActiveRouteNav 'usersSettings'}}" href="{{pathFor route='usersSettings'}}">
-            <div class="image" style="{{profileBackgroundImage currentUser}}"></div>
-            <span>{{ currentUser.firstName }}</span>
-          </a>
-        </div>
-      </nav>
-    {{/if}}
+        <a id="projects-btn" class="" href="#">
+          <i class="fa fa-suitcase"></i>
+        </a>
+
+        <a id="events-btn" class="" href="">
+          <i class="fa fa-calendar"></i>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <a id="profile-btn" class="button-with-image {{toggleActiveRouteNav 'usersSettings'}}" href="{{pathFor route='usersSettings'}}">
+          <div class="image" style="{{profileBackgroundImage currentUser}}"></div>
+          <span>{{ currentUser.firstName }}</span>
+        </a>
+      </div>
+    </nav>
+
 
     <div class="inner-wrapper template-{{pageName}}">
       <div class="content-wrapper">
