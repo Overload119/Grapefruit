@@ -7,19 +7,23 @@ Meteor.publish('thread', function(threadId) {
   return [];
 });
 
-Meteor.publish('discussions', function(category, limit) {
+Meteor.publish('discussions', function(threadCriteria, threadOptions) {
+  check(threadCriteria, Object);
+  check(threadOptions, Object);
+
   if (this.userId) {
-    return Threads.find({ category: category }, {
-      sort: { lastActiveAt: -1 }, limit: (limit || Constants.DEFAULT_LIMIT)
-    });
+    return Threads.find(threadCriteria, threadOptions);
   }
+
   return [];
 });
 
 Meteor.publish('threads', function(limit) {
+  // Always publish 1 more than the limit.
+  // This will allow us to "Show More."
   if (this.userId) {
     return Threads.find({ isPrivate: false, messageCount: { $gt: 0 }}, {
-      sort: { lastActiveAt: -1 }, limit: (limit || Constants.DEFAULT_LIMIT)
+      sort: { lastActiveAt: -1 }, limit: (limit || Constants.DEFAULT_LIMIT) + 1
     });
   }
   return [];

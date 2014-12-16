@@ -1,42 +1,52 @@
-var threadLimitOptions = {
-  limit: Session.get('threadLimit'),
-  sort: { lastActiveAt: -1 },
-  skip: Session.get('threadOffset')
-}
+var getThreadParameters = function (sort) {
+  var threadCriteria = { isPrivate: false };
+
+  // Always get +1 on the limit, so we can tell if we should "Show More"
+  var threadOptions = {
+    limit: Session.get('threadLimit'),
+    sort: { lastActiveAt: -1 }
+  };
+
+  switch (sort) {
+    case 'relevant':
+      // Look for threads that contains keywords that the user has on their profile.
+      var relevanceFactors = _.union(Meteor.user().interests, Meteor.user().skills);
+      threadCriteria = {
+        tags: {
+          $in: relevanceFactors
+        }
+      };
+      break;
+    case 'active':
+    default:
+      break;
+  };
+
+  return {
+    threadCriteria: threadCriteria,
+    threadOptions: threadOptions
+  };
+};
 
 Template.threadsIndex.helpers({
-  threadCategories: function() {
-    return Constants.THREAD_CATEGORIES;
-  },
-  currentCategory: function() {
-    return Session.get('currentCategory');
-  },
-  currentCategoryName: function() {
-    // Iterate through the categories and find the friendly name.
-    for (var i = 0; i < Constants.THREAD_CATEGORIES.length; i++) {
-      if (Constants.THREAD_CATEGORIES[i].dbName === Session.get('currentCategory')) {
-        return Constants.THREAD_CATEGORIES[i].friendlyName;
-      }
-    }
-    return 'Unknown Category';
-  },
-  currentCategoryDescription: function() {
-    for (var i = 0; i < Constants.THREAD_CATEGORIES.length; i++) {
-      if (Constants.THREAD_CATEGORIES[i].dbName === Session.get('currentCategory')) {
-        return Constants.THREAD_CATEGORIES[i].description;
-      }
-    }
-    return 'Unknown Description';
+  activeIfSort: function(sortParam) {
+    return Session.get('ti_sort') === sortParam ? 'active' : '';
   },
   threads: function() {
-    return Threads.find({ category: Session.get('currentCategory') }, threadLimitOptions);
+    var params = getThreadParameters(Session.get('ti_sort'));
+    return Threads.find(params.threadCriteria, params.threadOptions);
   },
   hasThreads: function() {
-    return Threads.find({ category: Session.get('currentCategory') }, threadLimitOptions).count() > 0;
+    var params = getThreadParameters(Session.get('ti_sort'));
+    return Threads.find(params.threadCriteria, params.threadOptions).count() > 0;
   },
   hasMoreThreads: function() {
-    return Threads.find({ category: Session.get('currentCategory') }).count() >
-      Threads.find({ category: Session.get('currentCategory') }, threadLimitOptions).count();
+    // Check if the number of threads we're subscribed to is larger than the number of shown threads.
+    var params = getThreadParameters(Session.get('ti_sort'));
+
+    // Ignore the sort params.
+    return Threads.find(params.threadCriteria).count() >
+      Session.get('threadLimit');
   },
   isLoadingThreads: function() {
     return Session.get('isLoadingThreads');
@@ -47,6 +57,12 @@ Template.threadsIndex.helpers({
 });
 
 Template.threadsIndex.events({
+  'click .sort-bar button': function(evt, template) {
+    var el = $(evt.currentTarget);
+    var sortPref = el.data('value');
+
+    Session.set('ti_sort', sortPref);
+  },
   'click #discuss-create-btn': function(evt, template) {
     var el = $(evt.currentTarget);
     var parentEl = el.closest('p');
@@ -60,53 +76,19 @@ Template.threadsIndex.events({
       parentEl.find('i').addClass('fa-minus-circle').removeClass('fa-plus-circle');
       createEl.addClass('active');
     }
-
   },
-  'click .thread-btn': function(evt, template) {
-    var el = $(evt.currentTarget);
-    var newCategory = el.data('category');
-
-    // Do nothing if they click the same element.
-    if (newCategory === Session.get('currentCategory')) {
-      return;
-    }
-
-    Session.set('currentCategory', newCategory);
-    // Must load new threads.
+  'click .show-more-btn': function(evt, template) {
+    var oldLimit = Session.get('threadLimit');
+    Session.set('threadLimit', oldLimit + Constants.DEFAULT_LIMIT);
     Session.set('isLoadingThreads', true);
-    Session.set('threadLimit', Constants.DEFAULT_LIMIT);
-    Meteor.subscribe('discussions', newCategory, Session.get('threadLimit'),
+    var params = getThreadParameters(Session.get('ti_sort'));
+
+    // Subscribe to the additional threads. +1 on limit so we can show Show More if necessary.
+    params.threadOptions.limit++;
+    Meteor.subscribe('discussions', params.threadCriteria, params.threadOptions,
       function onReady() {
         Session.set('isLoadingThreads', false);
       });
-  },
-  'click #submit-thread-btn': function(evt, template) {
-    var el = $(evt.currentTarget);
-
-    var threadContent = $('.thread-content').val();
-    var threadTitle   = $('.thread-title').val();
-
-    if (threadTitle.trim() === '') {
-      $('.thread-title').notify('Required', { position: 'top left' });
-      return;
-    }
-
-    if (threadContent.trim() === '') {
-      $('.thread-content').notify('Required', { position: 'top left' });
-      return;
-    }
-
-    var threadData = {
-      category: Session.get('currentCategory'),
-      title: threadTitle,
-      content: threadContent
-    };
-
-    Meteor.call('startThreadWithCategory', threadData, function(err, res) {
-      Router.go('discussShow', {
-        _id: res._id
-      });
-    });
   }
 });
 
@@ -121,8 +103,7 @@ Template.threadsIndex.rendered = function() {
 };
 
 Template.threadsIndex.created = function() {
-  Session.setDefault('currentCategory', Constants.THREAD_CATEGORIES[0].dbName);
-  Session.setDefault('isLoadingThreads', false);
-  Session.setDefault('threadLimit', Constants.DEFAULT_LIMIT);
-  Session.setDefault('threadOffset', 0);
+  Session.set('pageTitle', 'Community');
+  Session.set('threadLimit', Constants.DEFAULT_LIMIT);
+  Session.set('isLoadingThreads', false);
 };

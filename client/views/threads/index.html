@@ -1,47 +1,44 @@
 <template name="threadsIndex">
-  <div class="thread-categories">
-    <p>Which kinds of discussions are you interested in?</p>
-    {{#each threadCategories}}
-      {{#if currentCategoryIs this.dbName}}
-        <button class="thread-btn active" data-category="{{this.dbName}}">{{this.friendlyName}}</button>
-      {{else}}
-        <button class="thread-btn" data-category="{{this.dbName}}">{{this.friendlyName}}</button>
-      {{/if}}
-    {{/each}}
-    <p class="category-description"><i class="fa fa-question"></i> {{ currentCategoryDescription }}</p>
-  </div>
 
   <div class="module">
-    <p class="discuss-create-p">
-      <i class="fa fa-plus-circle"></i>&nbsp;
-      <a href="#" id="discuss-create-btn">Create a discussion in '{{ currentCategoryName }}'</a>
-    </p>
-    <div class="discuss-create">
-      <input type="text" class="thread-title" placeholder="Title" autofocus="autofocus" />
-      <div class="help">
-        Your post contents can take advantage of <a href="http://www.wikiwand.com/en/Markdown" target="_blank">Markdown</a>.
+    <div class="app-section">
+      <div class="header">
+        <h1>Community Discussions</h1>
+        <button class="create">
+          Create a discussion
+          <i class="fa fa-long-arrow-right"></i>
+        </button>
       </div>
-      <div id="editor" class="thread-content-container">
-        <textarea class="thread-content" max-length="500" placeholder="Contents"></textarea>
+
+      <div class="sort-bar">
+        <button data-value="active" class="{{activeIfSort 'active'}}">
+          <i class="fa fa-fire"></i> Most Active
+        </button>
+        <button data-value="relevant" class="{{activeIfSort 'relevant'}}">
+          <i class="fa fa-child"></i> Most Relevant to Me
+        </button>
       </div>
-      <button id="submit-thread-btn"><i class="fa fa-send"></i> Create</button>
     </div>
-  </div>
 
-  <div class="module">
-    {{#if isLoadingThreads}}
-      <p><i class="fa fa-spin fa-spinner"></i> Loading discussions...</p>
-    {{else}}
-      {{#if hasThreads}}
-        {{#each threads}}
-          {{> discussListItem this }}
-        {{/each}}
-        {{#if hasMoreThreads}}
-          <p><a href="#">View more</a></p>
-        {{/if}}
+    <div class="threads-list">
+      {{#if isLoadingThreads}}
+        <p><i class="fa fa-spin fa-spinner"></i> Loading discussions...</p>
       {{else}}
-        <p>No discussions have been started in '<b>{{ currentCategoryName }}</b>'.</p>
+        {{#if hasThreads}}
+          {{#each threads}}
+            {{> discussListItem this }}
+          {{/each}}
+          {{#if hasMoreThreads}}
+            <div class="show-more">
+              <button class="show-more-btn">Show More</button>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="no-results">
+            <i class="fa fa-frown-o fa-large"></i> No discussions found.
+          </div>
+        {{/if}}
       {{/if}}
-    {{/if}}
+    </div>
   </div>
 </template>
