@@ -4,7 +4,7 @@
       <div class="header">
         <h1>Project Directory</h1>
         <button class="create">
-          Start a project
+          List your project
           <i class="fa fa-long-arrow-right"></i>
         </button>
       </div>
@@ -18,15 +18,25 @@
         </button>
       </div>
 
-      <div class="project-listing-container">
-        {{#if projects}}
-          <ul>
+      <div class="results-list projects-list">
+        {{#if isLoadingProjects}}
+          <p><i class="fa fa-spin fa-spinner"></i> Loading projects...</p>
+        {{else}}
+          {{#if projects}}
             {{#each projects}}
               {{> projectListItem this}}
             {{/each}}
-          </ul>
-        {{else}}
-          <div class="empty-list"><i class="fa fa-lg fa-frown-o"></i> No projects found.</div>
+
+            {{#if hasMoreProjects}}
+              <div class="show-more">
+                <button class="show-more-btn">Show More</button>
+              </div>
+            {{/if}}
+          {{else}}
+            <div class="no-results">
+              <i class="fa fa-frown-o fa-large"></i> No projects found.
+            </div>
+          {{/if}}
         {{/if}}
       </div>
     </div>

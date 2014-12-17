@@ -50,9 +50,6 @@ Template.threadsIndex.helpers({
   },
   isLoadingThreads: function() {
     return Session.get('isLoadingThreads');
-  },
-  currentCategoryIs: function(dbName) {
-    return Session.get('currentCategory') === dbName;
   }
 });
 
