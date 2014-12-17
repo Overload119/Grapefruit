@@ -3,7 +3,7 @@
     <div class="profile-image" style="{{ threadThumbnail }}"></div>
     <div class="item-details">
       <p class="lead">{{ threadTitle }}</p>
-      <p class="sublead">{{ lastThreadMessage }}</p>
+      <p class="sublead {{emptyIfNoMessage}}">{{ lastThreadMessage }}</p>
     </div>
     <div class="profile-meta">
       <p class="meta">{{ relativeTimeAgo lastThreadActiveDate }}</p>

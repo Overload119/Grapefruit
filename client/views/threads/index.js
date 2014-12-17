@@ -63,19 +63,8 @@ Template.threadsIndex.events({
 
     Session.set('ti_sort', sortPref);
   },
-  'click #discuss-create-btn': function(evt, template) {
-    var el = $(evt.currentTarget);
-    var parentEl = el.closest('p');
-    var createEl = el.closest('.module').find('.discuss-create');
-    var isActive = createEl.hasClass('active');
-
-    if (isActive) {
-      parentEl.find('i').removeClass('fa-minus-circle').addClass('fa-plus-circle');
-      createEl.removeClass('active');
-    } else {
-      parentEl.find('i').addClass('fa-minus-circle').removeClass('fa-plus-circle');
-      createEl.addClass('active');
-    }
+  'click #create-thread': function(evt, template) {
+    Router.go('threadsNew');
   },
   'click .show-more-btn': function(evt, template) {
     var oldLimit = Session.get('threadLimit');

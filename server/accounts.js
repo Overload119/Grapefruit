@@ -3,15 +3,15 @@ var debug = Meteor.npmRequire('debug')('accounts');
 var populateKeywordsFromUser = function(user) {
   // Populate keywords from their Skills/Interests/Job Experience.
   _.each(user.interests, function(word) {
-    Meteor.call('insertOrUpdateKeyword', word);
+    Meteor.call('insertOrUpdateKeyword', word, 'interests');
   });
 
   _.each(user.skills, function(word) {
-    Meteor.call('insertOrUpdateKeyword', word);
+    Meteor.call('insertOrUpdateKeyword', word, 'skills');
   });
 
   _.each(user.jobExperience, function(word) {
-    Meteor.call('insertOrUpdateKeyword', word);
+    Meteor.call('insertOrUpdateKeyword', word, 'jobExperience');
   });
 
   return user;

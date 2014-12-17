@@ -82,7 +82,7 @@ Template.usersSettings.events({
     });
 
     // After adding the interest or the skill, update the keyword associated with it.
-    Meteor.call('insertOrUpdateKeyword', value);
+    Meteor.call('insertOrUpdateKeyword', value, userKey);
 
     // Scroll to bottom if possible and animate the new addition.
     var newEl = el.closest('.list-card').find('.list li:last').addClass('appear');

@@ -1,3 +1,3 @@
-Meteor.publish('keywords', function() {
-  return Keywords.find({});
+Meteor.publish('keywords', function(findCriteria) {
+  return Keywords.find(findCriteria);
 });

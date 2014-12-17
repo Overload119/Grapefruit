@@ -1,0 +1,38 @@
+<template name="threadsNew">
+
+
+  <div class="module">
+    <div class="module-title">
+      {{> backButtonInline}}
+      Create Post
+    </div>
+
+    <div class="submission-form">
+      <label>
+        <span class="field-title">What's this post about?</span>
+        <span class="field-description">Pick a title that's to the point and catchy. Up to 140 characters.</span>
+        <input id="thread-title" type="textbox" placeholder="Title" max-length="140" />
+      </label>
+
+      <label>
+        <span class="field-title">Elaborate on your post (optional)</span>
+        <span class="field-description">Markdown supported.</span>
+        <textarea id="thread-contents" placeholder="Contents" row="3"></textarea>
+      </label>
+
+      <label>
+        <span class="field-title">Tags</span>
+        <span class="field-description">
+          Make this post more visible to people who have the tags as part of their profile.
+          <br>(Up to 5 - comma separated)
+        </span>
+        <input id="thread-tags" type="textbox" max-length="140" />
+      </label>
+
+      <button id="thread-create-btn">
+        <i class="fa fa-check"></i>
+        I'm all done, create this post!
+      </button>
+    </div>
+  </div>
+</template>

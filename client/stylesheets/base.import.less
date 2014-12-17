@@ -86,6 +86,35 @@ button {
   .module-title {
     font-size: 1.5em;
     margin-bottom: 0.5em;
+    .back-btn {
+      float: left;
+      font-size: 0.5em;
+      margin-right: 1em;
+    }
+  }
+}
+
+.submission-form {
+  padding: .5em;
+  label {
+    display: block;
+    margin-bottom: 1em;
+    .field-title {
+      display: block;
+      font-size: 1.1em;
+    }
+    .field-description {
+      display: block;
+      font-size: 0.9em;
+      font-style: italic;
+      color: @lightTextColor;
+      margin-bottom: .8em;
+    }
+    input[type="textbox"], textarea {
+      width: 100%;
+      border: 1px solid @baseBorderColor;
+      padding: 1em;
+    }
   }
 }
 

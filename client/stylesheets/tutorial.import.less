@@ -1,9 +1,9 @@
 .tutorial-screen {
-  background: @accentColor;
+  background: @baseColor;
   position: relative;
   width: 100%;
   height: 100%;
-  color: #FFF;
+  color: @textColor;
   .scrolling-nav {
     position: absolute;
     min-width: 640px;
@@ -31,15 +31,9 @@
       visibility: visible;
     }
     .continue-btn {
-      border: 2px solid #FFF;
-      background: transparent;
       margin-top: 1em;
       padding: 0.8em 1em;
       font-size: 1.25em;
-      .gf-button();
-      &:hover {
-        text-decoration: underline;
-      }
       &.disabled {
         opacity: 0.5;
         color: @gray;
@@ -55,40 +49,20 @@
       margin: 2em 0;
       li {
         display: inline-block;
-        background-color: @badge;
-        font-size: 1.5em;
+        font-size: 1.25em;
         padding: 0.8em 1em;
         border-radius: 4px;
         margin-right: 1em;
         position: relative;
         cursor: pointer;
         opacity: 0.9;
-        &:after {
-          top: -7px;
-          left: -7px;
-          padding: 7px;
-          .box-sizing(content-box);
-          .user-select(none);
-          content: '';
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          border-radius: 4px;
-          .transform(scale(0.8));
-          .box-shadow(0 0 0 4px #FFF);
-          .transition-transform(250ms, opacity 250ms);
-        }
+        border: 2px solid @baseBorderColor;
         &:hover {
-          background: lighten(@badge, 2%);
+          color: @accentColor;
         }
         &.selected {
           color: @accentColor;
-          background: white;
-          &:after {
-            .transform(scale(1));
-            opacity: 1;
-          }
+          border-color: @accentColor;
         }
       }
     }

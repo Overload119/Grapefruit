@@ -10,6 +10,10 @@ Template.registerHelper('formatName', function(user) {
   return result;
 });
 
+Template.registerHelper('appName', function() {
+  return Meteor.settings.public.appName;
+});
+
 Template.registerHelper('formatRole', function(roleStr) {
   var result = '';
   switch(roleStr) {

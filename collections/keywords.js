@@ -13,6 +13,10 @@ KeywordsSchema = new SimpleSchema({
     type: Number,
     defaultValue: 0,
   },
+  type: {
+    type: String,
+    optional: true
+  },
   content: {
     type: String,
     index: true,
@@ -40,7 +44,7 @@ Meteor.methods({
       }
     }
   },
-  insertOrUpdateKeyword: function(keyword) {
+  insertOrUpdateKeyword: function(keyword, type) {
     if (Meteor.isServer) {
       if (typeof keyword !== 'string') {
         throw new Meteor.Error('Keyword must be a string.');
@@ -54,7 +58,7 @@ Meteor.methods({
       if (existingKeyword) {
         Keywords.update({ _id: existingKeyword.id }, { $inc: {count: 1} });
       } else {
-        Keywords.insert({ content: keyword, count: 1 });
+        Keywords.insert({ content: keyword, type: type, count: 1 });
       }
     }
   }

@@ -126,21 +126,14 @@ Meteor.methods({
 
     return false;
   },
-  startThreadWithCategory: function(threadData) {
+  startThread: function(threadData) {
     check(threadData, Object);
+    check(threadData.content, String);
+    check(threadData.tags, Array);
+    check(threadData.title, String);
 
     if (!this.userId) {
       throw new Meteor.Error('You need to be logged in for that.');
-    }
-
-    var category = threadData.category;
-
-    var isValidCategory = _.contains(
-      _(Constants.THREAD_CATEGORIES).map(function(ctg) { return ctg.dbName }),
-      category);
-
-    if (!isValidCategory) {
-      throw new Meteor.Error(category + ' is not a valid category');
     }
 
     // Shallow reference to the thread creator.
@@ -152,36 +145,34 @@ Meteor.methods({
       lastName: Meteor.user().lastName
     };
 
+    var threadHasMessage = !!threadData.content.trim();
+
     var newThreadId = Threads.insert({
       creatorId: this.userId,
       creator: creator,
-      category: category,
-      messageCount: 1,
+      messageCount: threadHasMessage ? 1 : 0,
       isPrivate: false,
+      tags: threadData.tags,
       memberIds: [ this.userId ],
       title: threadData.title,
-      lastActiveMessage: {
-        _id: messageId,
-        content: threadData.content
-      }
     });
 
     // The content of the thread is the first message.
-    var messageId = Messages.insert({
-      fromId: this.userId,
-      threadId: newThreadId,
-      content: threadData.content,
-      createdAt: new Date()
-    });
+    var msgId;
+    if (threadHasMessage) {
+      msgId = Messages.insert({
+        fromId: this.userId,
+        threadId: newThreadId,
+        content: threadData.content,
+        createdAt: new Date()
+      });
+    }
 
     // Update the thread after the message is created to give the.
     Threads.update({ _id: newThreadId }, {
       $set: {
         lastActiveUser: creator,
-        lastActiveMessage: {
-          _id: messageId,
-          content: threadData.content
-        },
+        lastActiveMessage: (threadHasMessage ? { _id: msgId, content: threadData.content } : {}),
         lastActiveAt: new Date()
       }
     });
