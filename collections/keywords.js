@@ -45,12 +45,9 @@ Meteor.methods({
     }
   },
   insertOrUpdateKeyword: function(keyword, type) {
+    check(keyword, String);
     if (Meteor.isServer) {
-      if (typeof keyword !== 'string') {
-        throw new Meteor.Error('Keyword must be a string.');
-      }
-
-      if (keyword.trim() === '') {
+      if (!keyword.trim()) {
         throw new Meteor.Error('Keyword must not be blank.');
       }
 
