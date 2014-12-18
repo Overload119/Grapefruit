@@ -1,0 +1,35 @@
+<template name="projectsShow">
+  <div class="module">
+    <div class="module-title">
+      {{> backButtonInline}}
+      {{ title }}
+    </div>
+    <div class="module-subtitle">{{ tagline }}</div>
+  </div>
+
+  <div class="module">
+    {{#if canEdit}}
+      <button id="edit-project-description" class="edit-project-btn">
+        <i class="fa fa-edit"></i>
+        <span>Edit</span>
+      </button>
+      <textarea id="edit-project-description-txt" class="edit-project-description-txt"></textarea>
+    {{/if}}
+    <div id="project-description" class="project-description">
+      {{{ contentAsHtml }}}
+    </div>
+  </div>
+
+  <div class="module">
+    <div class="like-bar">
+      <i class="fa fa-thumbs-o-up"></i> {{pluralize score 'person'}} like this.
+      <br/><br/>
+      {{#if hasLiked}}
+        <button id="like-btn" href="javascript:void(0)">Unlike</button>
+      {{else}}
+        <button id="like-btn" href="javascript:void(0)">Like</button>
+      {{/if}}
+    </div>
+  </div>
+
+</template>

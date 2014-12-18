@@ -3,8 +3,8 @@ var getThreadParameters = function (sort) {
 
   // Always get +1 on the limit, so we can tell if we should "Show More"
   var threadOptions = {
-    limit: Session.get('threadLimit'),
-    sort: { lastActiveAt: -1 }
+    sort: { lastActiveAt: -1 },
+    limit: Session.get('threadLimit')
   };
 
   switch (sort) {

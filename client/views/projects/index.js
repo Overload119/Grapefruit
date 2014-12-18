@@ -1,9 +1,10 @@
 var getProjectParameters = function (sort) {
+  // TODO: Eventually we may want to add additional criteria like sorting by tags.
   var projectCriteria = {};
 
   var projectOptions = {
-    limit: Session.get('projectLimit'),
-    sort: { lastActiveAt: -1 }
+    sort: { createdAt: -1 },
+    limit: Session.get('projectLimit')
   };
 
   switch (sort) {
@@ -22,11 +23,27 @@ var getProjectParameters = function (sort) {
 };
 
 Template.projectsIndex.events({
+  'click #create-project': function(evt, template) {
+    Router.go('projectsNew');
+  },
   'click .sort-bar button': function(evt, template) {
     var el = $(evt.currentTarget);
     var sortPref = el.data('value');
 
     Session.set('pi_sort', sortPref);
+  },
+  'click .show-more-btn': function(evt, template) {
+    var oldLimit = Session.get('projectLimit');
+    Session.set('projectLimit', oldLimit + Constants.DEFAULT_LIMIT);
+    Session.set('isLoadingProjects', true);
+    var params = getProjectParameters(Session.get('pi_sort'));
+
+    // Subscribe to the additional threads. +1 on limit so we can show Show More if necessary.
+    params.projectOptions.limit++;
+    Meteor.subscribe('projects', params.projectCriteria, params.projectOptions,
+      function onReady() {
+        Session.set('isLoadingProjects', false);
+      });
   }
 });
 
@@ -38,11 +55,12 @@ Template.projectsIndex.helpers({
     return '';
   },
   projects: function() {
-    return Projects.find({}).fetch();
+    var params = getProjectParameters(Session.get('pi_sort'));
+    return Projects.find(params.projectCriteria, params.projectOptions);
   },
   hasMoreProjects: function() {
     var params = getProjectParameters(Session.get('pi_sort'));
-    return Projects.find(param.projectCriteria, params.projectOptions).count() >
+    return Projects.find(params.projectCriteria).count() >
       Session.get('projectLimit');
   },
   isLoadingProjects: function() {

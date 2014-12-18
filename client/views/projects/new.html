@@ -1,0 +1,42 @@
+<template name="projectsNew">
+  <div class="module">
+    <div class="module-title">
+      {{> backButtonInline}}
+      List Your Project
+    </div>
+
+    <div class="submission-form">
+      <label>
+        <span class="field-title">What's your project?</span>
+        <span class="field-description">This can be the name of your product or company.</span>
+        <input id="project-title" type="textbox" placeholder="Title" max-length="40" />
+      </label>
+
+      <label>
+        <span class="field-title">Project Tagline</span>
+        <span class="field-description">Describe your product in 1 line. (140 characters).</span>
+        <input id="project-tagline" type="textbox" placeholder="Title" max-length="140" />
+      </label>
+
+      <label>
+        <span class="field-title">Describe your project.</span>
+        <span class="field-description">Include any links, as well as what you're looking for, what stage you're at, etc.</span>
+        <textarea id="project-contents" placeholder="Contents" row="3"></textarea>
+      </label>
+
+      <label>
+        <span class="field-title">Tags</span>
+        <span class="field-description">
+          Make this project more visible to people who have the tags as part of their profile.
+          <br>(Up to 5 - comma separated)
+        </span>
+        <input id="project-tags" type="textbox" max-length="140" />
+      </label>
+
+      <button id="project-create-btn">
+        <i class="fa fa-check"></i>
+        List this project!
+      </button>
+    </div>
+  </div>
+</template>

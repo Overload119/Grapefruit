@@ -1,5 +1,12 @@
-<template name="projectsListItem">
-  <div class="project">
-    FUCK YEAH!
-  </div>
+<template name="projectListItem">
+  <a class="project user-list-item" href="{{ pathFor route='projectsShow' }}">
+    <div class="profile-image" style="{{ projectThumbnail }}"></div>
+    <div class="item-details">
+      <p class="lead">{{ title }}</p>
+      <p class="sublead {{emptyIfNoMessage}}">{{ tagline }}</p>
+    </div>
+    <div class="profile-meta">
+      <p class="meta">{{ relativeTimeAgo createdAt }}</p>
+    </div>
+  </a>
 </template>
