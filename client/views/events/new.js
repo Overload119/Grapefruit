@@ -21,6 +21,7 @@ Template.eventsNew.helpers({
 
 Template.eventsNew.rendered = function() {
   this.datePicker = new Pikaday({
+    minDate: new Date(),
     field: document.getElementById('event-start-date'),
     format: 'MMMM Do YYYY'
   });
@@ -47,4 +48,8 @@ Template.eventsNew.rendered = function() {
 
 Template.eventsNew.created = function() {
   Session.set('pageTitle', 'New Event');
+};
+
+Template.eventsNew.destroyed = function() {
+  this.datePicker.destroy();
 };

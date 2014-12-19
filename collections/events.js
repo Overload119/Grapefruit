@@ -41,6 +41,11 @@ EventsSchema = new SimpleSchema({
   location: {
     type: String,
     optional: false
+  },
+  isHidden: {
+    type: Boolean,
+    optional: false,
+    defaultValue: false
   }
 });
 

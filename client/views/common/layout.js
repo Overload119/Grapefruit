@@ -21,6 +21,7 @@ Template.layout.helpers({
 });
 
 Template.layout.rendered = function() {
+  console.log('tooltipster');
   $('.nav-left a').tooltipster({
     theme: 'tooltipster-light',
     contentAsHTML: true,
