@@ -20,6 +20,11 @@ Template.eventsNew.helpers({
 });
 
 Template.eventsNew.rendered = function() {
+  this.datePicker = new Pikaday({
+    field: document.getElementById('event-start-date'),
+    format: 'MMMM Do YYYY'
+  });
+
   $('#event-start-time').tagit({
     placeholderText: 'ex. 5:30 pm',
     allowSpaces: true,
