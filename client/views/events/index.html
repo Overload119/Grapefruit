@@ -10,4 +10,23 @@
       </div>
     </div>
   </div>
+
+  <div class="module">
+    {{#if eventsThisMonth}}
+      <div class="events-list">
+        <div class="calendar-month">{{ thisMonthName }}</div>
+        {{#each eventsThisMonth}}
+          {{> eventsListing this}}
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if eventsNextMonth}}
+      <div class="events-list">
+        <div class="calendar-month">{{ thisMonthName }}</div>
+        {{#each eventsNextMonth}}
+          {{> eventsListing this}}
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
 </template>

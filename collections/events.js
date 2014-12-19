@@ -52,4 +52,6 @@ EventsSchema = new SimpleSchema({
 Events.attachSchema(EventsSchema);
 
 Meteor.methods({
+  createEvent: function(event) {
+  }
 });

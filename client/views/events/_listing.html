@@ -1,0 +1,13 @@
+<template name="eventsListing">
+  <a href="{{pathFor 'eventsShow'}}" class="event">
+    <div class="calendar-date">
+      {{ dayOfDate startDate }}
+      <span class="day-of-week">{{ dateOfWeekOfDate startDate }}</span>
+    </div>
+    <div class="event-details">
+      <div class="title">{{ title }}</div>
+      <div class="description">{{ truncate description 30 }}</div>
+    </div>
+    <p>Event details</p>
+  </a>
+</template>

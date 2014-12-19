@@ -10,6 +10,25 @@ Template.registerHelper('formatName', function(user) {
   return result;
 });
 
+Template.registerHelper('truncate', function(text, limit, textOverflow) {
+  limit = limit || 40;
+  textOverflow = textOverflow || '...';
+
+  var wordsArr = text.split(' ');
+  var lastWord = wordsArr[ wordsArr.length - 1 ];
+
+  // TODO We can make this smarter to not cut off words.
+  return text.substring(0, limit - textOverflow.length) + textOverflow;
+});
+
+Template.registerHelper('dayOfDate', function(date) {
+  return moment(date).format('D');
+});
+
+Template.registerHelper('dayOfWeekOfDate', function(date) {
+  return moment(date).format('ddd');
+});
+
 Template.registerHelper('appName', function() {
   return Meteor.settings.public.appName;
 });
