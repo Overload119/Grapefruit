@@ -45,7 +45,7 @@ button {
   padding: .5em .6em;
   .box-shadow(0 1px 0 0 rgba(0, 0, 0, 0.05));
   &:hover {
-    border-color: darken(@baseBorderColor, 3%);
+    border-color: darken(@baseBorderColor, 10%);
     .box-shadow(0 1px 0 0 rgba(0, 0, 0, 0.08));
   }
   &:active {
@@ -85,7 +85,6 @@ button {
   }
   .module-title {
     font-size: 1.5em;
-    margin-bottom: 0.5em;
     .back-btn {
       float: left;
       font-size: 0.5em;
@@ -101,7 +100,7 @@ button {
 
 .submission-form {
   padding: .5em;
-  label {
+  label, .field {
     display: block;
     margin-bottom: 1em;
     .field-title {
@@ -115,10 +114,19 @@ button {
       color: @lightTextColor;
       margin-bottom: .8em;
     }
+    .field-description-extra {
+      display: block;
+      font-size: 0.9em;
+      margin: 0.5em;
+      text-align: center;
+    }
     input[type="textbox"], textarea {
       width: 100%;
       border: 1px solid @baseBorderColor;
       padding: 1em;
+      &:focus {
+        border-color: darken(@baseBorderColor, 20%);
+      }
     }
   }
 }
@@ -137,7 +145,7 @@ button {
     h1 {
       font-size: 1.5em;
       float: left;
-      margin-top: .17em;
+      margin: .25em 0 0 0;
     }
     .create {
       float: right;

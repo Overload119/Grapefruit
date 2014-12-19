@@ -88,6 +88,10 @@ Schema.User = new SimpleSchema({
     type: Boolean,
     defaultValue: true
   },
+  isSubscribedToEventNotif: {
+    type: Boolean,
+    defaultValue: false
+  },
   isMessagable: {
     type: Boolean,
     defaultValue: true

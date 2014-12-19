@@ -8,36 +8,38 @@
           <i class="fa fa-long-arrow-right"></i>
         </button>
       </div>
+    </div>
+  </div>
 
-      <div class="sort-bar">
-        <button data-value="popular" class="{{activeIfSort 'popular'}}">
-          <i class="fa fa-fire"></i> Most Popular
-        </button>
-        <button data-value="recent" class="{{activeIfSort 'recent'}}">
-          <i class="fa fa-clock-o"></i> Most Recent
-        </button>
-      </div>
+  <div class="module">
+    <div class="sort-bar">
+      <button data-value="popular" class="{{activeIfSort 'popular'}}">
+        <i class="fa fa-fire"></i> Most Popular
+      </button>
+      <button data-value="recent" class="{{activeIfSort 'recent'}}">
+        <i class="fa fa-clock-o"></i> Most Recent
+      </button>
+    </div>
 
-      <div class="results-list projects-list">
-        {{#if isLoadingProjects}}
-          <p><i class="fa fa-spin fa-spinner"></i> Loading projects...</p>
-        {{else}}
-          {{#if projects}}
-            {{#each projects}}
-              {{> projectListItem this}}
-            {{/each}}
-            {{#if hasMoreProjects}}
-              <div class="show-more">
-                <button class="show-more-btn">Show More</button>
-              </div>
-            {{/if}}
-          {{else}}
-            <div class="no-results">
-              <i class="fa fa-frown-o fa-large"></i> No projects found.
+    <div class="results-list projects-list">
+      {{#if isLoadingProjects}}
+        <p><i class="fa fa-spin fa-spinner"></i> Loading projects...</p>
+      {{else}}
+        {{#if projects}}
+          {{#each projects}}
+            {{> projectListItem this}}
+          {{/each}}
+          {{#if hasMoreProjects}}
+            <div class="show-more">
+              <button class="show-more-btn">Show More</button>
             </div>
           {{/if}}
+        {{else}}
+          <div class="no-results">
+            <i class="fa fa-frown-o fa-large"></i> No projects found.
+          </div>
         {{/if}}
-      </div>
+      {{/if}}
     </div>
   </div>
 </template>

@@ -1,2 +1,47 @@
 <template name="eventsNew">
+  <div class="module">
+    <div class="module-title">
+      {{> backButtonInline}}
+      Create an Event
+    </div>
+  </div>
+
+  <div class="module">
+    <div class="submission-form">
+      <label>
+        <span class="field-title">Event Name</span>
+        <span class="field-description">Choose a name for your event.</span>
+        <input id="event-title" type="textbox" placeholder="ex. Entrepreneur Exchange" max-length="40" />
+      </label>
+
+      <label>
+        <span class="field-title">Location</span>
+        <span class="field-description">What does this event take place?</span>
+        <input id="event-location" type="textbox" placeholder="Street address" max-length="140" />
+      </label>
+
+      <label>
+        <span class="field-title">Details</span>
+        <span class="field-description">Markdown supported.</span>
+        <textarea id="event-contents" placeholder="Include additional information" row="3"></textarea>
+      </label>
+
+      <div class="field">
+        <span class="field-title">Start Date</span>
+        <span class="field-description">When does this event start?</span>
+        <input id="event-start-date" type="textbox" max-length="140" />
+        <span class="field-description-extra">
+          <a id="show-event-start-time" href="javascript:void(0)">
+            Add event time?
+          </a>
+        </span>
+        <input id="event-start-time" type="textbox" placeholder="ex. 5:30 pm" max-length="8" />
+      </div>
+
+      <button id="project-create-btn">
+        <i class="fa fa-check"></i>
+        Create Event
+      </button>
+    </div>
+  </div>
 </template>

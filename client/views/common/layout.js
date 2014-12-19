@@ -24,10 +24,11 @@ Template.layout.rendered = function() {
   $('.nav-left a').tooltipster({
     theme: 'tooltipster-light',
     contentAsHTML: true,
-    animation: 'grow',
+    animation: 'fade',
     speed: 250,
     delay: 400,
     position: 'bottom',
+    onlyOne: true,
     offsetY: -15
   });
 }

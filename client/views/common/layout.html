@@ -2,25 +2,30 @@
   <div class="outer-wrapper">
     <nav class="nav">
       <div class="nav-left">
-        <a id="inbox-btn" class="{{toggleActiveRouteNav 'usersInbox'}}" href="{{pathFor route='usersInbox'}}" title="Inbox">
+        <a id="inbox-btn" class="{{toggleActiveRouteNav 'usersInbox'}}"
+           href="{{pathFor route='usersInbox'}}" title="Inbox">
           <i class="fa fa-envelope"></i>
         </a>
 
-        <a id="discuss-btn" class="{{toggleActiveRouteNav 'threadsIndex' 'threadsNew'}}" href="{{pathFor route='threadsIndex'}}" title="Community">
+        <a id="discuss-btn" class="{{toggleActiveRouteNav 'threadsIndex' 'threadsNew'}}"
+           href="{{pathFor route='threadsIndex'}}" title="Community">
           <i class="fa fa-comments"></i>
         </a>
 
-        <a id="projects-btn" class="{{toggleActiveRouteNav 'projectsIndex'}}" href="{{pathFor route='projectsIndex'}}" title="Projects">
+        <a id="projects-btn" class="{{toggleActiveRouteNav 'projectsIndex' 'projectsNew'}}"
+           href="{{pathFor route='projectsIndex'}}" title="Projects">
           <i class="fa fa-suitcase"></i>
         </a>
 
-        <a id="events-btn" class="" href="" title="Events">
+        <a id="events-btn" class="{{toggleActiveRouteNav 'eventsIndex' 'eventsNew'}}"
+           href="{{pathFor route='eventsIndex'}}" title="Events">
           <i class="fa fa-calendar"></i>
         </a>
       </div>
 
       <div class="nav-right">
-        <a id="profile-btn" class="button-with-image {{toggleActiveRouteNav 'usersSettings'}}" href="{{pathFor route='usersSettings'}}">
+        <a id="profile-btn" class="button-with-image {{toggleActiveRouteNav 'usersSettings'}}"
+           href="{{pathFor route='usersSettings'}}">
           <div class="image" style="{{profileBackgroundImage currentUser}}"></div>
           <span>{{ currentUser.firstName }}</span>
         </a>
